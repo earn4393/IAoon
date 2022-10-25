@@ -5,6 +5,7 @@ import Constants from "expo-constants";
 import { Splash } from "../Splash";
 import { TabNav } from "./TabNav";
 import { Search } from "../page/Search";
+import { DrawerNav } from "../page/DrawerNav";
 
 const Stack = createNativeStackNavigator();
 const HEIGHT = Dimensions.get("screen").height;
@@ -36,10 +37,10 @@ const TabScreen = () => {
   return <TabNav />;
 };
 
-const SearchScreen = ({ navigation }) => {
-  console.log("หน้า Search ใน StackNav.js");
-  return <Search nav={navigation} />;
-};
+// const SearchScreen = ({ navigation }) => {
+//   console.log("หน้า Search ใน StackNav.js");
+//   return <Search nav={navigation} />;
+// };
 
 export const StackNav = () => {
   return (
@@ -57,7 +58,7 @@ export const StackNav = () => {
         component={TabScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Search"
         component={SearchScreen}
         options={{
@@ -72,7 +73,7 @@ export const StackNav = () => {
           // headerShown: true ,
           // header: (props) => <SearchHeaderBar {...props} />,
         }}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };

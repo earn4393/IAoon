@@ -10,64 +10,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-
-const DATA = [
-  {
-    id: "1",
-    name: "A",
-    review: "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    type: "A",
-    conutry: "A",
-    abstract: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    category: ["A", "B", "C"],
-  },
-  {
-    id: "2",
-    name: "B",
-    review: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-    type: "B",
-    conutry: "B",
-    abstract: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    category: ["A", "B", "D"],
-  },
-  {
-    id: "3",
-    name: "C",
-    review: "ccccccccccccccccccccccccccccccccccc",
-    type: "A",
-    conutry: "B",
-    abstract: "aaaaaaaaaaaaaaaaadddertergeaaaaaaaaaaaaaaaaaa",
-    category: ["A", "C", "D"],
-  },
-  {
-    id: "3",
-    name: "frde",
-    review: "bbbbbbbbbbbbbbbhyttttttttttttttttttttttttt",
-    type: "B",
-    conutry: "B",
-    abstract: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    category: ["A", "B", "D"],
-  },
-];
-
-const IMG = [
-  {
-    id: 1,
-    img: "https://picjumbo.com/wp-content/uploads/the-golden-gate-bridge-sunset-1080x720.jpg",
-  },
-  {
-    id: 2,
-    img: "https://picjumbo.com/wp-content/uploads/the-golden-gate-bridge-sunset-1080x720.jpg",
-  },
-  {
-    id: 3,
-    img: "https://picjumbo.com/wp-content/uploads/the-golden-gate-bridge-sunset-1080x720.jpg",
-  },
-];
-
-const c = ["A", "B"];
-const t = ["A", "B"];
-const ca = ["A", "B", "D", "C"];
+import { useSelector } from "react-redux";
 
 const Item = ({ title }) => (
   <View>
@@ -75,8 +18,26 @@ const Item = ({ title }) => (
   </View>
 );
 
+const ShowImages = (props) => {
+  const imgTo = { uri: props.img };
+  // console.log(imgTo);
+  return (
+    <View style={{ flex: 1 }}>
+      <Image source={imgTo} style={styles.imageHead}></Image>
+    </View>
+  );
+};
+
+const renderItem = ({ item }) => <ShowImages img={item.img} />;
+
 export const Search = (props) => {
   const navigation = props.nav;
+  const DATA = useSelector((state) => state.watch);
+  const FIELD_OBJ = useSelector((state) => state.field);
+  const COUNTRY_ARRAY = FIELD_OBJ[0].country;
+  const TYPE_ARRAY = FIELD_OBJ[0].type;
+  const CATEGORY_ARRAY = FIELD_OBJ[0].category;
+
   const [conutry, setCountry] = useState("");
   const [type, setType] = useState("");
   const [category, setCategory] = useState("");
@@ -84,57 +45,6 @@ export const Search = (props) => {
   const [pushType, setPushType] = useState(1);
   const [pushCategory, setPushCategory] = useState(1);
   const [Search, setSearch] = useState([{ data: [] }]);
-
-  const cc = c.map((item) => {
-    return (
-      <TouchableOpacity
-        onPress={() => {
-          if (conutry != item) {
-            setCountry(item);
-          } else {
-            setCountry("");
-          }
-          console.log(conutry);
-        }}
-      >
-        <Text style={styles.styleText}>{item}</Text>
-      </TouchableOpacity>
-    );
-  });
-
-  const ct = t.map((item) => {
-    return (
-      <TouchableOpacity
-        onPress={() => {
-          if (type != item) {
-            setType(item);
-          } else {
-            setType("");
-          }
-          console.log(type);
-        }}
-      >
-        <Text style={styles.styleText}>{item}</Text>
-      </TouchableOpacity>
-    );
-  });
-
-  const cca = ca.map((item) => {
-    return (
-      <TouchableOpacity
-        onPress={() => {
-          if (category != item) {
-            setCategory(item);
-          } else {
-            setCategory("");
-          }
-          console.log(category);
-        }}
-      >
-        <Text style={styles.styleText}>{item}</Text>
-      </TouchableOpacity>
-    );
-  });
 
   let data = [];
   console.log(`country: ${conutry} type: ${type} category: ${category}`);
@@ -176,8 +86,80 @@ export const Search = (props) => {
     }
   });
 
-  console.log("Data : ", data);
-  const renderItem = ({ item }) => <Item title={item.name} />;
+  const SearchCountry = (props) => {
+    const selectedCountry = COUNTRY_ARRAY.map((item) => {
+      return (
+        <TouchableOpacity
+          onPress={() => {
+            if (conutry != item) {
+              setCountry(item);
+            } else {
+              setCountry("");
+            }
+            console.log(conutry);
+          }}
+        >
+          <Text style={styles.styleText}>{item}</Text>
+        </TouchableOpacity>
+      );
+    });
+    return (
+      <View>
+        <Text style={styles.styleText}>ประเทศ: </Text>
+        {selectedCountry}
+      </View>
+    );
+  };
+
+  const SearchType = (props) => {
+    const selectedType = TYPE_ARRAY.map((item) => {
+      return (
+        <TouchableOpacity
+          onPress={() => {
+            if (type != item) {
+              setType(item);
+            } else {
+              setType("");
+            }
+            console.log(type);
+          }}
+        >
+          <Text style={styles.styleText}>{item}</Text>
+        </TouchableOpacity>
+      );
+    });
+    return (
+      <View>
+        <Text style={styles.styleText}>ประเภท: </Text>
+        {selectedType}
+      </View>
+    );
+  };
+
+  const SearchCategory = (props) => {
+    const selectedCategory = CATEGORY_ARRAY.map((item) => {
+      return (
+        <TouchableOpacity
+          onPress={() => {
+            if (category != item) {
+              setCategory(item);
+            } else {
+              setCategory("");
+            }
+            console.log(category);
+          }}
+        >
+          <Text style={styles.styleText}>{item}</Text>
+        </TouchableOpacity>
+      );
+    });
+    return (
+      <View>
+        <Text style={styles.styleText}>แนว: </Text>
+        {selectedCategory}
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -188,18 +170,9 @@ export const Search = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-        <View>
-          <Text style={styles.styleText}>ประเทศ :</Text>
-          {cc}
-        </View>
-        <View>
-          <Text style={styles.styleText}>ประเภท :</Text>
-          {ct}
-        </View>
-        <View>
-          <Text style={styles.styleText}>แนว :</Text>
-          {cca}
-        </View>
+        <SearchCountry />
+        <SearchType />
+        <SearchCategory />
 
         <FlatList
           data={data}
@@ -233,5 +206,10 @@ const styles = StyleSheet.create({
   },
   styleText: {
     color: "white",
+  },
+  imageHead: {
+    width: 500,
+    height: 250,
+    marginBottom: 20,
   },
 });
