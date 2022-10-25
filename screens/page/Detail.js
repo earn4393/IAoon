@@ -7,13 +7,13 @@ import {
   ScrollView,
   Image,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 import { Video } from "expo-av";
 import * as ScreenOrientation from "expo-screen-orientation";
-import { useSelector } from "react-redux";
 
 const ShowDetail = (props) => {
   const data = props.data;
@@ -25,7 +25,11 @@ const ShowDetail = (props) => {
       <Image source={imgTo} style={styles.imageHead}></Image>
       <View>
         <Text>{data.name}</Text>
-        <View>Love</View>
+        <View>
+          <TouchableOpacity>
+            <Text>Love</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <View>{data.review}</View>
     </View>
@@ -79,6 +83,7 @@ export const Detail = (props) => {
               useNativeControls
               style={{ width: Dimensions.get("window").width, height: 200 }}
             />
+            <ShowDetail data={data} />
           </View>
         </ScrollView>
       </LinearGradient>
