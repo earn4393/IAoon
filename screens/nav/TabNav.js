@@ -15,6 +15,7 @@ import { Home } from "../page/Home";
 import { Series } from "../page/Series";
 import { Movies } from "../page/Movies";
 import { Account } from "../page/Account";
+import { Search } from "../page/Search";
 import { Detail } from "../page/Detail";
 
 const Tab = createBottomTabNavigator();
@@ -63,6 +64,60 @@ const CustomHeaderBar = (props) => {
   );
 };
 
+const CustomHeadBarSearch = (props) => {
+  const { navigation, route, options, layout } = props;
+  // console.log("options: ", options);
+  return (
+    <View style={styles.headerContainer}>
+      <View style={{ flex: 2, flexDirection: "row" }}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
+              console.log("Go Home");
+            }}
+          >
+            <Entypo
+              name="chevron-small-left"
+              size={32}
+              color="#006262"
+              style={{ paddingTop: "1%", paddingRight: 2 }}
+            />
+          </TouchableOpacity>
+          <Text style={styles.headerFont}>ไออุ่น</Text>
+        <View
+          style={{
+            paddingLeft: 8,
+            flex: 1,
+            flexDirection: "row",
+            width: "auto",
+            height: 40,
+            backgroundColor: "#191919",
+          }}
+        >
+          <TextInput
+            style={styles.headerInput}
+            placeholder="ค้นหา"
+            placeholderTextColor="#191919"
+          />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Search");
+              console.log("Go Home");
+            }}
+          >
+            <Ionicons
+              name="search"
+              size={32}
+              color="#006262"
+              style={{ paddingTop: "1%", paddingRight: 2 }}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+};
+
 const ShowHome = ({ navigation }) => {
   console.log("หน้า ShowHome ใน TabNav.js");
   return <Home nav={navigation} />;
@@ -86,6 +141,11 @@ const Accounts = ({ navigation }) => {
 const Description = ({ navigation }) => {
   console.log("หน้า Description ใน TabNav.js");
   return <Detail nav={navigation} />;
+};
+
+const SearchScreen = ({ navigation }) => {
+  console.log("หน้า Search ใน TabNav.js");
+  return <Search nav={navigation} />;
 };
 
 export const TabNav = () => {
@@ -145,6 +205,23 @@ export const TabNav = () => {
       />
 
       <Tab.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{
+          title: "ไออุ่น",
+          headerBackTitleStyle: () => {
+            <Entypo name="home" size={50} color="white" />;
+          },
+          headerStyle: {
+            backgroundColor: "black",
+          },
+          headerTintColor: "#FAA307",
+          // headerShown: true ,
+          header: (props) => <CustomHeadBarSearch {...props} />,
+        }}
+      />
+
+      <Tab.Screen
         name="Description"
         component={Description}
         options={{
@@ -155,6 +232,8 @@ export const TabNav = () => {
         }}
       />
     </Tab.Navigator>
+
+      
   );
 };
 

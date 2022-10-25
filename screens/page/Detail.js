@@ -17,6 +17,9 @@ import * as ScreenOrientation from "expo-screen-orientation";
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
 
+const HEIGHT = Dimensions.get("screen").height;
+const WIDTH = Dimensions.get("screen").width;
+
 const ShowDetail = (props) => {
   const data = props.data;
   const imgTo = { uri: data.img };
