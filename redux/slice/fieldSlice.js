@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = [
   {
-    typeconutry: ["Chaina", "Paris", "India", "Japan"],
+    country: ["Chaina", "Paris", "India", "Japan"],
     type: ["movies", "series"],
     category: ["fantacy", "romantic", "comady", "drama"],
   },

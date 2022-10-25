@@ -8,11 +8,11 @@ import { store } from "./redux/store";
 export default function App() {
   return (
     <SafeAreaProvider>
-      {/* <Provider store={store}> */}
-      <NavigationContainer>
-        <StackNav />
-      </NavigationContainer>
-      {/* </Provider> */}
+      <Provider store={store}>
+        <NavigationContainer>
+          <StackNav />
+        </NavigationContainer>
+      </Provider>
     </SafeAreaProvider>
   );
 }

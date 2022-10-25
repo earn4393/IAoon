@@ -8,76 +8,12 @@ import {
   Image,
   Dimensions,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
+import { useSelector } from "react-redux";
 
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
-
-const DATA = [
-  {
-    id: "1",
-    name: "Appocite",
-    review: "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    type: "A",
-    conutry: "A",
-    abstract: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    category: ["A", "B", "C"],
-  },
-  {
-    id: "2",
-    name: "Apple",
-    review: "aaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    type: "A",
-    conutry: "A",
-    abstract: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    category: ["A", "B", "C"],
-  },
-  {
-    id: "3",
-    name: "Beep",
-    review: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-    type: "B",
-    conutry: "B",
-    abstract: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    category: ["A", "B", "D"],
-  },
-  {
-    id: "4",
-    name: "Coral",
-    review: "ccccccccccccccccccccccccccccccccccc",
-    type: "A",
-    conutry: "C",
-    abstract: "aaaaaaaaaaaaaaaaadddertergeaaaaaaaaaaaaaaaaaa",
-    category: ["A", "C", "D"],
-  },
-  // {
-  //   id: "4",
-  //   name: "D",
-  //   review: "bbbbbbbbbbbbbbbhyttttttttttttttttttttttttt",
-  //   type: "B",
-  //   conutry: "B",
-  //   abstract: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-  //   category: ["A", "B", "D"],
-  // },
-];
-
-const IMG = [
-  {
-    id: 1,
-    img: "https://picjumbo.com/wp-content/uploads/the-golden-gate-bridge-sunset-1080x720.jpg",
-  },
-  {
-    id: 2,
-    img: "https://i.ibb.co/bFH0XSc/ShoesVeg.jpg",
-  },
-  {
-    id: 3,
-    img: "https://picjumbo.com/wp-content/uploads/the-golden-gate-bridge-sunset-1080x720.jpg",
-  },
-];
-
-const c = ["A", "B", "C"];
 
 const Item = ({ title }) => (
   <View style={styles.itemlist}>
@@ -103,53 +39,61 @@ const ShowImages = (props) => {
 //   )
 // }
 
-// const FlalitHeader = (props) => {
-//   return (
-//     <View style={styles.countryBar}>
-//       <Text style={{fontSize:24}}>{props.conutry}</Text>
-//     </View>
-//   );
-// };
+const FlalitHeader = (props) => {
+  return (
+    <View style={styles.countryBar}>
+      <Text style={{ fontSize: 24 }}>{props.conutry}</Text>
+    </View>
+  );
+};
 
-const renderItem = ({ item }) => <Item title={item.name} />;
+const renderItem = ({ item }) => <ShowImages img={item.img} />;
 
 const FlatListTester = (props) => {
-  const a = c.map((c) => {
-    let b = [];
-    let country = [];
-    DATA.map((item) => {
+  const showAllWatch = props.countryList.map((c) => {
+    let watches = [];
+    let countries = [];
+    props.data.map((item) => {
       if (item.conutry == c) {
-        b.push(item);
-        country.push(item.conutry);
+        watches.push(item);
+        countries.push(item.conutry);
       }
-      // console.log(item)
     });
 
-    return (
-      <View style={{ paddingBottom: 10 }}>
-        <View style={styles.countryBar}>
-          <Text>{country[0]}</Text>
+    if (watches.length > 0) {
+      return (
+        <View style={{ paddingBottom: 10 }}>
+          <View style={styles.countryBar}>
+            <Text>{countries[0]}</Text>
+          </View>
+          <FlatList
+            data={watches}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            horizontal={true}
+          />
         </View>
-        <FlatList
-          data={b}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          horizontal={true}
-        />
-      </View>
-    );
+      );
+    }
   });
-  return <View>{a}</View>;
+  return <View>{showAllWatch}</View>;
 };
 
 const renderInsideItem = ({ item }) => <FlatListTester title={item.name} />;
 
 export const Home = (props) => {
   const navigation = props.nav;
+  const DATA = useSelector((state) => state.watch);
+  const COUNTRY_OBJ = useSelector((state) => state.field);
+  const COUNTRY_ARRAY = COUNTRY_OBJ[0].country;
+
+  const IMG = DATA.map((item) => {
+    return item.img;
+  });
 
   const renderItem = ({ item }) => <Item title={item.name} />;
 
-  const renderIMG = ({ item }) => <ShowImages img={item.img} />;
+  const renderIMG = ({ item }) => <ShowImages img={item} />;
 
   // const a = c.map((c) => {
   //   let b = [];
@@ -197,7 +141,7 @@ export const Home = (props) => {
            data={c}
            renderItem={renderInsideItem}
            keyExtractor={(item) => item.country}/> */}
-          <FlatListTester />
+          <FlatListTester data={DATA} countryList={COUNTRY_ARRAY} />
         </ScrollView>
       </LinearGradient>
     </SafeAreaView>

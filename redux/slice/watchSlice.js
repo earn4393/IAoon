@@ -10,15 +10,17 @@ const initialState = [
     conutry: "India",
     category: ["comady", "drama"],
     love: ["Earn", "Donut"],
+    img: "https://picjumbo.com/wp-content/uploads/the-golden-gate-bridge-sunset-1080x720.jpg",
   },
   {
     id: "2",
     name: "lord of the ring",
     review: "lord of the ring bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     type: "movie",
-    conutry: "Paris",
+    conutry: "Chaina",
     category: ["fantacy", "drama"],
     love: ["Donut"],
+    img: "https://i.ibb.co/bFH0XSc/ShoesVeg.jpg",
   },
   {
     id: "3",
@@ -28,6 +30,7 @@ const initialState = [
     conutry: "Japan",
     category: ["fantacy", "drama"],
     love: ["Earn"],
+    img: "https://picjumbo.com/wp-content/uploads/the-golden-gate-bridge-sunset-1080x720.jpg",
   },
   {
     id: "3",
@@ -35,9 +38,10 @@ const initialState = [
     review:
       "ชีวิตเพื่อชาติ รักนี้เพื่อเธอ  bbbbbbbbbbbbbbbhyttttttttttttttttttttttttt",
     type: "serie",
-    conutry: "India",
+    conutry: "Chaina",
     category: ["drama", "comady"],
     love: ["Eart"],
+    img: "https://i.ibb.co/bFH0XSc/ShoesVeg.jpg",
   },
 ];
 
