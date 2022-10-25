@@ -14,6 +14,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 import { Video } from "expo-av";
 import * as ScreenOrientation from "expo-screen-orientation";
+const HEIGHT = Dimensions.get("screen").height;
+const WIDTH = Dimensions.get("screen").width;
 
 const ShowDetail = (props) => {
   const data = props.data;
@@ -31,13 +33,52 @@ const ShowDetail = (props) => {
           </TouchableOpacity>
         </View>
       </View>
-      <View>{data.review}</View>
+      <View>
+        <Text>{data.review}</Text>
+      </View>
+    </View>
+  );
+};
+
+const ShowImages = (props) => {
+  const imgTo = { uri: props.img };
+  // console.log(imgTo);
+  return (
+    <View style={{ flex: 1 }}>
+      <Image source={imgTo} style={styles.imageHead}></Image>
+    </View>
+  );
+};
+
+const renderItem = ({ item }) => <ShowImages img={item.img} />;
+
+const FlatListTester = (props) => {
+  let watches = [];
+  let randomWatches = [];
+  const youAsloLike = props.data.map((item) => {
+    if (item.type == props.type) {
+      watches.push(item);
+    }
+  });
+
+  return (
+    <View style={{ paddingBottom: 10 }}>
+      <View style={styles.countryBar}>
+        <Text>You also like</Text>
+      </View>
+      <FlatList
+        data={watches}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        horizontal={true}
+      />
     </View>
   );
 };
 
 export const Detail = (props) => {
   const navigation = props.nav;
+  const DATA = useSelector((state) => state.watch);
   const video = React.useRef(null);
   const data = {
     id: "1",
@@ -83,7 +124,12 @@ export const Detail = (props) => {
               useNativeControls
               style={{ width: Dimensions.get("window").width, height: 200 }}
             />
+          </View>
+          <View>
             <ShowDetail data={data} />
+          </View>
+          <View>
+            <FlatListTester data={DATA} type={data.type} />
           </View>
         </ScrollView>
       </LinearGradient>
