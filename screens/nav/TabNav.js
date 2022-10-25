@@ -101,7 +101,7 @@ const CustomHeadBarSearch = (props) => {
           />
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Home");
+              navigation.navigate("Search");
               console.log("Go Home");
             }}
           >
