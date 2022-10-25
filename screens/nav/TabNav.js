@@ -85,7 +85,7 @@ const Accounts = ({ navigation }) => {
 
 const Description = ({ navigation }) => {
   console.log("หน้า Description ใน TabNav.js");
-  return <Detail />;
+  return <Detail nav={navigation} />;
 };
 
 export const TabNav = () => {
