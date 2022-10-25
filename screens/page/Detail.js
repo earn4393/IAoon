@@ -16,10 +16,9 @@ import * as ScreenOrientation from "expo-screen-orientation";
 import { useSelector } from "react-redux";
 
 const ShowDetail = (props) => {
-  const data = props.data
+  const data = props.data;
   const imgTo = { uri: data.img };
   // console.log(imgTo);
-  const 
 
   return (
     <View style={{ flex: 1 }}>
@@ -32,7 +31,6 @@ const ShowDetail = (props) => {
     </View>
   );
 };
-
 
 export const Detail = (props) => {
   const navigation = props.nav;
