@@ -7,6 +7,7 @@ import {
   ScrollView,
   Image,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
@@ -26,7 +27,14 @@ const ShowImages = (props) => {
   // console.log(imgTo);
   return (
     <View style={{ flex: 1 }}>
+      <TouchableOpacity
+        onPress={() => {
+          // navigation.goBack();
+          console.log("Go to Watch Video");
+      }}
+      >
       <Image source={imgTo} style={styles.imageHead}></Image>
+      </TouchableOpacity>
     </View>
   );
 };

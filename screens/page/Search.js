@@ -89,18 +89,21 @@ export const Search = (props) => {
   const SearchCountry = (props) => {
     const selectedCountry = COUNTRY_ARRAY.map((item) => {
       return (
-        <TouchableOpacity
-          onPress={() => {
-            if (conutry != item) {
-              setCountry(item);
-            } else {
-              setCountry("");
-            }
-            console.log(conutry);
-          }}
-        >
-          <Text style={styles.styleText}>{item}</Text>
-        </TouchableOpacity>
+        <View >
+          <TouchableOpacity
+            onPress={() => {
+              if (conutry != item) {
+                setCountry(item);
+              } else {
+                setCountry("");
+              }
+              console.log(conutry);
+            }}
+          >
+            <View>
+            <Text style={styles.styleText}>{item}</Text></View>
+          </TouchableOpacity>
+        </View>
       );
     });
     return (
