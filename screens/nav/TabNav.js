@@ -15,11 +15,8 @@ import { Home } from "../page/Home";
 import { Series } from "../page/Series";
 import { Movies } from "../page/Movies";
 import { Account } from "../page/Account";
-<<<<<<< HEAD
 import { Search } from "../page/Search";
-=======
 import { Detail } from "../page/Detail";
->>>>>>> refs/remotes/origin/main
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();

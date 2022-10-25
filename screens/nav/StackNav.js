@@ -5,7 +5,6 @@ import Constants from "expo-constants";
 import { Splash } from "../Splash";
 import { TabNav } from "./TabNav";
 import { Search } from "../page/Search";
-import { DrawerNav } from "../page/DrawerNav";
 
 const Stack = createNativeStackNavigator();
 const HEIGHT = Dimensions.get("screen").height;
