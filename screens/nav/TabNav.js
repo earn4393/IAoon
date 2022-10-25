@@ -15,6 +15,7 @@ import { Home } from "../page/Home";
 import { Series } from "../page/Series";
 import { Movies } from "../page/Movies";
 import { Account } from "../page/Account";
+import { Detail } from "../page/Detail";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -84,7 +85,7 @@ const Accounts = ({ navigation }) => {
 
 const Description = ({ navigation }) => {
   console.log("หน้า Description ใน TabNav.js");
-  // return <StackNav2 />;
+  return <Detail nav={navigation} />;
 };
 
 export const TabNav = () => {

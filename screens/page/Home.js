@@ -47,8 +47,6 @@ const FlalitHeader = (props) => {
   );
 };
 
-const renderItem = ({ item }) => <ShowImages img={item.img} />;
-
 const FlatListTester = (props) => {
   const showAllWatch = props.countryList.map((c) => {
     let watches = [];
@@ -79,10 +77,42 @@ const FlatListTester = (props) => {
   return <View>{showAllWatch}</View>;
 };
 
+const FlatlistFavorite = (props) => {
+  if (props.user.length > 0) {
+    const user = props.user[0].username;
+    const watches = [];
+
+    const showFavorite = props.data.map((item) => {
+      const index = item.love.indexOf(user);
+      if (index != -1) {
+        watches.push(item);
+      }
+    });
+    if (watches.length > 0) {
+      return (
+        <View style={{ paddingBottom: 10 }}>
+          <View style={styles.countryBar}>
+            <Text style={styles.T}>Favorite</Text>
+          </View>
+          <FlatList
+            data={watches}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            horizontal={true}
+          />
+        </View>
+      );
+    }
+  }
+};
+
 const renderInsideItem = ({ item }) => <FlatListTester title={item.name} />;
+const renderIMG = ({ item }) => <ShowImages img={item} />;
+const renderItem = ({ item }) => <ShowImages img={item.img} />;
 
 export const Home = (props) => {
   const navigation = props.nav;
+  const USER = useSelector((state) => state.user);
   const DATA = useSelector((state) => state.watch);
   const COUNTRY_OBJ = useSelector((state) => state.field);
   const COUNTRY_ARRAY = COUNTRY_OBJ[0].country;
@@ -90,10 +120,6 @@ export const Home = (props) => {
   const IMG = DATA.map((item) => {
     return item.img;
   });
-
-  const renderItem = ({ item }) => <Item title={item.name} />;
-
-  const renderIMG = ({ item }) => <ShowImages img={item} />;
 
   // const a = c.map((c) => {
   //   let b = [];
@@ -141,6 +167,7 @@ export const Home = (props) => {
            data={c}
            renderItem={renderInsideItem}
            keyExtractor={(item) => item.country}/> */}
+          <FlatlistFavorite data={DATA} user={USER} />
           <FlatListTester data={DATA} countryList={COUNTRY_ARRAY} />
         </ScrollView>
       </LinearGradient>
