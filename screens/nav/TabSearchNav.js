@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import React, { useState } from "react";
 import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Constants from "expo-constants";
@@ -18,6 +19,7 @@ const WIDTH = Dimensions.get("screen").width;
 
 const CustomHeadBarSearch = (props) => {
   const { navigation, route, options, layout } = props;
+  const [searchQry, setSearchQry] = useState(null);
   // console.log("options: ", options);
   return (
     <View style={styles.headerContainer}>
@@ -41,6 +43,7 @@ const CustomHeadBarSearch = (props) => {
             style={styles.headerInput}
             placeholder="ค้นหา"
             placeholderTextColor="#9AD3DA"
+            onChangeText={(search) => setSearchQry(search)}
           /></View>
           <TouchableOpacity
             onPress={() => {

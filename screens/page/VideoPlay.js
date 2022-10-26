@@ -14,30 +14,41 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 import { Video } from "expo-av";
 import * as ScreenOrientation from "expo-screen-orientation";
+import { AntDesign } from "@expo/vector-icons";
 
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
 
-const ShowDetail = (props) => {
-    const data = props.data;
-    const imgTo = { uri: data.img };
-    // console.log(imgTo);
+// const ShowDetail = (props) => {
+//     const data = props.data;
+//     const imgTo = { uri: data.img };
+//     // console.log(imgTo);
   
-    return (
-      <View style={{ flex: 1 }}>
-        <Image source={imgTo} style={styles.imageHead}></Image>
-        <View>
-          <Text>{data.name}</Text>
-          <View>
-            <TouchableOpacity>
-              <Text>Love</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <Text>{data.review}</Text>
-      </View>
-    );
-  };
+//     return (
+//         <View style={{ flex: 1 , flexDirection: 'column' }}>
+//             <View style={{ flex: 1 , flexDirection: 'row' ,paddingLeft:14,}}>
+//                 <Image source={imgTo} style={styles.imageHead}></Image>
+//                 <View style={{ flex: 1 , flexDirection: 'column' }}>
+//                     <View style={{ flex: 1 , flexDirection: 'row'}}>
+//                         <Text style={{ fontSize:20,color: 'white' }}>{data.name}</Text>
+//                         <View style={{ flex:1 ,alignItems:'flex-end',paddingRight:14}}>
+//                             <TouchableOpacity>
+//                                 <AntDesign color={'white'} size={24} name='hearto'></AntDesign>
+//                             </TouchableOpacity>
+//                         </View>
+//                     </View>
+//                 <View>
+//                     <Text style={{ fontSize:10,color: 'white' }}>Love</Text>
+//                 </View>
+//                 </View>
+                
+//             </View>
+//             <View style={{}}>
+//                     <Text style={{ fontSize:10,color: 'white' }}>{data.review}</Text>
+//             </View>
+//         </View>
+//     );
+//   };
 
 
 export const VideoPlay = (props) => {
@@ -64,6 +75,41 @@ export const VideoPlay = (props) => {
         ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
       }
     }
+
+    const ShowDetail = (props) => {
+        const data = props.data;
+        // const data = props;
+        const imgTo = { uri: data.img };
+        // console.log(imgTo);
+      
+        return (
+            <View style={{ flex: 1 , flexDirection: 'column' }}>
+                <View style={{ flex: 1 , flexDirection: 'row' ,paddingLeft:14,paddingBottom: 10,}}>
+                    <Image source={imgTo} style={styles.imageHead}></Image>
+                    <View style={{ flex: 1 , flexDirection: 'column' }}>
+                        <View style={{ flex: 1 , flexDirection: 'row'}}>
+                            <Text style={{ fontSize:20,color: 'white' }}>{data.name}</Text>
+                            <View style={{ flex:1 ,alignItems:'flex-end',paddingRight:14}}>
+                                <TouchableOpacity>
+                                    <AntDesign color={'white'} size={24} name='hearto'></AntDesign>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    <View>
+                        <Text style={{ fontSize:10,color: 'white' }}>Love</Text>
+                    </View>
+                    </View>
+                    
+                </View>
+                <View style={{flex: 1}}>
+                    <View style={{ backgroundColor: 'black',width:'auto',height:100}}>
+                        {/* หาวิธีให้ตัวอักษรขึ้นบรรทักใหม่ */}
+                        <Text style={{ fontSize:10,color: 'white',paddingTop: 8,paddingLeft:4,paddingRight:4}}>{data.review}</Text>
+                    </View>
+                </View>
+            </View>
+        );
+      };
   
     return (
       <SafeAreaView style={styles.container}>
@@ -90,6 +136,7 @@ export const VideoPlay = (props) => {
             <ScrollView style={styles.box}>
               {/* <Text>What's happening?</Text> */}
               <ShowDetail data={data} />
+              {/* <ShowDetail data={props} /> */}
             </ScrollView>
           </View>
         </LinearGradient>
@@ -112,10 +159,11 @@ const styles = StyleSheet.create({
       bottom: 0,
     },
     box: {
-      backgroundColor: "white",
-      borderWidth: 2,
+    //   backgroundColor: "white",
+    //   borderWidth: 2,
       flex: 1,
-      margin: 20,
+      paddingTop: 19,
+    //   margin: 20,
     },
     video: {
       alignSelf: "center",
@@ -123,9 +171,9 @@ const styles = StyleSheet.create({
       height: "100%",
     },
     imageHead: {
-      width: parseInt(WIDTH),
-      height: 250,
-      marginBottom: 20,
+      width: parseInt(WIDTH/3),
+      height: parseInt(HEIGHT/5),
+      marginRight: 10,
     },
   });
   

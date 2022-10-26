@@ -117,6 +117,7 @@ export const Search = (props) => {
   const SearchType = (props) => {
     const selectedType = TYPE_ARRAY.map((item) => {
       return (
+        // <View style={{ flex: 1, flexDirection: "row" }}>
         <TouchableOpacity
           onPress={() => {
             if (type != item) {
@@ -126,9 +127,11 @@ export const Search = (props) => {
             }
             console.log(type);
           }}
+          style={{ flexDirection: "row" }}
         >
           <Text style={styles.styleText}>{item}</Text>
         </TouchableOpacity>
+        // </View>
       );
     });
     return (
