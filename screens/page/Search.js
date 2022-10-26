@@ -122,6 +122,7 @@ export const Search = (props) => {
             }
             setSearch([]);
           }}
+          style={{ flexDirection: "row" }}
         >
           <Text style={styles.styleText}>ภาพยนตร์</Text>
         </TouchableOpacity>

@@ -43,6 +43,37 @@ export const Series = (props) => {
     );
   };
 
+  const ShowImage = (props) => {
+    // const navigation = props.nav;
+    const imgTo = { uri: props.img };
+    const title = props.title;
+    return (
+      <View style={{ flex: 1 }}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("PlayTabNav");
+            console.log("Go to Watch Video");
+          }}
+        >
+          <View style={{ paddingLeft: 10, paddingTop: 10 }}>
+            <Image source={imgTo} style={styles.imagetitle}></Image>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "flex-end",
+                paddingRight: 4,
+                marginBottom: 0,
+                marginTop: -30,
+              }}
+            >
+              <Text style={{ fontSize: 16, color: "white" }}>{title}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   const FlatListTester = (props) => {
     const showAllWatch = props.countryList.map((c) => {
       let watches = [];
@@ -75,7 +106,9 @@ export const Series = (props) => {
 
   const renderInsideItem = ({ item }) => <FlatListTester title={item.name} />;
   const renderIMG = ({ item }) => <ShowImages img={item} />;
-  const renderItem = ({ item }) => <ShowImages img={item.img} />;
+  const renderItem = ({ item }) => (
+    <ShowImage img={item.img} title={item.name} />
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -93,11 +126,6 @@ export const Series = (props) => {
             keyExtractor={(item) => item.id}
             horizontal={true}
           />
-          {/* {a} */}
-          {/* <FlatList
-         data={c}
-         renderItem={renderInsideItem}
-         keyExtractor={(item) => item.country}/> */}
           <FlatListTester data={DATA} countryList={COUNTRY_ARRAY} />
         </ScrollView>
       </LinearGradient>
@@ -128,7 +156,12 @@ const styles = StyleSheet.create({
   imageHead: {
     width: parseInt(WIDTH),
     height: 250,
-    marginBottom: 20,
+    marginBottom: 10,
+  },
+  imagetitle: {
+    width: parseInt(WIDTH / 2),
+    height: 250,
+    marginBottom: 10,
   },
   countryBar: {
     backgroundColor: "#FAA307",

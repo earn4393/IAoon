@@ -14,6 +14,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 import { Video } from "expo-av";
 import * as ScreenOrientation from "expo-screen-orientation";
+import { AntDesign } from "@expo/vector-icons";
 
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
@@ -22,6 +23,7 @@ export const VideoPlay = (props) => {
   const navigation = props.nav;
   const DATA = useSelector((state) => state.watch);
   const video = React.useRef(null);
+
   const data = {
     id: "1",
     name: "สิ่งเล็กๆที่เรียกว่ารัก",
@@ -32,29 +34,6 @@ export const VideoPlay = (props) => {
     category: ["comady", "drama"],
     love: ["Earn", "Donut"],
     img: "https://picjumbo.com/wp-content/uploads/the-golden-gate-bridge-sunset-1080x720.jpg",
-  };
-
-  const ShowDetail = (props) => {
-    const data = props.data;
-    const imgTo = { uri: data.img };
-    // console.log(imgTo);
-
-    return (
-      <View style={{ flex: 1 }}>
-        <Image source={imgTo} style={styles.imageHead}></Image>
-        <View>
-          <Text>{data.name}</Text>
-          <View>
-            <TouchableOpacity>
-              <Text>Love</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View>
-          <Text>{data.review}</Text>
-        </View>
-      </View>
-    );
   };
 
   const renderItem = ({ item }) => <ShowImages img={item.img} />;
@@ -89,6 +68,65 @@ export const VideoPlay = (props) => {
           keyExtractor={(item) => item.id}
           horizontal={true}
         />
+      </View>
+    );
+  };
+
+  const ShowDetail = (props) => {
+    const data = props.data;
+    // const data = props;
+    const imgTo = { uri: data.img };
+    // console.log(imgTo);
+
+    return (
+      <View style={{ flex: 1, flexDirection: "column" }}>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            paddingLeft: 14,
+            paddingBottom: 10,
+          }}
+        >
+          <Image source={imgTo} style={styles.imageHead}></Image>
+          <View style={{ flex: 1, flexDirection: "column" }}>
+            <View style={{ flex: 1, flexDirection: "row" }}>
+              <Text style={{ fontSize: 20, color: "white" }}>{data.name}</Text>
+              <View
+                style={{ flex: 1, alignItems: "flex-end", paddingRight: 14 }}
+              >
+                <TouchableOpacity>
+                  <AntDesign
+                    color={"white"}
+                    size={24}
+                    name="hearto"
+                  ></AntDesign>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View>
+              <Text style={{ fontSize: 10, color: "white" }}>Love</Text>
+            </View>
+          </View>
+        </View>
+        <View style={{ flex: 1 }}>
+          <View
+            style={{ backgroundColor: "black", width: "auto", height: 100 }}
+          >
+            {/* หาวิธีให้ตัวอักษรขึ้นบรรทักใหม่ */}
+            <Text
+              style={{
+                fontSize: 10,
+                color: "white",
+                paddingTop: 8,
+                paddingLeft: 4,
+                paddingRight: 4,
+              }}
+            >
+              {data.review}
+            </Text>
+          </View>
+        </View>
       </View>
     );
   };
@@ -153,10 +191,11 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   box: {
-    backgroundColor: "white",
-    borderWidth: 2,
+    //   backgroundColor: "white",
+    //   borderWidth: 2,
     flex: 1,
-    margin: 20,
+    paddingTop: 19,
+    //   margin: 20,
   },
   video: {
     alignSelf: "center",
@@ -164,8 +203,8 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   imageHead: {
-    width: parseInt(WIDTH),
-    height: 250,
-    marginBottom: 20,
+    width: parseInt(WIDTH / 3),
+    height: parseInt(HEIGHT / 5),
+    marginRight: 10,
   },
 });

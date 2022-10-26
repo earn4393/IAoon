@@ -43,10 +43,33 @@ export const Home = (props) => {
     );
   };
 
-  const FlalitHeader = (props) => {
+  const ShowImage = (props) => {
+    // const navigation = props.nav;
+    const imgTo = { uri: props.img };
+    const title = props.title;
     return (
-      <View style={styles.countryBar}>
-        <Text style={{ fontSize: 24 }}>{props.country}</Text>
+      <View style={{ flex: 1 }}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("PlayTabNav");
+            console.log("Go to Watch Video");
+          }}
+        >
+          <View style={{ paddingLeft: 10, paddingTop: 10 }}>
+            <Image source={imgTo} style={styles.imagetitle}></Image>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "flex-end",
+                paddingRight: 4,
+                marginBottom: 0,
+                marginTop: -30,
+              }}
+            >
+              <Text style={{ fontSize: 16, color: "white" }}>{title}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -112,7 +135,9 @@ export const Home = (props) => {
 
   const renderInsideItem = ({ item }) => <FlatListTester title={item.name} />;
   const renderIMG = ({ item }) => <ShowImages img={item} />;
-  const renderItem = ({ item }) => <ShowImages img={item.img} />;
+  const renderItem = ({ item }) => (
+    <ShowImage img={item.img} title={item.name} />
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -127,7 +152,7 @@ export const Home = (props) => {
           <FlatList
             data={IMG}
             renderItem={renderIMG}
-            // keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id}
             horizontal={true}
           />
 
@@ -161,13 +186,18 @@ const styles = StyleSheet.create({
   imageHead: {
     width: parseInt(WIDTH),
     height: 250,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   countryBar: {
     backgroundColor: "#FAA307",
     width: "100%",
     height: "auto",
     paddingLeft: 8,
+  },
+  imagetitle: {
+    width: parseInt(WIDTH / 2),
+    height: 250,
+    marginBottom: 10,
   },
   itemlist: {
     flexDirection: "row",
