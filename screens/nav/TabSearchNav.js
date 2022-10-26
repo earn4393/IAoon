@@ -22,40 +22,40 @@ const CustomHeadBarSearch = (props) => {
   return (
     <View style={styles.headerContainer}>
       <View style={{ flex: 2, flexDirection: "row" }}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.goBack();
-              console.log("Go Home");
-            }}
-          >
-            <Entypo
-              name="chevron-small-left"
-              size={32}
-              color="#006262"
-              style={{ paddingTop: "1%", paddingLeft: "2%" }}
-            />
-          </TouchableOpacity>
-          <Text style={styles.headerFont}>ไออุ่น</Text>
-        <View style={styles.headerInSearch} >
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+            console.log("Go Home");
+          }}
+        >
+          <Entypo
+            name="chevron-small-left"
+            size={32}
+            color="#006262"
+            style={{ paddingTop: "1%", paddingLeft: "2%" }}
+          />
+        </TouchableOpacity>
+        <Text style={styles.headerFont}>ไออุ่น</Text>
+        <View style={styles.headerInSearch}>
           <TextInput
             style={styles.headerInput}
             placeholder="ค้นหา"
-            placeholderTextColor="#191919"
-          /></View>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Search");
-              console.log("Go Home");
-            }}
-          >
-            <Ionicons
-              name="search"
-              size={32}
-              color="#006262"
-              style={{ paddingTop: "1%", paddingRight: "2%" }}
-            />
-          </TouchableOpacity>
-        
+            placeholderTextColor="#9AD3DA"
+          />
+        </View>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Search");
+            console.log("Go Home");
+          }}
+        >
+          <Ionicons
+            name="search"
+            size={32}
+            color="#006262"
+            style={{ paddingTop: "1%", paddingRight: "2%" }}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -67,54 +67,48 @@ const SearchScreen = ({ navigation }) => {
 };
 
 export const TabSearchNav = () => {
-    return (
-      <Tab.Navigator>
-  
-        <Tab.Screen
-          name="Search"
-          component={SearchScreen}
-          options={{
-            header: (props) => <CustomHeadBarSearch {...props} />,
-            tabBarStyle: { display: "none" },
-            // tabBarVisible: false
-          }}
-        />
-
-      </Tab.Navigator>
-  
-        
-    );
-  };
-
-
+  return (
+    <Tab.Navigator>
+      <Tab.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{
+          header: (props) => <CustomHeadBarSearch {...props} />,
+          tabBarStyle: { display: "none" },
+          // tabBarVisible: false
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
 
 const styles = StyleSheet.create({
-    headerContainer: {
-      paddingTop: Platform.OS === "ios" ? 0 : Constants.statusBarHeight + 10,
-      height: parseInt(HEIGHT * 0.1),
-      width: "100%",
-      backgroundColor: "black",
-    },
-    headerFont: {
-      fontSize: 25,
-      color: "#FAA307",
-      paddingLeft: 0,
-    },
-    headerInput: {
-      backgroundColor: "#191919",
-      paddingLeft: 8,
-      width: 200,
-      height: 40,
-      color: "white",
-      fontSize: 20,
-    },
-    headerInSearch:{
-        paddingLeft: 2,
-        flex: 1,
-        flexDirection: "row",
-        width: "auto",
-        height: 40,
-        backgroundColor: "#191919",
-        marginLeft:"2%",
-    }
-  });
+  headerContainer: {
+    paddingTop: Platform.OS === "ios" ? 0 : Constants.statusBarHeight + 10,
+    height: parseInt(HEIGHT * 0.1),
+    width: "100%",
+    backgroundColor: "black",
+  },
+  headerFont: {
+    fontSize: 25,
+    color: "#FAA307",
+    paddingLeft: 0,
+  },
+  headerInput: {
+    backgroundColor: "#191919",
+    paddingLeft: 8,
+    width: 200,
+    height: 40,
+    color: "white",
+    fontSize: 20,
+  },
+  headerInSearch: {
+    paddingLeft: 2,
+    flex: 1,
+    flexDirection: "row",
+    width: "auto",
+    height: 40,
+    backgroundColor: "#191919",
+    marginLeft: "2%",
+  },
+});
