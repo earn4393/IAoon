@@ -15,8 +15,9 @@ import { Home } from "../page/Home";
 import { Series } from "../page/Series";
 import { Movies } from "../page/Movies";
 import { Account } from "../page/Account";
-import { Search } from "../page/Search";
-import { Detail } from "../page/Detail";
+// import { Search } from "../page/Search";
+// import { Detail } from "../page/Detail";
+import { StackNav } from "./StackNav";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -47,8 +48,9 @@ const CustomHeaderBar = (props) => {
           />
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Search");
-              console.log("Hello");
+              // navigation.navigate("PlayTabNav");
+              navigation.navigate("TabSearchNav")
+              console.log("Go to search page");
             }}
           >
             <Ionicons
@@ -64,59 +66,14 @@ const CustomHeaderBar = (props) => {
   );
 };
 
-const CustomHeadBarSearch = (props) => {
+const CustomHeaderBarAccount = (props) =>{
   const { navigation, route, options, layout } = props;
-  // console.log("options: ", options);
-  return (
+  return(
     <View style={styles.headerContainer}>
-      <View style={{ flex: 2, flexDirection: "row" }}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.goBack();
-              console.log("Go Home");
-            }}
-          >
-            <Entypo
-              name="chevron-small-left"
-              size={32}
-              color="#006262"
-              style={{ paddingTop: "1%", paddingRight: 2 }}
-            />
-          </TouchableOpacity>
-          <Text style={styles.headerFont}>ไออุ่น</Text>
-        <View
-          style={{
-            paddingLeft: 8,
-            flex: 1,
-            flexDirection: "row",
-            width: "auto",
-            height: 40,
-            backgroundColor: "#191919",
-          }}
-        >
-          <TextInput
-            style={styles.headerInput}
-            placeholder="ค้นหา"
-            placeholderTextColor="#191919"
-          />
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Search");
-              console.log("Go Home");
-            }}
-          >
-            <Ionicons
-              name="search"
-              size={32}
-              color="#006262"
-              style={{ paddingTop: "1%", paddingRight: 2 }}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
+      <Text style={styles.headerFont}>ไออุ่น</Text>
     </View>
-  );
-};
+  )
+}
 
 const ShowHome = ({ navigation }) => {
   console.log("หน้า ShowHome ใน TabNav.js");
@@ -138,15 +95,10 @@ const Accounts = ({ navigation }) => {
   return <Account nav={navigation} />;
 };
 
-const Description = ({ navigation }) => {
-  console.log("หน้า Description ใน TabNav.js");
-  return <Detail nav={navigation} />;
-};
-
-const SearchScreen = ({ navigation }) => {
-  console.log("หน้า Search ใน TabNav.js");
-  return <Search nav={navigation} />;
-};
+// const DescriptionScreen = ({ navigation }) => {
+//   console.log("หน้า Description ใน TabNav.js");
+//   return <Detail nav={navigation} />;
+// };
 
 export const TabNav = () => {
   return (
@@ -201,36 +153,30 @@ export const TabNav = () => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" size={24} color={color} />
           ),
+          header: (props) => <CustomHeaderBarAccount {...props} />,
         }}
       />
 
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Search"
         component={SearchScreen}
         options={{
-          title: "ไออุ่น",
-          headerBackTitleStyle: () => {
-            <Entypo name="home" size={50} color="white" />;
-          },
-          headerStyle: {
-            backgroundColor: "black",
-          },
-          headerTintColor: "#FAA307",
-          // headerShown: true ,
           header: (props) => <CustomHeadBarSearch {...props} />,
+          tabBarStyle: { display: "none" },
+          // tabBarVisible: false
         }}
-      />
+      /> */}
 
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Description"
-        component={Description}
+        component={DescriptionScreen}
         options={{
           title: "Description",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" size={24} color={color} />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
 
       

@@ -18,66 +18,7 @@ import * as ScreenOrientation from "expo-screen-orientation";
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
 
-const ShowDetail = (props) => {
-  const data = props.data;
-  const imgTo = { uri: data.img };
-  // console.log(imgTo);
-
-  return (
-    <View style={{ flex: 1 }}>
-      <Image source={imgTo} style={styles.imageHead}></Image>
-      <View>
-        <Text>{data.name}</Text>
-        <View>
-          <TouchableOpacity>
-            <Text>Love</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View>
-        <Text>{data.review}</Text>
-      </View>
-    </View>
-  );
-};
-
-const ShowImages = (props) => {
-  const imgTo = { uri: props.img };
-  // console.log(imgTo);
-  return (
-    <View style={{ flex: 1 }}>
-      <Image source={imgTo} style={styles.imageHead}></Image>
-    </View>
-  );
-};
-
-const renderItem = ({ item }) => <ShowImages img={item.img} />;
-
-const FlatListTester = (props) => {
-  let watches = [];
-  let randomWatches = [];
-  const youAsloLike = props.data.map((item) => {
-    if (item.type == props.type) {
-      watches.push(item);
-    }
-  });
-
-  return (
-    <View style={{ paddingBottom: 10 }}>
-      <View style={styles.countryBar}>
-        <Text>You also like</Text>
-      </View>
-      <FlatList
-        data={watches}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        horizontal={true}
-      />
-    </View>
-  );
-};
-
-export const Detail = (props) => {
+export const VideoPlay = (props) => {
   const navigation = props.nav;
   const DATA = useSelector((state) => state.watch);
   const video = React.useRef(null);
@@ -91,6 +32,65 @@ export const Detail = (props) => {
     category: ["comady", "drama"],
     love: ["Earn", "Donut"],
     img: "https://picjumbo.com/wp-content/uploads/the-golden-gate-bridge-sunset-1080x720.jpg",
+  };
+
+  const ShowDetail = (props) => {
+    const data = props.data;
+    const imgTo = { uri: data.img };
+    // console.log(imgTo);
+
+    return (
+      <View style={{ flex: 1 }}>
+        <Image source={imgTo} style={styles.imageHead}></Image>
+        <View>
+          <Text>{data.name}</Text>
+          <View>
+            <TouchableOpacity>
+              <Text>Love</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View>
+          <Text>{data.review}</Text>
+        </View>
+      </View>
+    );
+  };
+
+  const renderItem = ({ item }) => <ShowImages img={item.img} />;
+
+  const ShowImages = (props) => {
+    const imgTo = { uri: props.img };
+    // console.log(imgTo);
+    return (
+      <View style={{ flex: 1 }}>
+        <Image source={imgTo} style={styles.imageHead}></Image>
+      </View>
+    );
+  };
+
+  const FlatListTester = (props) => {
+    let watches = [];
+    let randomWatches = [];
+    const youAsloLike = props.data.map((item) => {
+      if (item.type == props.type) {
+        watches.push(item);
+      }
+    });
+
+    return (
+      <View style={{ paddingBottom: 10 }}>
+        <View style={styles.countryBar}>
+          <Text>You also like</Text>
+        </View>
+        <FlatList
+          data={watches}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          horizontal={true}
+        />
+      </View>
+    );
   };
 
   function setOrientation() {
@@ -112,27 +112,27 @@ export const Detail = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-        <ScrollView style={styles.box}>
-          <View style={styles.container}>
-            <Video
-              source={{
-                uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
-              }}
-              ref={video}
-              resizeMode="cover"
-              isLooping
-              onFullscreenUpdate={setOrientation}
-              useNativeControls
-              style={{ width: Dimensions.get("window").width, height: 200 }}
-            />
-          </View>
-          <View>
-            <ShowDetail data={data} />
-          </View>
-          <View>
-            <FlatListTester data={DATA} type={data.type} />
-          </View>
-        </ScrollView>
+        <View style={styles.container}>
+          <Video
+            source={{
+              uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
+            }}
+            ref={video}
+            resizeMode="cover"
+            isLooping
+            onFullscreenUpdate={setOrientation}
+            useNativeControls
+            style={{ width: Dimensions.get("window").width, height: 200 }}
+          />
+          <ScrollView style={styles.box}>
+            <View>
+              <ShowDetail data={data} />
+            </View>
+            <View>
+              <FlatListTester data={DATA} type={data.type} />
+            </View>
+          </ScrollView>
+        </View>
       </LinearGradient>
     </SafeAreaView>
   );
