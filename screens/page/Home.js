@@ -23,13 +23,14 @@ const Item = ({ title }) => (
 );
 
 const ShowImages = (props) => {
+  const { navigation, route, options, layout } = props;
   const imgTo = { uri: props.img };
   // console.log(imgTo);
   return (
     <View style={{ flex: 1 }}>
       <TouchableOpacity
         onPress={() => {
-          // navigation.goBack();
+          navigation.navigate("PlayTabNav")
           console.log("Go to Watch Video");
       }}
       >

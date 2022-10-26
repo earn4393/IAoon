@@ -5,7 +5,9 @@ import Constants from "expo-constants";
 import { Splash } from "../Splash";
 import { TabNav } from "./TabNav";
 import { TabSearchNav } from "./TabSearchNav";
-import { Search } from "../page/Search";
+import { PlayTabNav } from "./PlayTabNav";
+// import { Search } from "../page/Search";
+
 
 const Stack = createNativeStackNavigator();
 const HEIGHT = Dimensions.get("screen").height;
@@ -24,6 +26,11 @@ const TabScreen = () => {
 const TabSearchScreen = () => {
   console.log("หน้า Search ใน StackNav.js");
   return <TabSearchNav />;
+};
+
+const PlayTabScreen = () => {
+  console.log("หน้า VideoPlay ใน StackNav.js");
+  return <PlayTabNav />;
 };
 
 export const StackNav = () => {
@@ -47,28 +54,11 @@ export const StackNav = () => {
         component={TabSearchScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="PlayTabNav"
+        component={PlayTabScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  headerContainer: {
-    paddingTop: Platform.OS === "ios" ? 0 : Constants.statusBarHeight + 10,
-    height: parseInt(HEIGHT * 0.1),
-    width: "100%",
-    backgroundColor: "black",
-  },
-  headerFont: {
-    fontSize: 25,
-    color: "#FAA307",
-    paddingLeft: 8,
-  },
-  headerInput: {
-    backgroundColor: "#191919",
-    paddingLeft: 8,
-    width: 200,
-    height: 40,
-    color: "white",
-    fontSize: 20,
-  },
-});

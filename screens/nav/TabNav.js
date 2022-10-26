@@ -16,7 +16,7 @@ import { Series } from "../page/Series";
 import { Movies } from "../page/Movies";
 import { Account } from "../page/Account";
 // import { Search } from "../page/Search";
-import { Detail } from "../page/Detail";
+// import { Detail } from "../page/Detail";
 import { StackNav } from "./StackNav";
 
 const Tab = createBottomTabNavigator();
@@ -48,9 +48,9 @@ const CustomHeaderBar = (props) => {
           />
           <TouchableOpacity
             onPress={() => {
-              // navigation.navigate("Search");
+              // navigation.navigate("PlayTabNav");
               navigation.navigate("TabSearchNav")
-              console.log("Hello");
+              console.log("Go to search page");
             }}
           >
             <Ionicons
@@ -65,6 +65,15 @@ const CustomHeaderBar = (props) => {
     </View>
   );
 };
+
+const CustomHeaderBarAccount = (props) =>{
+  const { navigation, route, options, layout } = props;
+  return(
+    <View style={styles.headerContainer}>
+      <Text style={styles.headerFont}>ไออุ่น</Text>
+    </View>
+  )
+}
 
 const ShowHome = ({ navigation }) => {
   console.log("หน้า ShowHome ใน TabNav.js");
@@ -86,10 +95,10 @@ const Accounts = ({ navigation }) => {
   return <Account nav={navigation} />;
 };
 
-const Description = ({ navigation }) => {
-  console.log("หน้า Description ใน TabNav.js");
-  return <Detail nav={navigation} />;
-};
+// const DescriptionScreen = ({ navigation }) => {
+//   console.log("หน้า Description ใน TabNav.js");
+//   return <Detail nav={navigation} />;
+// };
 
 export const TabNav = () => {
   return (
@@ -144,6 +153,7 @@ export const TabNav = () => {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" size={24} color={color} />
           ),
+          header: (props) => <CustomHeaderBarAccount {...props} />,
         }}
       />
 
@@ -157,16 +167,16 @@ export const TabNav = () => {
         }}
       /> */}
 
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Description"
-        component={Description}
+        component={DescriptionScreen}
         options={{
           title: "Description",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" size={24} color={color} />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
 
       
