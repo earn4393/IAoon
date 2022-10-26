@@ -14,8 +14,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 import { Video } from "expo-av";
 import * as ScreenOrientation from "expo-screen-orientation";
-const HEIGHT = Dimensions.get("screen").height;
-const WIDTH = Dimensions.get("screen").width;
 
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
