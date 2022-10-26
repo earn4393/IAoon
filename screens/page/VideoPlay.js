@@ -34,7 +34,7 @@ const ShowDetail = (props) => {
             </TouchableOpacity>
           </View>
         </View>
-        <View>{data.review}</View>
+        <Text>{data.review}</Text>
       </View>
     );
   };
@@ -88,8 +88,8 @@ export const VideoPlay = (props) => {
               style={{ width: Dimensions.get("window").width, height: 200 }}
             />
             <ScrollView style={styles.box}>
-              <Text>What's happening?</Text>
-              {/* <ShowDetail data={data} /> */}
+              {/* <Text>What's happening?</Text> */}
+              <ShowDetail data={data} />
             </ScrollView>
           </View>
         </LinearGradient>

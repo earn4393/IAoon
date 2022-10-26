@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import React, { useState } from "react";
 import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Constants from "expo-constants";
@@ -26,6 +27,7 @@ const WIDTH = Dimensions.get("screen").width;
 
 const CustomHeaderBar = (props) => {
   const { navigation, route, options, layout } = props;
+  const [searchQry, setSearchQry] = useState(null);
   // console.log("options: ", options);
   return (
     <View style={styles.headerContainer}>
@@ -35,17 +37,17 @@ const CustomHeaderBar = (props) => {
           style={{
             paddingLeft: 8,
             flex: 1,
-            flexDirection: "row",
+            flexDirection: "row-reverse",
             width: "auto",
             height: 40,
-            backgroundColor: "#191919",
+            // backgroundColor: "#191919",
           }}
         >
-          <TextInput
+          {/* <TextInput
             style={styles.headerInput}
             placeholder="ค้นหา"
-            placeholderTextColor="#191919"
-          />
+            placeholderTextColor="#9AD3DA"
+          /> */}
           <TouchableOpacity
             onPress={() => {
               // navigation.navigate("PlayTabNav");
@@ -202,6 +204,6 @@ const styles = StyleSheet.create({
     width: "85%",
     height: 40,
     color: "white",
-    fontSize: 20,
+    fontSize: 16,
   },
 });

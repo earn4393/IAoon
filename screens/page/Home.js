@@ -147,7 +147,7 @@ export const Home = (props) => {
             console.log("Go to Watch Video");
         }}
         >
-        <Image source={imgTo} style={styles.imageHead}></Image>
+          <Image source={imgTo} style={styles.imageHead}></Image>
         </TouchableOpacity>
       </View>
     );
