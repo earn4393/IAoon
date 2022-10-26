@@ -4,23 +4,16 @@ import {
   View,
   Text,
   FlatList,
-  ScrollView,
   Image,
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
-
-const Item = ({ title }) => (
-  <View>
-    <Text style={styles.box}>{title}</Text>
-  </View>
-);
+import { Searchbar } from "react-native-paper";
 
 const ShowImages = (props) => {
   const imgTo = { uri: props.img };
-  // console.log(imgTo);
   return (
     <View style={{ flex: 1 }}>
       <Image source={imgTo} style={styles.imageHead}></Image>
@@ -38,41 +31,38 @@ export const Search = (props) => {
   const TYPE_ARRAY = FIELD_OBJ[0].type;
   const CATEGORY_ARRAY = FIELD_OBJ[0].category;
 
+  const [searchQry, setSearchQry] = useState(null);
   const [conutry, setCountry] = useState("");
   const [type, setType] = useState("");
   const [category, setCategory] = useState("");
-  const [pushCountry, setPushCountry] = useState(1);
-  const [pushType, setPushType] = useState(1);
-  const [pushCategory, setPushCategory] = useState(1);
-  const [Search, setSearch] = useState([{ data: [] }]);
+  const [search, setSearch] = useState([]);
 
-  let data = [];
   console.log(`country: ${conutry} type: ${type} category: ${category}`);
   DATA.map((item) => {
     const index = item.category.indexOf(category);
     if (conutry !== "" && type === "" && category === "") {
       if (item.conutry == conutry) {
-        data.push(item);
+        search.push(item);
       }
     } else if (conutry === "" && type !== "" && category === "") {
       if (item.type === type) {
-        data.push(item);
+        search.push(item);
       }
     } else if (conutry === "" && type === "" && category !== "") {
       if (index !== -1) {
-        data.push(item);
+        search.push(item);
       }
     } else if (conutry !== "" && type !== "" && category === "") {
       if (item.conutry === conutry && item.type === type) {
-        data.push(item);
+        search.push(item);
       }
     } else if (conutry !== "" && type === "" && category !== "") {
       if (item.conutry === conutry && index !== -1) {
-        data.push(item);
+        search.push(item);
       }
     } else if (conutry === "" && type !== "" && category !== "") {
       if (index !== -1 && item.type === type) {
-        data.push(item);
+        search.push(item);
       }
     } else if (
       conutry !== "" &&
@@ -81,12 +71,12 @@ export const Search = (props) => {
       type !== ""
     ) {
       if (item.conutry === conutry && index !== -1 && item.type === type) {
-        data.push(item);
+        search.push(item);
       }
     }
   });
 
-  const SearchCountry = (props) => {
+  const SearchCountry = () => {
     const selectedCountry = COUNTRY_ARRAY.map((item) => {
       return (
         <View>
@@ -115,7 +105,7 @@ export const Search = (props) => {
     );
   };
 
-  const SearchType = (props) => {
+  const SearchType = () => {
     const selectedType = TYPE_ARRAY.map((item) => {
       return (
         <TouchableOpacity
@@ -140,7 +130,7 @@ export const Search = (props) => {
     );
   };
 
-  const SearchCategory = (props) => {
+  const SearchCategory = () => {
     const selectedCategory = CATEGORY_ARRAY.map((item) => {
       return (
         <TouchableOpacity
@@ -165,6 +155,15 @@ export const Search = (props) => {
     );
   };
 
+  const doSearch = () => {
+    if (searchQry !== null || searchQry !== "") {
+      let index = DATA.findIndex((item) => item.name.includes(searchQry));
+      if (index != -1) {
+        setSearch([DATA[index]]);
+      }
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient
@@ -174,15 +173,22 @@ export const Search = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
+        <View>
+          <Searchbar
+            placeholder={"search from name"}
+            value={searchQry}
+            onChangeText={setSearchQry}
+            onSubmitEditing={doSearch}
+          />
+        </View>
         <SearchCountry />
         <SearchType />
         <SearchCategory />
 
         <FlatList
-          data={data}
+          data={search}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
-          horizontal={true}
         />
       </LinearGradient>
     </SafeAreaView>

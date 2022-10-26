@@ -6,60 +6,56 @@ import {
   Dimensions,
   TextInput,
   TouchableOpacity,
+  Searchbar,
 } from "react-native";
 import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Constants from "expo-constants";
 import { Search } from "../page/Search";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
 
-const CustomHeadBarSearch = (props) => {
-  const { navigation, route, options, layout } = props;
-  // console.log("options: ", options);
-  return (
-    <View style={styles.headerContainer}>
-      <View style={{ flex: 2, flexDirection: "row" }}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.goBack();
-            console.log("Go Home");
-          }}
-        >
-          <Entypo
-            name="chevron-small-left"
-            size={32}
-            color="#006262"
-            style={{ paddingTop: "1%", paddingLeft: "2%" }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerFont}>ไออุ่น</Text>
-        <View style={styles.headerInSearch}>
-          <TextInput
-            style={styles.headerInput}
-            placeholder="ค้นหา"
-            placeholderTextColor="#191919"
-          />
-        </View>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("Search");
-            console.log("Go Home");
-          }}
-        >
-          <Ionicons
-            name="search"
-            size={32}
-            color="#006262"
-            style={{ paddingTop: "1%", paddingRight: "2%" }}
-          />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-};
+// const CustomHeadBarSearch = (props) => {
+//   const { navigation, route, options, layout } = props;
+//   const DATA = useSelector((state) => state.watch);
+//   return (
+//     <View style={styles.headerContainer}>
+//       <View style={{ flex: 2, flexDirection: "row" }}>
+//         <TouchableOpacity
+//           onPress={() => {
+//             navigation.goBack();
+//             console.log("Go Home");
+//           }}
+//         >
+//           <Entypo
+//             name="chevron-small-left"
+//             size={32}
+//             color="#006262"
+//             style={{ paddingTop: "1%", paddingLeft: "2%" }}
+//           />
+//         </TouchableOpacity>
+//         <Text style={styles.headerFont}>ไออุ่น</Text>
+//         <TouchableOpacity
+//           onPress={() => {
+//             navigation.navigate("Search");
+//             console.log("Go Home");
+//           }}
+//         >
+//           <Ionicons
+//             name="search"
+//             size={32}
+//             color="#006262"
+//             style={{ paddingTop: "1%", paddingRight: "2%" }}
+//           />
+//         </TouchableOpacity>
+//       </View>
+//     </View>
+//   );
+// };
 
 const SearchScreen = ({ navigation }) => {
   console.log("หน้า Search ใน TabNav.js");
@@ -73,9 +69,8 @@ export const TabSearchNav = () => {
         name="Search"
         component={SearchScreen}
         options={{
-          header: (props) => <CustomHeadBarSearch {...props} />,
           tabBarStyle: { display: "none" },
-          // tabBarVisible: false
+          headerShown: false,
         }}
       />
     </Tab.Navigator>
