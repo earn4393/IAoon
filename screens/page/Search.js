@@ -89,7 +89,7 @@ export const Search = (props) => {
   const SearchCountry = (props) => {
     const selectedCountry = COUNTRY_ARRAY.map((item) => {
       return (
-        <View >
+        <View>
           <TouchableOpacity
             onPress={() => {
               if (conutry != item) {
@@ -101,7 +101,8 @@ export const Search = (props) => {
             }}
           >
             <View>
-            <Text style={styles.styleText}>{item}</Text></View>
+              <Text style={styles.styleText}>{item}</Text>
+            </View>
           </TouchableOpacity>
         </View>
       );
@@ -181,6 +182,7 @@ export const Search = (props) => {
           data={data}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
+          horizontal={true}
         />
       </LinearGradient>
     </SafeAreaView>

@@ -40,7 +40,7 @@ const CustomHeadBarSearch = (props) => {
           <TextInput
             style={styles.headerInput}
             placeholder="ค้นหา"
-            placeholderTextColor="#9AD3DA"
+            placeholderTextColor="#191919"
           />
         </View>
         <TouchableOpacity
