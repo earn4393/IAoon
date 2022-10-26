@@ -7,75 +7,14 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import React, { useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 
-// const Item = ({ title }) => (
-//   <View>
-//     <Text style={styles.box}>{title}</Text>
-//   </View>
-// );
-
-// const ShowImages = (props) => {
-//   const imgTo = { uri: props.img };
-//   // console.log(imgTo);
-//   return (
-//     <View style={{ flex: 1 }}>
-//       <TouchableOpacity
-//             onPress={() => {
-//               navigation.navigate("PlayTabNav")
-//               console.log("Go to Watch Video");
-//           }}
-//           >
-//         <Image source={imgTo} style={styles.imageHead}></Image>
-//       </TouchableOpacity>
-//     </View>
-//   );
-// };
-
-// const FlalitHeader = (props) => {
-//   return (
-//     <View style={styles.countryBar}>
-//       <Text style={{ fontSize: 24 }}>{props.conutry}</Text>
-//     </View>
-//   );
-// };
-
-// const FlatListTester = (props) => {
-//   const showAllWatch = props.countryList.map((c) => {
-//     let watches = [];
-//     let countries = [];
-//     props.data.map((item) => {
-//       if (item.conutry == c && item.type == "series") {
-//         watches.push(item);
-//         countries.push(item.conutry);
-//       }
-//     });
-
-//     if (watches.length > 0) {
-//       return (
-//         <View style={{ paddingBottom: 10 }}>
-//           <View style={styles.countryBar}>
-//             <Text>{countries[0]}</Text>
-//           </View>
-//           <FlatList
-//             data={watches}
-//             renderItem={renderItem}
-//             keyExtractor={(item) => item.id}
-//             horizontal={true}
-//           />
-//         </View>
-//       );
-//     }
-//   });
-//   return <View>{showAllWatch}</View>;
-// };
-
-// const renderInsideItem = ({ item }) => <FlatListTester title={item.name} />;
-// const renderIMG = ({ item }) => <ShowImages img={item} />;
-// const renderItem = ({ item }) => <ShowImages img={item.img} />;
+const HEIGHT = Dimensions.get("screen").height;
+const WIDTH = Dimensions.get("screen").width;
 
 export const Series = (props) => {
   const navigation = props.nav;
@@ -87,48 +26,34 @@ export const Series = (props) => {
     return item.img;
   });
 
-  const Item = ({ title }) => (
-    <View>
-      <Text style={styles.box}>{title}</Text>
-    </View>
-  );
-  
   const ShowImages = (props) => {
     const imgTo = { uri: props.img };
     // console.log(imgTo);
     return (
       <View style={{ flex: 1 }}>
         <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("PlayTabNav")
-                console.log("Go to Watch Video");
-            }}
-            >
+          onPress={() => {
+            navigation.navigate("PlayTabNav");
+            console.log("Go to Watch Video");
+          }}
+        >
           <Image source={imgTo} style={styles.imageHead}></Image>
         </TouchableOpacity>
       </View>
     );
   };
-  
-  const FlalitHeader = (props) => {
-    return (
-      <View style={styles.countryBar}>
-        <Text style={{ fontSize: 24 }}>{props.conutry}</Text>
-      </View>
-    );
-  };
-  
+
   const FlatListTester = (props) => {
     const showAllWatch = props.countryList.map((c) => {
       let watches = [];
       let countries = [];
       props.data.map((item) => {
-        if (item.conutry == c && item.type == "series") {
+        if (item.country == c && item.type == "ซีรี่ย์") {
           watches.push(item);
-          countries.push(item.conutry);
+          countries.push(item.country);
         }
       });
-  
+
       if (watches.length > 0) {
         return (
           <View style={{ paddingBottom: 10 }}>
@@ -147,7 +72,7 @@ export const Series = (props) => {
     });
     return <View>{showAllWatch}</View>;
   };
-  
+
   const renderInsideItem = ({ item }) => <FlatListTester title={item.name} />;
   const renderIMG = ({ item }) => <ShowImages img={item} />;
   const renderItem = ({ item }) => <ShowImages img={item.img} />;
@@ -196,18 +121,30 @@ const styles = StyleSheet.create({
   box: {
     flex: 2,
     margin: 0,
-    color: "white",
+    color: "black",
     paddingTop: 10,
     paddingBottom: 10,
   },
   imageHead: {
-    width: 500,
+    width: parseInt(WIDTH),
     height: 250,
     marginBottom: 20,
   },
   countryBar: {
     backgroundColor: "#FAA307",
     width: "100%",
-    height: 40,
+    height: "auto",
+    paddingLeft: 8,
+  },
+  itemlist: {
+    flexDirection: "row",
+    width: 300,
+    height: 50,
+    backgroundColor: "white",
+    borderColor: "black",
+    borderWidth: 1,
+    marginTop: 10,
+    marginRight: 10,
+    marginLeft: 10,
   },
 });

@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = [
   {
-    country: ["Chaina", "Paris", "India", "Japan"],
-    type: ["movies", "series"],
+    country: ["อเมริกา", "ไทย", "เกาหลี"],
+    type: ["ภาพยนตร์", "ซีรี่ย์"],
     category: ["fantacy", "romantic", "comady", "drama"],
   },
 ];

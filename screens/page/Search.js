@@ -6,11 +6,15 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 import { Searchbar } from "react-native-paper";
+
+const HEIGHT = Dimensions.get("screen").height;
+const WIDTH = Dimensions.get("screen").width;
 
 const ShowImages = (props) => {
   const imgTo = { uri: props.img };
@@ -32,45 +36,45 @@ export const Search = (props) => {
   const CATEGORY_ARRAY = FIELD_OBJ[0].category;
 
   const [searchQry, setSearchQry] = useState(null);
-  const [conutry, setCountry] = useState("");
+  const [country, setCountry] = useState("");
   const [type, setType] = useState("");
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState([]);
 
-  console.log(`country: ${conutry} type: ${type} category: ${category}`);
+  console.log(`country: ${country} type: ${type} category: ${category}`);
   DATA.map((item) => {
     const index = item.category.indexOf(category);
-    if (conutry !== "" && type === "" && category === "") {
-      if (item.conutry == conutry) {
+    if (country !== "" && type === "" && category === "") {
+      if (item.country == country) {
         search.push(item);
       }
-    } else if (conutry === "" && type !== "" && category === "") {
+    } else if (country === "" && type !== "" && category === "") {
       if (item.type === type) {
         search.push(item);
       }
-    } else if (conutry === "" && type === "" && category !== "") {
+    } else if (country === "" && type === "" && category !== "") {
       if (index !== -1) {
         search.push(item);
       }
-    } else if (conutry !== "" && type !== "" && category === "") {
-      if (item.conutry === conutry && item.type === type) {
+    } else if (country !== "" && type !== "" && category === "") {
+      if (item.country === country && item.type === type) {
         search.push(item);
       }
-    } else if (conutry !== "" && type === "" && category !== "") {
-      if (item.conutry === conutry && index !== -1) {
+    } else if (country !== "" && type === "" && category !== "") {
+      if (item.country === country && index !== -1) {
         search.push(item);
       }
-    } else if (conutry === "" && type !== "" && category !== "") {
+    } else if (country === "" && type !== "" && category !== "") {
       if (index !== -1 && item.type === type) {
         search.push(item);
       }
     } else if (
-      conutry !== "" &&
+      country !== "" &&
       type !== "" &&
       category !== "" &&
       type !== ""
     ) {
-      if (item.conutry === conutry && index !== -1 && item.type === type) {
+      if (item.country === country && index !== -1 && item.type === type) {
         search.push(item);
       }
     }
@@ -82,12 +86,12 @@ export const Search = (props) => {
         <View>
           <TouchableOpacity
             onPress={() => {
-              if (conutry != item) {
+              if (country != item) {
                 setCountry(item);
               } else {
                 setCountry("");
               }
-              console.log(conutry);
+              setSearch([]);
             }}
           >
             <View>
@@ -106,26 +110,33 @@ export const Search = (props) => {
   };
 
   const SearchType = () => {
-    const selectedType = TYPE_ARRAY.map((item) => {
-      return (
-        <TouchableOpacity
-          onPress={() => {
-            if (type != item) {
-              setType(item);
-            } else {
-              setType("");
-            }
-            console.log(type);
-          }}
-        >
-          <Text style={styles.styleText}>{item}</Text>
-        </TouchableOpacity>
-      );
-    });
     return (
       <View>
         <Text style={styles.styleText}>ประเภท: </Text>
-        {selectedType}
+        <TouchableOpacity
+          onPress={() => {
+            if (type != "ภาพยนตร์") {
+              setType("ภาพยนตร์");
+            } else {
+              setType("");
+            }
+            setSearch([]);
+          }}
+        >
+          <Text style={styles.styleText}>ภาพยนตร์</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            if (type != "ซีรี่ย์") {
+              setType("ซีรี่ย์");
+            } else {
+              setType("");
+            }
+            setSearch([]);
+          }}
+        >
+          <Text style={styles.styleText}>ซีรี่ย์</Text>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -140,7 +151,7 @@ export const Search = (props) => {
             } else {
               setCategory("");
             }
-            console.log(category);
+            setSearch([]);
           }}
         >
           <Text style={styles.styleText}>{item}</Text>
@@ -219,7 +230,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   imageHead: {
-    width: 500,
+    width: parseInt(WIDTH),
     height: 250,
     marginBottom: 20,
   },

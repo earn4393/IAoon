@@ -2,12 +2,34 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet, View, Text } from "react-native";
 import React, { useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
+import * as WatchModel from "../firebase/watchModel";
+import { useDispatch } from "react-redux";
+import { addWatch } from "../redux/slice/watchSlice";
 
 export const Splash = (props) => {
   const navigation = props.nav;
+  const dispatch = useDispatch();
+
+  const loadWatchToStore = (doc) => {
+    dispatch(
+      addWatch({
+        id: doc.id,
+        name: doc.data().name,
+        review: doc.data().review,
+        type: doc.data().type,
+        country: doc.data().country,
+        category: doc.data().category,
+        love: doc.data().love,
+        img: doc.data().img,
+        trailer: doc.data().trailer,
+      })
+    );
+  };
 
   useEffect(() => {
     setTimeout(() => {
+      console.log("111111111111111111111111111111111111111");
+      WatchModel.getAllWatches(loadWatchToStore);
       navigation.navigate("TabNav");
     }, 1000);
   }, []);
