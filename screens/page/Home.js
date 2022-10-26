@@ -16,108 +16,108 @@ import { useSelector } from "react-redux";
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
 
-const Item = ({ title }) => (
-  <View style={styles.itemlist}>
-    <Text style={styles.box}>{title}</Text>
-  </View>
-);
+// const Item = ({ title }) => (
+//   <View style={styles.itemlist}>
+//     <Text style={styles.box}>{title}</Text>
+//   </View>
+// );
 
-const ShowImages = (props) => {
-  const { navigation, route, options, layout } = props;
-  const imgTo = { uri: props.img };
-  // console.log(imgTo);
-  return (
-    <View style={{ flex: 1 }}>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("PlayTabNav")
-          console.log("Go to Watch Video");
-      }}
-      >
-      <Image source={imgTo} style={styles.imageHead}></Image>
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-// const ShowMeYourDiv = (props) => {
-//   return(
-//     <View>
-//       <Text>Test</Text>
+// const ShowImages = (props) => {
+//   const navigation = props.nav;
+//   const imgTo = { uri: props.img };
+//   // console.log(imgTo);
+//   return (
+//     <View style={{ flex: 1 }}>
+//       <TouchableOpacity
+//         onPress={() => {
+//           navigation.navigate("PlayTabNav")
+//           console.log("Go to Watch Video");
+//       }}
+//       >
+//       <Image source={imgTo} style={styles.imageHead}></Image>
+//       </TouchableOpacity>
 //     </View>
-//   )
-// }
+//   );
+// };
 
-const FlalitHeader = (props) => {
-  return (
-    <View style={styles.countryBar}>
-      <Text style={{ fontSize: 24 }}>{props.conutry}</Text>
-    </View>
-  );
-};
+// // const ShowMeYourDiv = (props) => {
+// //   return(
+// //     <View>
+// //       <Text>Test</Text>
+// //     </View>
+// //   )
+// // }
 
-const FlatListTester = (props) => {
-  const showAllWatch = props.countryList.map((c) => {
-    let watches = [];
-    let countries = [];
-    props.data.map((item) => {
-      if (item.conutry == c) {
-        watches.push(item);
-        countries.push(item.conutry);
-      }
-    });
+// const FlalitHeader = (props) => {
+//   return (
+//     <View style={styles.countryBar}>
+//       <Text style={{ fontSize: 24 }}>{props.conutry}</Text>
+//     </View>
+//   );
+// };
 
-    if (watches.length > 0) {
-      return (
-        <View style={{ paddingBottom: 10 }}>
-          <View style={styles.countryBar}>
-            <Text>{countries[0]}</Text>
-          </View>
-          <FlatList
-            data={watches}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            horizontal={true}
-          />
-        </View>
-      );
-    }
-  });
-  return <View>{showAllWatch}</View>;
-};
+// const FlatListTester = (props) => {
+//   const showAllWatch = props.countryList.map((c) => {
+//     let watches = [];
+//     let countries = [];
+//     props.data.map((item) => {
+//       if (item.conutry == c) {
+//         watches.push(item);
+//         countries.push(item.conutry);
+//       }
+//     });
 
-const FlatlistFavorite = (props) => {
-  if (props.user.length > 0) {
-    const user = props.user[0].username;
-    const watches = [];
+//     if (watches.length > 0) {
+//       return (
+//         <View style={{ paddingBottom: 10 }}>
+//           <View style={styles.countryBar}>
+//             <Text>{countries[0]}</Text>
+//           </View>
+//           <FlatList
+//             data={watches}
+//             renderItem={renderItem}
+//             keyExtractor={(item) => item.id}
+//             horizontal={true}
+//           />
+//         </View>
+//       );
+//     }
+//   });
+//   return <View>{showAllWatch}</View>;
+// };
 
-    const showFavorite = props.data.map((item) => {
-      const index = item.love.indexOf(user);
-      if (index != -1) {
-        watches.push(item);
-      }
-    });
-    if (watches.length > 0) {
-      return (
-        <View style={{ paddingBottom: 10 }}>
-          <View style={styles.countryBar}>
-            <Text style={styles.T}>Favorite</Text>
-          </View>
-          <FlatList
-            data={watches}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            horizontal={true}
-          />
-        </View>
-      );
-    }
-  }
-};
+// const FlatlistFavorite = (props) => {
+//   if (props.user.length > 0) {
+//     const user = props.user[0].username;
+//     const watches = [];
 
-const renderInsideItem = ({ item }) => <FlatListTester title={item.name} />;
-const renderIMG = ({ item }) => <ShowImages img={item} />;
-const renderItem = ({ item }) => <ShowImages img={item.img} />;
+//     const showFavorite = props.data.map((item) => {
+//       const index = item.love.indexOf(user);
+//       if (index != -1) {
+//         watches.push(item);
+//       }
+//     });
+//     if (watches.length > 0) {
+//       return (
+//         <View style={{ paddingBottom: 10 }}>
+//           <View style={styles.countryBar}>
+//             <Text style={styles.T}>Favorite</Text>
+//           </View>
+//           <FlatList
+//             data={watches}
+//             renderItem={renderItem}
+//             keyExtractor={(item) => item.id}
+//             horizontal={true}
+//           />
+//         </View>
+//       );
+//     }
+//   }
+// };
+
+// const renderInsideItem = ({ item }) => <FlatListTester title={item.name} />;
+// const renderIMG = ({ item }) => <ShowImages img={item} />;
+// const renderItem = ({ item }) => <ShowImages img={item.img} />;
 
 export const Home = (props) => {
   const navigation = props.nav;
@@ -129,6 +129,108 @@ export const Home = (props) => {
   const IMG = DATA.map((item) => {
     return item.img;
   });
+  const Item = ({ title }) => (
+    <View style={styles.itemlist}>
+      <Text style={styles.box}>{title}</Text>
+    </View>
+  );
+  
+  const ShowImages = (props) => {
+    // const navigation = props.nav;
+    const imgTo = { uri: props.img };
+    // console.log(imgTo);
+    return (
+      <View style={{ flex: 1 }}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("PlayTabNav")
+            console.log("Go to Watch Video");
+        }}
+        >
+        <Image source={imgTo} style={styles.imageHead}></Image>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+  
+  // const ShowMeYourDiv = (props) => {
+  //   return(
+  //     <View>
+  //       <Text>Test</Text>
+  //     </View>
+  //   )
+  // }
+  
+  const FlalitHeader = (props) => {
+    return (
+      <View style={styles.countryBar}>
+        <Text style={{ fontSize: 24 }}>{props.conutry}</Text>
+      </View>
+    );
+  };
+  
+  const FlatListTester = (props) => {
+    const showAllWatch = props.countryList.map((c) => {
+      let watches = [];
+      let countries = [];
+      props.data.map((item) => {
+        if (item.conutry == c) {
+          watches.push(item);
+          countries.push(item.conutry);
+        }
+      });
+  
+      if (watches.length > 0) {
+        return (
+          <View style={{ paddingBottom: 10 }}>
+            <View style={styles.countryBar}>
+              <Text>{countries[0]}</Text>
+            </View>
+            <FlatList
+              data={watches}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+              horizontal={true}
+            />
+          </View>
+        );
+      }
+    });
+    return <View>{showAllWatch}</View>;
+  };
+  
+  const FlatlistFavorite = (props) => {
+    if (props.user.length > 0) {
+      const user = props.user[0].username;
+      const watches = [];
+  
+      const showFavorite = props.data.map((item) => {
+        const index = item.love.indexOf(user);
+        if (index != -1) {
+          watches.push(item);
+        }
+      });
+      if (watches.length > 0) {
+        return (
+          <View style={{ paddingBottom: 10 }}>
+            <View style={styles.countryBar}>
+              <Text style={styles.T}>Favorite</Text>
+            </View>
+            <FlatList
+              data={watches}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+              horizontal={true}
+            />
+          </View>
+        );
+      }
+    }
+  };
+  
+  const renderInsideItem = ({ item }) => <FlatListTester title={item.name} />;
+  const renderIMG = ({ item }) => <ShowImages img={item} />;
+  const renderItem = ({ item }) => <ShowImages img={item.img} />;
 
   // const a = c.map((c) => {
   //   let b = [];
