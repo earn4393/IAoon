@@ -9,7 +9,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 import { Video } from "expo-av";
@@ -23,6 +23,7 @@ export const VideoPlay = (props) => {
   const navigation = props.nav;
   const DATA = useSelector((state) => state.watch);
   const video = React.useRef(null);
+  console.log('มันคืออะไรรรร: ',navigation)
 
   const data = {
     id: "1",
@@ -77,6 +78,13 @@ export const VideoPlay = (props) => {
     // const data = props;
     const imgTo = { uri: data.img };
     // console.log(imgTo);
+    const [like, setLike] = useState(false);
+
+    const addFavorite = (like) => {
+      // console.log("CARD + USER ON CLICK", card, user);
+      // props.updateUser(card, user);
+      setLike(!like);
+    };
 
     return (
       <View style={{ flex: 1, flexDirection: "column" }}>
@@ -95,12 +103,13 @@ export const VideoPlay = (props) => {
               <View
                 style={{ flex: 1, alignItems: "flex-end", paddingRight: 14 }}
               >
-                <TouchableOpacity>
-                  <AntDesign
-                    color={"white"}
-                    size={24}
-                    name="hearto"
-                  ></AntDesign>
+                <TouchableOpacity 
+                  onPress={() => {
+                    addFavorite(like);
+                  }}
+                >
+                {like ? ( <AntDesign color={"red"} size={24} name="heart" ></AntDesign>) :
+                        (<AntDesign color={"white"} size={24} name="hearto" ></AntDesign>)}
                 </TouchableOpacity>
               </View>
             </View>

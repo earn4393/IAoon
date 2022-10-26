@@ -12,15 +12,18 @@ import {
 import React, { useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
+import { event } from "react-native-reanimated";
 
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
+
 
 export const Movies = (props) => {
   const navigation = props.nav;
   const DATA = useSelector((state) => state.watch);
   const COUNTRY_OBJ = useSelector((state) => state.field);
   const COUNTRY_ARRAY = COUNTRY_OBJ[0].country;
+  const scrollRef = React.createRef();
 
   const IMG = DATA.map((item) => {
     return item.img;
@@ -118,7 +121,8 @@ export const Movies = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-        <ScrollView style={styles.box}>
+        <ScrollView style={styles.box}
+        >
           <FlatList
             data={IMG}
             renderItem={renderIMG}
