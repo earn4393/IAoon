@@ -28,6 +28,11 @@ export const Home = (props) => {
   });
 
   const ShowImages = (props) => {
+    // console.log(props)
+    // const getAllWatches = []
+    // for (var i=0; i < 5; i++){
+    //   getAllWatches.push()
+    // }
     const imgTo = { uri: props.img };
     return (
       <View style={{ flex: 1 }}>
@@ -139,6 +144,8 @@ export const Home = (props) => {
     <ShowImage img={item.img} title={item.name} />
   );
 
+  
+
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient
@@ -148,7 +155,8 @@ export const Home = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-        <ScrollView style={styles.box}>
+        <ScrollView style={styles.box}
+        >
           <FlatList
             data={IMG}
             renderItem={renderIMG}
