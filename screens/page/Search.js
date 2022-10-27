@@ -9,6 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 import React, { useState } from "react";
+import { Entypo,Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 import { Searchbar } from "react-native-paper";
@@ -185,14 +186,52 @@ export const Search = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-        <View>
-          <Searchbar
-            placeholder={"search from name"}
-            value={searchQry}
-            onChangeText={setSearchQry}
-            onSubmitEditing={doSearch}
-          />
+
+        <View style={{flexDirection: "row",width: parseInt(WIDTH),height:parseInt(HEIGHT*0.1),backgroundColor:'black',}}>
+          <View style={{flex: 4,flexDirection: "row",paddingTop: parseInt(HEIGHT*0.05),}}>
+            <View style={{flex: 1,flexDirection: "row" }}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.goBack();
+                  console.log("Go Home");
+                }}
+              >
+                <Entypo
+                  name="chevron-small-left"
+                  size={32}
+                  color="#006262"
+                  style={{ paddingTop: "2%", paddingLeft: "2%" }}
+                />
+              </TouchableOpacity>
+              <Text style={{fontSize: 25,color: "#FAA307",paddingLeft: 0,}}>
+                ไออุ่น
+              </Text>
+            </View>
+
+            <View style={{flex: 3,flexDirection: "row",}}>
+              <View style={{marginBottom:4,}}>
+                <Searchbar
+                  placeholder={"search from name"}
+                  placeholderTextColor='black'
+                  value={searchQry}
+                  onChangeText={setSearchQry}
+                  onSubmitEditing={doSearch}
+                  style={styles.searchbarStyle}
+                  inputStyle={{color:'black'}}
+                />
+              </View>
+              {/* <View style={{flex: 1,flexDirection: "row-reverse",paddingTop: '2%'}}>
+                <Ionicons
+                  name="search"
+                  size={32}
+                  color="#006262"
+                  style={{ width:36, height:36, }}
+                />
+              </View> */}
+            </View>
+          </View>
         </View>
+
         <SearchCountry />
         <SearchType />
         <SearchCategory />
@@ -209,7 +248,8 @@ export const Search = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 5,
+    flexDirection: 'column',
     alignItems: "center",
     justifyContent: "center",
     // backgroundColor: 'orange',
@@ -235,4 +275,12 @@ const styles = StyleSheet.create({
     height: 250,
     marginBottom: 20,
   },
+  searchbarStyle:{
+    backgroundColor:'gray',
+    marginLeft:0,
+    height:parseInt(HEIGHT*0.05),
+    width:parseInt(WIDTH*0.75),
+    alignItems: 'flex-end',
+    textColor: "pink"
+  }
 });
