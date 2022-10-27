@@ -1,10 +1,142 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet, View, Text, ImageBackground } from "react-native";
-import React, { useEffect } from "react";
+import { StyleSheet, View, Text, ImageBackground,TouchableOpacity,Image,Alert,TextInput, } from "react-native";
+import React, { useEffect,useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
+import { useSelector,useDispatch } from 'react-redux';
+import { Entypo,Ionicons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
+import { updateIMGUser,updateUser } from "../../redux/slice/userSlice"
+import SelectDropdown from 'react-native-select-dropdown'
 
 export const Account = (props) => {
   const navigation = props.nav;
+  
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const getImage = user[0].img;
+  const [image, setImage] = useState(getImage);
+  const [username, setUsername] = useState(user[0].username);
+  const [firstName, setFirstName] = useState(user[0].firstName);
+  const [lastName, setLastName] = useState(user[0].lastName);
+  const [sex,setSex] = useState(user[0].sex);
+  const selectSex = ["female","male"];
+  console.log(user[0].img);
+
+  let openImagePickerAsync = async () => {
+    let perm = await ImagePicker.requestCameraPermissionsAsync();
+    console.log("Add picture on Account page");
+    if (perm === false) {
+      Alert("Allow access to your files.");
+      return;
+    }
+    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    console.log(pickerResult);
+    if (pickerResult.cancelled === true) {
+      return;
+    }
+    setImage(pickerResult.uri);
+    dispatch(updateIMGUser({img:pickerResult.uri}));
+    Alert.alert('Save your image already');
+  };
+
+  const editProfile =()=>{
+    dispatch(updateUser({username:username,firstName:firstName,lastName:lastName,sex:sex}))
+    console.log('Edit Profile')
+    Alert.alert('Save your proflie already');
+  }
+
+  const FindAccount = () => {
+    console.log("Account มีอะไรออกไหม")
+    console.log(user)
+
+    if(user.length>0){
+      return (
+        <View style={{flex: 8,flexDirection:'column'}}>
+          <View style={{flex:1.5,flexDirection:'column',alignItems:'center',paddingTop: 24}}>
+            <View style={{height:100,width:100,}}>
+              <TouchableOpacity
+                onPress={openImagePickerAsync}
+              >
+                <Image style={{width:'100%',height:'100%',borderRadius:100}}
+                source={{ uri: image }}
+                >
+                </Image>
+              </TouchableOpacity>
+            </View>
+            <Text style={{fontSize:20,color: "#9AD3DA",paddingTop: 10}}>
+              รูปโปรไฟล์
+            </Text>
+          </View>
+          <View style={{ flex:4,flexDirection:'column',alignItems:'center',marginBottom:0}}>
+            <TextInput
+              placeholder="Username"
+              placeholderTextColor="black"
+              value={username}
+              onChangeText={(user) => setUsername(user)}
+              style={[styles.textInput,{marginTop:30}]}
+            />
+            <TextInput
+              placeholder="FirstName"
+              placeholderTextColor="black"
+              value={firstName}
+              onChangeText={(fn) => setFirstName(fn)}
+              style={styles.textInput}
+            />
+            <TextInput
+              placeholder="LastName"
+              placeholderTextColor="black"
+              value={lastName}
+              onChangeText={(fn) => setLastName(fn)}
+              style={styles.textInput}
+            />
+
+            <SelectDropdown
+              data={selectSex}
+              defaultButtonText={sex}
+              onSelect={(selectedItem, index) => {
+                setSex(selectedItem)
+                console.log(selectedItem, index)
+              }}
+              renderDropdownIcon={(focused)=>{
+                return (
+                  <Entypo
+                  name={focused ? 'chevron-small-down' : 'chevron-small-up'}
+                  size={32}
+                  color="#000000"
+                />
+                )
+              }}
+              dropdownIconPosition={'right'}
+              dropdownStyle={{backgroundColor:'#9AD3DA',}}
+              buttonStyle={{backgroundColor:'#9AD3DA',marginTop:13,width: 350,borderColor:'black',borderWidth:1,}}
+              buttonTextStyle={{fontSize:20,textAlign:'left'}}
+            />
+          </View>
+          <View style={{borderWidth:0,borderColor:'yellow',marginBottom:40,alignItems:'center'}}>
+            <TouchableOpacity
+              onPress={editProfile}
+              style={styles.button}
+              >
+              <Text style={{fontSize: 25}}>edit</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => {navigation.navigate('Home');}}
+                style={styles.button}
+                >
+                <Text style={{fontSize: 25}}>
+                  Sign out
+                </Text>
+              </TouchableOpacity>
+          </View>
+        </View>
+      )
+    }else if(user.length==0){
+      return (
+        <View><Text>ไม่อยากทำแล้วน้าาาาา</Text></View>
+      )
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -14,7 +146,9 @@ export const Account = (props) => {
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
-      ></LinearGradient>
+      >
+        <FindAccount/>
+      </LinearGradient>
     </SafeAreaView>
   );
 };
@@ -33,4 +167,26 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
   },
+  textInput:{
+    width: 350,
+    height: 48,
+    fontSize: 20,
+    backgroundColor: "#9AD3DA",
+    marginLeft: "2%",
+    borderWidth: 1,
+    fontFamily:(Platform.OS === 'ios')? 'AppleSDGothicNeo-Thin' : 'Roboto',
+    // alignSelf:'center',
+    paddingLeft: 8,
+    marginTop:13,
+  },
+  button: {
+    margin: 10,
+    backgroundColor: '#FAA307',
+    height: 48,
+    width: 200,
+    // borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop:0,
+  }
 });

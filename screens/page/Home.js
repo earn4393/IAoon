@@ -9,9 +9,10 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
+import Slideshow from "react-native-image-slider-show";
 
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
@@ -144,7 +145,14 @@ export const Home = (props) => {
     <ShowImage img={item.img} title={item.name} />
   );
 
-  
+  const [position, setPosition] = useState(0)
+  useEffect(()=>{
+    const toggle = setInterval(() => {
+      setPosition(position === 5 ? 0 : position + 1);
+    }, 3000);
+
+    return () => clearInterval(toggle);
+  })
 
   return (
     <SafeAreaView style={styles.container}>
@@ -155,6 +163,11 @@ export const Home = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
+        {/* <Slideshow
+          position={position} 
+          dataSource={IMG}
+        /> */}
+        
         <ScrollView style={styles.box}
         >
           <FlatList
