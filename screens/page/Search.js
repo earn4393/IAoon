@@ -32,7 +32,6 @@ export const Search = (props) => {
   const DATA = useSelector((state) => state.watch);
   const FIELD_OBJ = useSelector((state) => state.field);
   const COUNTRY_ARRAY = FIELD_OBJ[0].country;
-  const TYPE_ARRAY = FIELD_OBJ[0].type;
   const CATEGORY_ARRAY = FIELD_OBJ[0].category;
 
   const [searchQry, setSearchQry] = useState(null);
@@ -40,6 +39,23 @@ export const Search = (props) => {
   const [type, setType] = useState("");
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState([]);
+
+  let countryList = [];
+  let categoryList = [];
+  const field = DATA.map((item) => {
+    if (countryList.indexOf(item.country) == -1) {
+      countryList.push(item.country);
+    }
+
+    const categories = item.category.map((cat) => {
+      if (categoryList.indexOf(cat) == -1) {
+        categoryList.push(cat);
+      }
+    });
+  });
+  
+  console.log(countryList);
+  console.log(categoryList);
 
   console.log(`country: ${country} type: ${type} category: ${category}`);
   DATA.map((item) => {
