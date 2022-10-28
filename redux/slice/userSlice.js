@@ -50,10 +50,14 @@ const userSlice = createSlice({
         }
       })
     },
+    deleteUser(state, action){
+      console.log(`deleteUser activated payload = ${action.payload}`);
+      return state.filter((item)=>item.id !== action.payload)
+    }
   },
 });
 
 console.log(userSlice);
 const { actions, reducer } = userSlice;
-export const { addUser, updateIMGUser } = actions;
+export const { addUser, updateIMGUser ,updateUser ,deleteUser } = actions;
 export default reducer;
