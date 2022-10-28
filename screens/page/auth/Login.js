@@ -86,11 +86,13 @@ export const Login = (props) => {
   // สำหรับไปหน้า Register
   const onSignUpPress = () => {
     // navigation.push("Register");
+    navigation.navigate("Register");
   };
 
   // สำหรับไปหน้าลืมรหัส
   const onForgotPress = () => {
     // navigation.push("Recover");
+    navigation.navigate("Recover");
   };
 
   return (

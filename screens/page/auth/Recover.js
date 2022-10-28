@@ -29,7 +29,7 @@ export const Recover = (props) => {
   // กลับไปที่หน้า login
   const success = (msg) => {
     Alert.alert(msg);
-    // navigation.navigate('Login')
+    navigation.navigate('ChangePassword')
   };
 
   const onSendPress = () => {

@@ -6,6 +6,9 @@ import { Splash } from "../Splash";
 import { TabNav } from "./TabNav";
 import { TabSearchNav } from "./TabSearchNav";
 import { PlayTabNav } from "./PlayTabNav";
+import { Register  } from "../page/auth/Register";
+import { Recover } from "../page/auth/Recover";
+import { ChangePassword } from "../page/auth/ChangePassword";
 // import { Search } from "../page/Search";
 
 const Stack = createNativeStackNavigator();
@@ -33,6 +36,21 @@ const PlayTabScreen = ({ navigation, route }) => {
   return <PlayTabNav nav={navigation} route={route} />;
 };
 
+const RegisterScreen = ({navigation}) =>{
+  console.log("หน้า Register ใน StackNav.js");
+  return <Register nav={navigation}/>;
+}
+
+const RecoverScreen = ({navigation}) =>{
+  console.log("หน้า Recover ใน StackNav.js");
+  return <Recover nav={navigation} />;
+}
+
+const ChangePasswordScreen = ({navigation}) =>{
+  console.log("หน้า ChangePassword ใน StackNav.js");
+  return <ChangePassword nav={navigation}/>;
+}
+
 export const StackNav = () => {
   return (
     <Stack.Navigator
@@ -58,6 +76,30 @@ export const StackNav = () => {
         name="PlayTabNav"
         component={PlayTabScreen}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{ 
+          headerStyle:{backgroundColor:'black',} ,
+          headerTintColor:'#FAA307',
+        }}
+      />
+      <Stack.Screen
+        name="Recover"
+        component={RecoverScreen}
+        options={{ 
+          headerStyle:{backgroundColor:'black',} ,
+          headerTintColor:'#FAA307',
+        }}
+      />
+      <Stack.Screen
+        name="ChangePassword"
+        component={ChangePasswordScreen}
+        options={{ 
+          headerStyle:{backgroundColor:'black',} ,
+          headerTintColor:'#FAA307',
+        }}
       />
     </Stack.Navigator>
   );

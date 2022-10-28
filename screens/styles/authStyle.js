@@ -18,7 +18,9 @@ const regStyles = StyleSheet.create({
     paddingLeft:20,
     borderWidth:1,
     borderColor:'gray',
-    borderRadius:40
+    borderRadius:40,
+    backgroundColor: "#9AD3DA",
+    fontFamily:(Platform.OS === 'ios')? 'AppleSDGothicNeo-Thin' : 'Roboto',
   }
 })
 

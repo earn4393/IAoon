@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Alert, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import regStyles from "../styles/authStyle";
+import regStyles from "../../styles/authStyle";
 import AuthInput from "./AuthInput";
 
 export const ChangePassword = (props) => {
@@ -38,6 +38,7 @@ export const ChangePassword = (props) => {
 
   const success = (msg) => {
     Alert.alert(msg);
+    navigation.navigate('Login');
   };
   const onChangePassword = () => {
     console.log("Change password now");
