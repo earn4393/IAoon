@@ -19,6 +19,9 @@ import { Account } from "../page/Account";
 // import { Search } from "../page/Search";
 // import { Detail } from "../page/Detail";
 import { StackNav } from "./StackNav";
+import { Login } from "../page/auth/Login";
+import { Register } from "../page/auth/Register";
+import { Recover } from "../page/auth/Recover";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -94,7 +97,7 @@ const Movie = ({ navigation }) => {
 
 const Accounts = ({ navigation }) => {
   console.log("หน้า Account ใน TabNav.js");
-  return <Account nav={navigation} />;
+  return <Login nav={navigation} />;
 };
 
 // const DescriptionScreen = ({ navigation }) => {

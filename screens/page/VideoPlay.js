@@ -41,38 +41,13 @@ export const VideoPlay = (props) => {
     );
   };
 
-  const FlatListTester = (props) => {
-    let watches = [];
-    let randomWatches = [];
-    const youAsloLike = props.watches.map((item) => {
-      if (item.type == props.watch.type && item.id != props.watch.id) {
-        watches.push(item);
-      }
-    });
-
-    // const _ = require("lodash");
-    // for (let i = 0; i < 10; i++) {
-    //   if (watches.length > 0) {
-    //     const watch = _.sample(watches);
-    //     randomWatches.push(watch);
-    //     watches.shift();
-    //   }
-    // }
-
-    return (
-      <View>
-        <View>
-          <Text>You also like</Text>
-        </View>
-        <FlatList
-          data={watches}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          horizontal={true}
-        />
-      </View>
-    );
-  };
+  let watches = [];
+  const youAsloLike = [];
+  DATA.map((item) => {
+    if (item.type == data.type && item.id != data.id) {
+      watches.push(item);
+    }
+  });
 
   const ShowDetail = (props) => {
     const data = props.data;
@@ -207,12 +182,12 @@ export const VideoPlay = (props) => {
                 <View>
                   <Text>You also like</Text>
                 </View>
-                <FlatList
-                  data={DATA}
+                {/* <FlatList
+                  data={watches}
                   renderItem={renderItem}
                   keyExtractor={(item) => item.id}
                   horizontal={true}
-                />
+                /> */}
               </View>
             </View>
           </ScrollView>

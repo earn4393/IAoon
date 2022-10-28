@@ -9,6 +9,7 @@ const initialState = [
     lastName: "Pin",
     sex: "female",
     img: "https://i.ibb.co/y4n8n20/user.jpg",
+    password: "123",
   },
 ];
 
@@ -20,7 +21,7 @@ const userSlice = createSlice({
     addUser(state, action) {
       console.log("addUser actived payload");
       state.push({
-        id: lastId,
+        id: action.payload.id,
         email: action.payload.email,
         username: action.payload.username,
         firstName: action.payload.firstName,

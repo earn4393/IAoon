@@ -34,7 +34,7 @@ export const Splash = (props) => {
 
   useEffect(() => {
     setTimeout(() => {
-      WatchModel.getAllWatches(loadWatchToStore, loadCountry);
+      // WatchModel.getAllWatches(loadWatchToStore, loadCountry);
       navigation.navigate("TabNav");
     }, 2500);
   }, []);
