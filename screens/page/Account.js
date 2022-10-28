@@ -13,57 +13,14 @@ export const Account = (props) => {
   
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  // if(user.length=1){}
-  // const getImage = user[0].img;
-  // const [image, setImage] = useState(getImage);
-  // const [username, setUsername] = useState(user[0].username);
-  // const [firstName, setFirstName] = useState(user[0].firstName);
-  // const [lastName, setLastName] = useState(user[0].lastName);
-  // const [sex,setSex] = useState(user[0].sex);
+  
   const selectSex = ["female","male"];
-  // console.log(user[0].img);
 
-  // let openImagePickerAsync = async () => {
-  //   let perm = await ImagePicker.requestCameraPermissionsAsync();
-  //   console.log("Add picture on Account page");
-  //   if (perm === false) {
-  //     Alert("Allow access to your files.");
-  //     return;
-  //   }
-  //   let pickerResult = await ImagePicker.launchImageLibraryAsync();
-  //   console.log(pickerResult);
-  //   if (pickerResult.cancelled === true) {
-  //     return;
-  //   }
-  //   setImage(pickerResult.uri);
-  //   dispatch(updateIMGUser({img:pickerResult.uri}));
-  //   Alert.alert('Save your image already');
-  // };
-
-  // const editProfile =()=>{
-  //   dispatch(updateUser({username:username,firstName:firstName,lastName:lastName,sex:sex}))
-  //   console.log('Edit Profile')
-  //   Alert.alert('Save your proflie already');
-  // }
-
-  // const logOutProfile =()=>{
-  //   dispatch(deleteUser(user[0].id));
-  //   console.log('Log out Profile');
-  // }
-
-  const findAccount = (user) => {
+  const FindAccount = (user) => {
+    user=user.user
     console.log("Account มีอะไรออกไหม")
     console.log(user)
     console.log('user มีกี่คนกันแน่: ',user.length)
-    // const getImage = user[0].img;
-    // const [image, setImage] = useState(getImage);
-    // const [username, setUsername] = useState(user[0].username);
-    // const [firstName, setFirstName] = useState(user[0].firstName);
-    // const [lastName, setLastName] = useState(user[0].lastName);
-    // const [sex,setSex] = useState(user[0].sex);
-    ////////////////////////////////////////////////////////////////////////////////////
-
-
     // console.log(username)
     if(user.length>0){
       const getImage = user[0].img;
@@ -97,7 +54,7 @@ export const Account = (props) => {
       }
     
       const logOutProfile =()=>{
-        dispatch(deleteUser(user[0].id));
+        dispatch(deleteUser(user[0]));
         console.log('Log out Profile');
       }
 
@@ -179,20 +136,25 @@ export const Account = (props) => {
                 style={styles.button}
                 >
                 <Text style={{fontSize: 25}}>
-                  Sign out
+                  Log out
                 </Text>
               </TouchableOpacity>
           </View>
         </View>
       )
-    }else if(user.length<=0){
-      console.log('ไม่มีใครอยู่ก็ต้องออกอันนี้ดิ ออกนะ แต่เออเร่อทำไมก่อง')
-      // return (
-      //   <SafeAreaView>
-      //     <Text>ไม่อยากทำแล้วน้าาาาา</Text>
-      //   </SafeAreaView>
-      // )
     }
+    else if(user.length<=0){
+      console.log('ไม่มีใครอยู่ก็ต้องออกอันนี้ดิ ออกนะ แต่เออเร่อทำไมก่อง')
+      return (
+        <SafeAreaView>
+          <Text>ไม่อยากทำแล้วน้าาาาา</Text>
+        </SafeAreaView>
+      )
+    }
+  }
+
+  const LogOut =()=>{
+    console.log('ไม่มีใครอยู่ก็ต้องออกอันนี้ดิ ออกนะ แต่เออเร่อทำไมก่อง')
   }
 
   return (
@@ -204,8 +166,9 @@ export const Account = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-        {/* <FindAccount/> */}
-        {findAccount(user)}
+        <FindAccount user={user}/>
+        {/* {findAccount(user)} */}
+        {/* {user.length > 0 ? (findAccount(user)):} */}
       </LinearGradient>
     </SafeAreaView>
   );

@@ -29,7 +29,7 @@ export const Splash = (props) => {
   useEffect(() => {
     setTimeout(() => {
       console.log("111111111111111111111111111111111111111");
-      WatchModel.getAllWatches(loadWatchToStore);
+      // WatchModel.getAllWatches(loadWatchToStore);
       navigation.navigate("TabNav");
     }, 1000);
   }, []);

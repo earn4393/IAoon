@@ -13,6 +13,7 @@ const initialState = [
 ];
 
 let lastId = initialState.length;
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -51,8 +52,9 @@ const userSlice = createSlice({
       })
     },
     deleteUser(state, action){
-      console.log(`deleteUser activated payload = ${action.payload}`);
-      return state.filter((item)=>item.id !== action.payload)
+      console.log(`deleteUser activated payload = ${action.payload.id}`);
+      // return state.filter((item)=>item.id !== action.payload)
+      return []
     }
   },
 });
