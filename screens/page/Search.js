@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 import React, { useState } from "react";
-import { Entypo,Ionicons } from "@expo/vector-icons";
+import { Entypo, Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 import { Searchbar } from "react-native-paper";
@@ -31,9 +31,6 @@ const renderItem = ({ item }) => <ShowImages img={item.img} />;
 export const Search = (props) => {
   const navigation = props.nav;
   const DATA = useSelector((state) => state.watch);
-  const FIELD_OBJ = useSelector((state) => state.field);
-  const COUNTRY_ARRAY = FIELD_OBJ[0].country;
-  const CATEGORY_ARRAY = FIELD_OBJ[0].category;
 
   const [searchQry, setSearchQry] = useState(null);
   const [country, setCountry] = useState("");
@@ -54,9 +51,6 @@ export const Search = (props) => {
       }
     });
   });
-  
-  console.log(countryList);
-  console.log(categoryList);
 
   console.log(`country: ${country} type: ${type} category: ${category}`);
   DATA.map((item) => {
@@ -98,7 +92,7 @@ export const Search = (props) => {
   });
 
   const SearchCountry = () => {
-    const selectedCountry = COUNTRY_ARRAY.map((item) => {
+    const selectedCountry = countryList.map((item) => {
       return (
         <View>
           <TouchableOpacity
@@ -160,7 +154,7 @@ export const Search = (props) => {
   };
 
   const SearchCategory = () => {
-    const selectedCategory = CATEGORY_ARRAY.map((item) => {
+    const selectedCategory = categoryList.map((item) => {
       return (
         <TouchableOpacity
           onPress={() => {
@@ -202,10 +196,22 @@ export const Search = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-
-        <View style={{flexDirection: "row",width: parseInt(WIDTH),height:parseInt(HEIGHT*0.1),backgroundColor:'black',}}>
-          <View style={{flex: 4,flexDirection: "row",paddingTop: parseInt(HEIGHT*0.05),}}>
-            <View style={{flex: 1,flexDirection: "row" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            width: parseInt(WIDTH),
+            height: parseInt(HEIGHT * 0.1),
+            backgroundColor: "black",
+          }}
+        >
+          <View
+            style={{
+              flex: 4,
+              flexDirection: "row",
+              paddingTop: parseInt(HEIGHT * 0.05),
+            }}
+          >
+            <View style={{ flex: 1, flexDirection: "row" }}>
               <TouchableOpacity
                 onPress={() => {
                   navigation.goBack();
@@ -219,21 +225,21 @@ export const Search = (props) => {
                   style={{ paddingTop: "2%", paddingLeft: "2%" }}
                 />
               </TouchableOpacity>
-              <Text style={{fontSize: 25,color: "#FAA307",paddingLeft: 0,}}>
+              <Text style={{ fontSize: 25, color: "#FAA307", paddingLeft: 0 }}>
                 ไออุ่น
               </Text>
             </View>
 
-            <View style={{flex: 3,flexDirection: "row",}}>
-              <View style={{marginBottom:4,}}>
+            <View style={{ flex: 3, flexDirection: "row" }}>
+              <View style={{ marginBottom: 4 }}>
                 <Searchbar
                   placeholder={"search from name"}
-                  placeholderTextColor='black'
+                  placeholderTextColor="black"
                   value={searchQry}
                   onChangeText={setSearchQry}
                   onSubmitEditing={doSearch}
                   style={styles.searchbarStyle}
-                  inputStyle={{color:'black'}}
+                  inputStyle={{ color: "black" }}
                 />
               </View>
               {/* <View style={{flex: 1,flexDirection: "row-reverse",paddingTop: '2%'}}>
@@ -265,7 +271,7 @@ export const Search = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 5,
-    flexDirection: 'column',
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     // backgroundColor: 'orange',
@@ -291,12 +297,12 @@ const styles = StyleSheet.create({
     height: 250,
     marginBottom: 20,
   },
-  searchbarStyle:{
-    backgroundColor:'gray',
-    marginLeft:0,
-    height:parseInt(HEIGHT*0.05),
-    width:parseInt(WIDTH*0.75),
-    alignItems: 'flex-end',
-    textColor: "pink"
-  }
+  searchbarStyle: {
+    backgroundColor: "gray",
+    marginLeft: 0,
+    height: parseInt(HEIGHT * 0.05),
+    width: parseInt(WIDTH * 0.75),
+    alignItems: "flex-end",
+    textColor: "pink",
+  },
 });

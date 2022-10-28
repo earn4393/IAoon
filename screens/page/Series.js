@@ -19,8 +19,7 @@ const WIDTH = Dimensions.get("screen").width;
 export const Series = (props) => {
   const navigation = props.nav;
   const DATA = useSelector((state) => state.watch);
-  const COUNTRY_OBJ = useSelector((state) => state.field);
-  const COUNTRY_ARRAY = COUNTRY_OBJ[0].country;
+  const COUNTRY_ARRAY = useSelector((state) => state.field);
 
   const IMG = DATA.map((item) => {
     return item.img;
@@ -79,7 +78,7 @@ export const Series = (props) => {
       let watches = [];
       let countries = [];
       props.data.map((item) => {
-        if (item.country == c && item.type == "ซีรี่ย์") {
+        if (item.country == c.country && item.type == "ซีรี่ย์") {
           watches.push(item);
           countries.push(item.country);
         }

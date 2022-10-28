@@ -20,11 +20,10 @@ export const Home = (props) => {
   const navigation = props.nav;
   const USER = useSelector((state) => state.user);
   const DATA = useSelector((state) => state.watch);
-  const COUNTRY_OBJ = useSelector((state) => state.field);
-  const COUNTRY_ARRAY = COUNTRY_OBJ[0].country;
+  const COUNTRY_ARRAY = useSelector((state) => state.field);
 
   const IMG = DATA.map((item) => {
-    return item.img;
+    return item;
   });
 
   const ShowImages = (props) => {
@@ -33,12 +32,18 @@ export const Home = (props) => {
     // for (var i=0; i < 5; i++){
     //   getAllWatches.push()
     // }
-    const imgTo = { uri: props.img };
+    const imgTo = { uri: props.data.img };
     return (
       <View style={{ flex: 1 }}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("PlayTabNav");
+            // navigation.navigate("PlayTabNav", {
+            //   data: { text: "Hello" },
+            // });
+            navigation.navigate({
+              name: "PlayTabNav",
+              params: { message: "Hello" },
+            });
             console.log("Go to Watch Video");
           }}
         >
@@ -50,13 +55,19 @@ export const Home = (props) => {
 
   const ShowImage = (props) => {
     // const navigation = props.nav;
-    const imgTo = { uri: props.img };
+    const imgTo = { uri: props.data.img };
     const title = props.title;
     return (
       <View style={{ flex: 1 }}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("PlayTabNav");
+            // navigation.navigate("PlayTabNav", {
+            //   data: { text: "Hello" },
+            // });
+            navigation.navigate({
+              name: "PlayTabNav",
+              params: { message: "Hello" },
+            });
             console.log("Go to Watch Video");
           }}
         >
@@ -71,7 +82,9 @@ export const Home = (props) => {
                 marginTop: -30,
               }}
             >
-              <Text style={{ fontSize: 16, color: "white" }}>{title}</Text>
+              <Text style={{ fontSize: 16, color: "white" }}>
+                {props.data.name}
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -84,7 +97,7 @@ export const Home = (props) => {
       let watches = [];
       let countries = [];
       props.data.map((item) => {
-        if (item.country == c) {
+        if (item.country == c.country) {
           watches.push(item);
           countries.push(item.country);
         }
@@ -138,13 +151,8 @@ export const Home = (props) => {
     }
   };
 
-  const renderInsideItem = ({ item }) => <FlatListTester title={item.name} />;
-  const renderIMG = ({ item }) => <ShowImages img={item} />;
-  const renderItem = ({ item }) => (
-    <ShowImage img={item.img} title={item.name} />
-  );
-
-  
+  const renderIMG = ({ item }) => <ShowImages data={item} />;
+  const renderItem = ({ item }) => <ShowImage data={item} />;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -155,15 +163,14 @@ export const Home = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-        <ScrollView style={styles.box}
-        >
+        <ScrollView style={styles.box}>
           <FlatList
             data={IMG}
             renderItem={renderIMG}
             keyExtractor={(item) => item.id}
             horizontal={true}
           />
-
+          <FlatlistFavorite data={DATA} user={USER} />
           <FlatListTester data={DATA} countryList={COUNTRY_ARRAY} />
         </ScrollView>
       </LinearGradient>

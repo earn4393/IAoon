@@ -1,10 +1,12 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet, View, Text } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import * as WatchModel from "../firebase/watchModel";
 import { useDispatch } from "react-redux";
 import { addWatch } from "../redux/slice/watchSlice";
+import { addField } from "../redux/slice/fieldSlice";
+import { useSelector } from "react-redux";
 
 export const Splash = (props) => {
   const navigation = props.nav;
@@ -26,11 +28,15 @@ export const Splash = (props) => {
     );
   };
 
+  const loadCountry = (doc) => {
+    dispatch(addField({ id: doc.id, country: doc.data().country }));
+  };
+
   useEffect(() => {
     setTimeout(() => {
-      WatchModel.getAllWatches(loadWatchToStore);
+      WatchModel.getAllWatches(loadWatchToStore, loadCountry);
       navigation.navigate("TabNav");
-    }, 1000);
+    }, 2500);
   }, []);
 
   return (

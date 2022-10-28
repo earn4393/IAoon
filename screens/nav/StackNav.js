@@ -8,7 +8,6 @@ import { TabSearchNav } from "./TabSearchNav";
 import { PlayTabNav } from "./PlayTabNav";
 // import { Search } from "../page/Search";
 
-
 const Stack = createNativeStackNavigator();
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
@@ -28,9 +27,10 @@ const TabSearchScreen = () => {
   return <TabSearchNav />;
 };
 
-const PlayTabScreen = () => {
+const PlayTabScreen = ({ navigation, route }) => {
   console.log("หน้า VideoPlay ใน StackNav.js");
-  return <PlayTabNav />;
+  console.log("PlayTab", route);
+  return <PlayTabNav nav={navigation} route={route} />;
 };
 
 export const StackNav = () => {

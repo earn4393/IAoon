@@ -17,12 +17,10 @@ import { event } from "react-native-reanimated";
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
 
-
 export const Movies = (props) => {
   const navigation = props.nav;
   const DATA = useSelector((state) => state.watch);
-  const COUNTRY_OBJ = useSelector((state) => state.field);
-  const COUNTRY_ARRAY = COUNTRY_OBJ[0].country;
+  const COUNTRY_ARRAY = useSelector((state) => state.field);
   const scrollRef = React.createRef();
 
   const IMG = DATA.map((item) => {
@@ -81,7 +79,7 @@ export const Movies = (props) => {
       let watches = [];
       let countries = [];
       props.data.map((item) => {
-        if (item.country == c && item.type == "ภาพยนตร์") {
+        if (item.country == c.country && item.type == "ภาพยนตร์") {
           watches.push(item);
           countries.push(item.country);
         }
@@ -106,7 +104,6 @@ export const Movies = (props) => {
     return <View>{showAllWatch}</View>;
   };
 
-  const renderInsideItem = ({ item }) => <FlatListTester title={item.name} />;
   const renderIMG = ({ item }) => <ShowImages img={item} />;
   const renderItem = ({ item }) => (
     <ShowImage img={item.img} title={item.name} />
@@ -121,8 +118,7 @@ export const Movies = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-        <ScrollView style={styles.box}
-        >
+        <ScrollView style={styles.box}>
           <FlatList
             data={IMG}
             renderItem={renderIMG}

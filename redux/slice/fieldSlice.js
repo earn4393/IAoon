@@ -1,11 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [
-  {
-    country: ["อเมริกา", "ไทย", "เกาหลี"],
-    category: ["fantacy", "romantic", "comady", "drama"],
-  },
-];
+const initialState = [];
 
 const fieldSlice = createSlice({
   name: "field",
@@ -13,12 +8,19 @@ const fieldSlice = createSlice({
   reducers: {
     addField(state, action) {
       console.log("addField actived payload");
-      state.push({
-        id: 1,
-        type: action.payload.type,
-        conutry: action.payload.conutry,
-        category: action.payload.category,
-      }); //proxy state
+      let inArray = true;
+      state.map((item) => {
+        if (item.country == action.payload.country) {
+          inArray = false;
+        }
+      });
+
+      if (inArray) {
+        state.push({
+          id: action.payload.id,
+          country: action.payload.country,
+        }); //proxy state
+      }
     },
   },
 });

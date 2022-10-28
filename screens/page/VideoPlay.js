@@ -21,9 +21,11 @@ const WIDTH = Dimensions.get("screen").width;
 
 export const VideoPlay = (props) => {
   const navigation = props.nav;
+  const route = props.route;
+  console.log(route);
   const DATA = useSelector((state) => state.watch);
   const video = React.useRef(null);
-  console.log('มันคืออะไรรรร: ',navigation)
+  // console.log("มันคืออะไรรรร: ", navigation);
 
   const data = {
     id: "1",
@@ -103,13 +105,20 @@ export const VideoPlay = (props) => {
               <View
                 style={{ flex: 1, alignItems: "flex-end", paddingRight: 14 }}
               >
-                <TouchableOpacity 
+                <TouchableOpacity
                   onPress={() => {
                     addFavorite(like);
                   }}
                 >
-                {like ? ( <AntDesign color={"red"} size={24} name="heart" ></AntDesign>) :
-                        (<AntDesign color={"white"} size={24} name="hearto" ></AntDesign>)}
+                  {like ? (
+                    <AntDesign color={"red"} size={24} name="heart"></AntDesign>
+                  ) : (
+                    <AntDesign
+                      color={"white"}
+                      size={24}
+                      name="hearto"
+                    ></AntDesign>
+                  )}
                 </TouchableOpacity>
               </View>
             </View>

@@ -4,7 +4,7 @@ const initialState = [
   {
     id: "1",
     email: "Aaaaa@ku.th",
-    username: "Earn",
+    username: "earn",
     firstName: "Kan",
     lastName: "Pin",
     sex: "female",
