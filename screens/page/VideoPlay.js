@@ -12,9 +12,10 @@ import {
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
-import { Video } from "expo-av";
-import * as ScreenOrientation from "expo-screen-orientation";
+// import { Video } from "expo-av";
+// import * as ScreenOrientation from "expo-screen-orientation";
 import { AntDesign } from "@expo/vector-icons";
+import YoutubePlayer from "react-native-youtube-iframe";
 
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
@@ -22,22 +23,11 @@ const WIDTH = Dimensions.get("screen").width;
 export const VideoPlay = (props) => {
   const navigation = props.nav;
   const route = props.route;
-  console.log(route);
+  // console.log("in Video play", route.params.data);
   const DATA = useSelector((state) => state.watch);
+  const data = route.params.data;
   const video = React.useRef(null);
   // console.log("มันคืออะไรรรร: ", navigation);
-
-  const data = {
-    id: "1",
-    name: "สิ่งเล็กๆที่เรียกว่ารัก",
-    review:
-      "สิ่งเล็กๆที่เรียกว่ารักaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    type: "movies",
-    conutry: "India",
-    category: ["comady", "drama"],
-    love: ["Earn", "Donut"],
-    img: "https://picjumbo.com/wp-content/uploads/the-golden-gate-bridge-sunset-1080x720.jpg",
-  };
 
   const renderItem = ({ item }) => <ShowImages img={item.img} />;
 
@@ -54,15 +44,24 @@ export const VideoPlay = (props) => {
   const FlatListTester = (props) => {
     let watches = [];
     let randomWatches = [];
-    const youAsloLike = props.data.map((item) => {
-      if (item.type == props.type) {
+    const youAsloLike = props.watches.map((item) => {
+      if (item.type == props.watch.type && item.id != props.watch.id) {
         watches.push(item);
       }
     });
 
+    // const _ = require("lodash");
+    // for (let i = 0; i < 10; i++) {
+    //   if (watches.length > 0) {
+    //     const watch = _.sample(watches);
+    //     randomWatches.push(watch);
+    //     watches.shift();
+    //   }
+    // }
+
     return (
-      <View style={{ paddingBottom: 10 }}>
-        <View style={styles.countryBar}>
+      <View>
+        <View>
           <Text>You also like</Text>
         </View>
         <FlatList
@@ -81,6 +80,14 @@ export const VideoPlay = (props) => {
     const imgTo = { uri: data.img };
     // console.log(imgTo);
     const [like, setLike] = useState(false);
+
+    const categories = data.category.map((cat) => {
+      return (
+        <View>
+          <Text style={{ fontSize: 10, color: "white" }}>{cat}</Text>
+        </View>
+      );
+    });
 
     const addFavorite = (like) => {
       // console.log("CARD + USER ON CLICK", card, user);
@@ -101,9 +108,20 @@ export const VideoPlay = (props) => {
           <Image source={imgTo} style={styles.imageHead}></Image>
           <View style={{ flex: 1, flexDirection: "column" }}>
             <View style={{ flex: 1, flexDirection: "row" }}>
-              <Text style={{ fontSize: 20, color: "white" }}>{data.name}</Text>
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: "white",
+                }}
+              >
+                {data.name}
+              </Text>
               <View
-                style={{ flex: 1, alignItems: "flex-end", paddingRight: 14 }}
+                style={{
+                  flex: 1,
+                  alignItems: "flex-end",
+                  paddingRight: 14,
+                }}
               >
                 <TouchableOpacity
                   onPress={() => {
@@ -122,9 +140,7 @@ export const VideoPlay = (props) => {
                 </TouchableOpacity>
               </View>
             </View>
-            <View>
-              <Text style={{ fontSize: 10, color: "white" }}>Love</Text>
-            </View>
+            {categories}
           </View>
         </View>
         <View style={{ flex: 1 }}>
@@ -149,15 +165,15 @@ export const VideoPlay = (props) => {
     );
   };
 
-  function setOrientation() {
-    if (Dimensions.get("window").height > Dimensions.get("window").width) {
-      //Device is in portrait mode, rotate to landscape mode.
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-    } else {
-      //Device is in landscape mode, rotate to portrait mode.
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-    }
-  }
+  // function setOrientation() {
+  //   if (Dimensions.get("window").height > Dimensions.get("window").width) {
+  //     //Device is in portrait mode, rotate to landscape mode.
+  //     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+  //   } else {
+  //     //Device is in landscape mode, rotate to portrait mode.
+  //     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+  //   }
+  // }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -169,7 +185,7 @@ export const VideoPlay = (props) => {
         style={styles.background}
       >
         <View style={styles.container}>
-          <Video
+          {/* <Video
             source={{
               uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
             }}
@@ -179,13 +195,25 @@ export const VideoPlay = (props) => {
             onFullscreenUpdate={setOrientation}
             useNativeControls
             style={{ width: Dimensions.get("window").width, height: 200 }}
-          />
+          /> */}
+          <YoutubePlayer height={300} play={false} videoId={"6FWpO12Rr_I"} />
           <ScrollView style={styles.box}>
             <View>
               <ShowDetail data={data} />
             </View>
             <View>
-              <FlatListTester data={DATA} type={data.type} />
+              {/* <FlatListTester watches={DATA} watch={data} /> */}
+              <View>
+                <View>
+                  <Text>You also like</Text>
+                </View>
+                <FlatList
+                  data={DATA}
+                  renderItem={renderItem}
+                  keyExtractor={(item) => item.id}
+                  horizontal={true}
+                />
+              </View>
             </View>
           </ScrollView>
         </View>
@@ -197,8 +225,8 @@ export const VideoPlay = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    // alignItems: "center",
+    // justifyContent: "center",
     // backgroundColor: 'orange',
   },
   background: {

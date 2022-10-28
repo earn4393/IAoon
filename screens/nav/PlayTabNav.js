@@ -42,14 +42,12 @@ const CustomHeadBarVideo = (props) => {
 
 const VideoPlayScreen = ({ navigation, route }) => {
   console.log("หน้า Video ใน PlayTabNav.js");
-  console.log("VideoPlay", route);
   return <VideoPlay nav={navigation} route={route} />;
 };
 
 export const PlayTabNav = (props) => {
   const navigation = props.nav;
   const route = props.route;
-  console.log("11111111111111111111111111 : ", route.params.message);
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -60,7 +58,7 @@ export const PlayTabNav = (props) => {
           tabBarStyle: { display: "none" },
           // tabBarVisible: false
         }}
-        initialParams={{ message: route.params.message }}
+        initialParams={{ data: route.params }}
       />
     </Tab.Navigator>
   );

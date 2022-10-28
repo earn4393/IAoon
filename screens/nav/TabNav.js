@@ -51,7 +51,7 @@ const CustomHeaderBar = (props) => {
           <TouchableOpacity
             onPress={() => {
               // navigation.navigate("PlayTabNav");
-              navigation.navigate("TabSearchNav")
+              navigation.navigate("TabSearchNav");
               console.log("Go to search page");
             }}
           >
@@ -68,14 +68,14 @@ const CustomHeaderBar = (props) => {
   );
 };
 
-const CustomHeaderBarAccount = (props) =>{
+const CustomHeaderBarAccount = (props) => {
   const { navigation, route, options, layout } = props;
-  return(
+  return (
     <View style={styles.headerContainer}>
       <Text style={styles.headerFont}>ไออุ่น</Text>
     </View>
-  )
-}
+  );
+};
 
 const ShowHome = ({ navigation }) => {
   console.log("หน้า ShowHome ใน TabNav.js");
@@ -180,8 +180,6 @@ export const TabNav = () => {
         }}
       /> */}
     </Tab.Navigator>
-
-      
   );
 };
 

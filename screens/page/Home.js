@@ -9,7 +9,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 import Slideshow from "react-native-image-slider-show";
@@ -43,7 +43,7 @@ export const Home = (props) => {
             // });
             navigation.navigate({
               name: "PlayTabNav",
-              params: { message: "Hello" },
+              params: props.data,
             });
             console.log("Go to Watch Video");
           }}
@@ -67,7 +67,7 @@ export const Home = (props) => {
             // });
             navigation.navigate({
               name: "PlayTabNav",
-              params: { message: "Hello" },
+              params: props.data,
             });
             console.log("Go to Watch Video");
           }}
@@ -152,25 +152,17 @@ export const Home = (props) => {
     }
   };
 
-<<<<<<< HEAD
   const renderIMG = ({ item }) => <ShowImages data={item} />;
   const renderItem = ({ item }) => <ShowImage data={item} />;
-=======
-  const renderInsideItem = ({ item }) => <FlatListTester title={item.name} />;
-  const renderIMG = ({ item }) => <ShowImages img={item} />;
-  const renderItem = ({ item }) => (
-    <ShowImage img={item.img} title={item.name} />
-  );
 
-  const [position, setPosition] = useState(0)
-  useEffect(()=>{
+  const [position, setPosition] = useState(0);
+  useEffect(() => {
     const toggle = setInterval(() => {
       setPosition(position === 5 ? 0 : position + 1);
     }, 3000);
 
     return () => clearInterval(toggle);
-  })
->>>>>>> refs/remotes/origin/main
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -181,17 +173,12 @@ export const Home = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-<<<<<<< HEAD
-        <ScrollView style={styles.box}>
-=======
         {/* <Slideshow
           position={position} 
           dataSource={IMG}
         /> */}
-        
-        <ScrollView style={styles.box}
-        >
->>>>>>> refs/remotes/origin/main
+
+        <ScrollView style={styles.box}>
           <FlatList
             data={IMG}
             renderItem={renderIMG}

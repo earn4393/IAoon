@@ -29,7 +29,7 @@ const TabSearchScreen = () => {
 
 const PlayTabScreen = ({ navigation, route }) => {
   console.log("หน้า VideoPlay ใน StackNav.js");
-  console.log("PlayTab", route);
+  // console.log("PlayTab", route.params);
   return <PlayTabNav nav={navigation} route={route} />;
 };
 

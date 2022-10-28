@@ -8,7 +8,7 @@ const initialState = [
     firstName: "Kan",
     lastName: "Pin",
     sex: "female",
-    img: "https://i.ibb.co/y4n8n20/user.jpg"
+    img: "https://i.ibb.co/y4n8n20/user.jpg",
   },
 ];
 
@@ -29,26 +29,26 @@ const userSlice = createSlice({
         img: action.payload.img,
       }); //proxy state
     },
-    updateIMGUser(state, action){
+    updateIMGUser(state, action) {
       console.log(`updateIMGUser activated payload = ${action.payload}`);
-      state.map((item)=>{
-        if(item.id === action.payload.id){
-          return item.img = action.payload.img
+      state.map((item) => {
+        if (item.id === action.payload.id) {
+          return (item.img = action.payload.img);
         }
-      })
+      });
     },
-    updateUser(state, action){
+    updateUser(state, action) {
       console.log(`updateUser activated payload = ${action.payload}`);
-      state.map((item)=>{
-        if(item.id === action.payload.id){
+      state.map((item) => {
+        if (item.id === action.payload.id) {
           return (
-            item.username = action.payload.username,
-            item.firstName = action.payload.firstName,
-            item.lastName = action.payload.lastName,
-            item.sex = action.payload.sex
-          )
+            (item.username = action.payload.username),
+            (item.firstName = action.payload.firstName),
+            (item.lastName = action.payload.lastName),
+            (item.sex = action.payload.sex)
+          );
         }
-      })
+      });
     },
   },
 });

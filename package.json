@@ -35,6 +35,8 @@
     "react-native-select-dropdown": "^3.0.0",
     "react-native-slideshow": "^1.0.1",
     "react-native-video": "^2.3.1",
+    "react-native-webview": "11.23.0",
+    "react-native-youtube-iframe": "^2.2.2",
     "react-redux": "8.0.2",
     "redux": "4.0.0"
   },
