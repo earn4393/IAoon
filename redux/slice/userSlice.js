@@ -8,6 +8,7 @@ const initialState = [
     firstName: "Kan",
     lastName: "Pin",
     sex: "female",
+    img: "https://i.ibb.co/y4n8n20/user.jpg"
   },
 ];
 
@@ -25,12 +26,34 @@ const userSlice = createSlice({
         firstName: action.payload.firstName,
         lastName: action.payload.lastName,
         sex: action.payload.sex,
+        img: action.payload.img,
       }); //proxy state
+    },
+    updateIMGUser(state, action){
+      console.log(`updateIMGUser activated payload = ${action.payload}`);
+      state.map((item)=>{
+        if(item.id === action.payload.id){
+          return item.img = action.payload.img
+        }
+      })
+    },
+    updateUser(state, action){
+      console.log(`updateUser activated payload = ${action.payload}`);
+      state.map((item)=>{
+        if(item.id === action.payload.id){
+          return (
+            item.username = action.payload.username,
+            item.firstName = action.payload.firstName,
+            item.lastName = action.payload.lastName,
+            item.sex = action.payload.sex
+          )
+        }
+      })
     },
   },
 });
 
 console.log(userSlice);
 const { actions, reducer } = userSlice;
-export const { addUser } = actions;
+export const { addUser, updateIMGUser } = actions;
 export default reducer;
