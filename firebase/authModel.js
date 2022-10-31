@@ -77,14 +77,17 @@ export const changePassword = (
   success,
   unsuccess
 ) => {
+  console.log("1111111111111111111111111111111111");
+  console.log(email);
+  console.log(oldpassword);
+  console.log(newpassword);
   auth
     .signInWithEmailAndPassword(email, oldpassword)
     .then((userCredential) => {
       let user = userCredential.user;
       user
         .updatePassword(newpassword)
-        .then(success("You password has been Change"))
-        .catch((err) => {});
+        .then(success("You password has been Change"));
     })
     .catch((e) => {
       unsuccess(e.code + " " + e.message);

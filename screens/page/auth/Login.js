@@ -49,12 +49,13 @@ export const Login = (props) => {
       id: doc.id,
       email: doc.data().email,
       username: doc.data().username,
-      firstName: doc.data().firstname,
-      lastName: doc.data().lastname,
+      firstName: doc.data().firstName,
+      lastName: doc.data().lastName,
       sex: doc.data().sex,
       img: doc.data().img,
     };
     dispatch(addUser(profile_state));
+    navigation.navigate("Account");
     // สำหรับ link ไปหา Account
     // navigation.navigate({
     //   name: "MainDrawer",
@@ -72,6 +73,7 @@ export const Login = (props) => {
   const signInSucces = (email) => {
     console.log("sign in succes email = ", email);
     userModel.getUserByUsername(email, success, unsuccess);
+    // navigation.navigate("Account");
   };
 
   const onSignInPress = () => {
@@ -81,6 +83,7 @@ export const Login = (props) => {
       signInSucces,
       unsuccess
     );
+    // navigation.navigate("Account");
   };
 
   // สำหรับไปหน้า Register

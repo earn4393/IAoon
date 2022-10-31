@@ -21,6 +21,7 @@ import {
 } from "../../redux/slice/userSlice";
 import * as AuthModel from "../../firebase/authModel";
 import SelectDropdown from "react-native-select-dropdown";
+import { Login } from "./auth/Login";
 
 export const Account = (props) => {
   const navigation = props.nav;
@@ -43,7 +44,8 @@ export const Account = (props) => {
       const [firstName, setFirstName] = useState(user[0].firstName);
       const [lastName, setLastName] = useState(user[0].lastName);
       const [sex, setSex] = useState(user[0].sex);
-      console.log("มีคนอยู่นะ");
+      console.log(user[0]);
+
       let openImagePickerAsync = async () => {
         let perm = await ImagePicker.requestCameraPermissionsAsync();
         console.log("Add picture on Account page");
@@ -51,6 +53,7 @@ export const Account = (props) => {
           Alert("Allow access to your files.");
           return;
         }
+
         let pickerResult = await ImagePicker.launchImageLibraryAsync();
         console.log(pickerResult);
         if (pickerResult.cancelled === true) {
@@ -86,6 +89,10 @@ export const Account = (props) => {
       const logOutProfile = () => {
         AuthModel.signOut(deleteUserStore, unsuccess);
         console.log("Log out Profile");
+      };
+
+      const rePassword = () => {
+        navigation.navigate("ChangePassword");
       };
 
       return (
@@ -187,15 +194,17 @@ export const Account = (props) => {
               <Text style={{ fontSize: 25 }}>Log out</Text>
             </TouchableOpacity>
           </View>
+          <TouchableOpacity
+            onPress={rePassword}
+            // style={styles.button}
+          >
+            <Text style={{ fontSize: 25 }}>Reset Password</Text>
+          </TouchableOpacity>
         </View>
       );
     } else if (user.length <= 0) {
       console.log("ไม่มีใครอยู่ก็ต้องออกอันนี้ดิ ออกนะ แต่เออเร่อทำไมก่อง");
-      return (
-        <SafeAreaView>
-          <Text>ไม่อยากทำแล้วน้าาาาา</Text>
-        </SafeAreaView>
-      );
+      return <Login nav={navigation} />;
     }
   };
 
@@ -213,8 +222,6 @@ export const Account = (props) => {
         style={styles.background}
       >
         <FindAccount user={user} />
-        {/* {findAccount(user)} */}
-        {/* {user.length > 0 ? (findAccount(user)):} */}
       </LinearGradient>
     </SafeAreaView>
   );

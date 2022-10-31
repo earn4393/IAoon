@@ -96,7 +96,7 @@ const Movie = ({ navigation }) => {
 
 const Accounts = ({ navigation }) => {
   console.log("หน้า Account ใน TabNav.js");
-  return <Login nav={navigation} />;
+  return <Account nav={navigation} />;
 };
 
 // const DescriptionScreen = ({ navigation }) => {

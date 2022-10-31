@@ -18,7 +18,7 @@ const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
 
 export const ChangePassword = (props) => {
-  const navigation = props.navigation;
+  const navigation = props.nav;
   const user = useSelector((state) => state.user);
 
   const [password, setPassword] = useState({
@@ -57,6 +57,9 @@ export const ChangePassword = (props) => {
   };
   const onChangePassword = () => {
     console.log("Change password now");
+    console.log(user[0].email);
+    console.log(password.oldPass);
+    console.log(password.newPass);
     if (password.newPass === password.confirmPass) {
       AuthModel.changePassword(
         user[0].email,

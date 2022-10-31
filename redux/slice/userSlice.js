@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = [
-  {
-    id: "1",
-    email: "Aaaaa@ku.th",
-    username: "earn",
-    firstName: "Kan",
-    lastName: "Pin",
-    sex: "female",
-    img: "https://i.ibb.co/y4n8n20/user.jpg",
-    password: "123",
-  },
+  // {
+  //   id: "1",
+  //   email: "Aaaaa@ku.th",
+  //   username: "earn",
+  //   firstName: "Kan",
+  //   lastName: "Pin",
+  //   sex: "female",
+  //   img: "https://i.ibb.co/y4n8n20/user.jpg",
+  //   password: "123",
+  // },
 ];
 
 let lastId = initialState.length;
