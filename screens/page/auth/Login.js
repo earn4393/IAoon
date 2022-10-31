@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  Image,
   TouchableOpacity,
   Alert,
   StyleSheet,
   Dimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import regStyles from "../../styles/authStyle";
 import AuthInput from "./AuthInput";
 import { useSelector, useDispatch } from "react-redux";
 import { LinearGradient } from "expo-linear-gradient";
@@ -58,24 +56,15 @@ export const Login = (props) => {
     };
     dispatch(addUser(profile_state));
     navigation.navigate("Account");
-    // สำหรับ link ไปหา Account
-    // navigation.navigate({
-    //   name: "MainDrawer",
-    //   params: {
-    //     username: doc.data().username,
-    //   },
-    // });
   };
 
   const unsuccess = (msg) => {
-    console.log(msg);
     Alert.alert(msg);
   };
 
   const signInSucces = (email) => {
     console.log("sign in succes email = ", email);
     userModel.getUserByUsername(email, success, unsuccess);
-    // navigation.navigate("Account");
   };
 
   const onSignInPress = () => {
@@ -85,18 +74,15 @@ export const Login = (props) => {
       signInSucces,
       unsuccess
     );
-    // navigation.navigate("Account");
   };
 
   // สำหรับไปหน้า Register
   const onSignUpPress = () => {
-    // navigation.push("Register");
     navigation.navigate("Register");
   };
 
   // สำหรับไปหน้าลืมรหัส
   const onForgotPress = () => {
-    // navigation.push("Recover");
     navigation.navigate("Recover");
   };
 
@@ -109,6 +95,7 @@ export const Login = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
+<<<<<<< HEAD
 
         <View style={{ flex: 1 , flexDirection: "column" ,justifyContent:'center',alignItems: 'stretch',}}>
           <View style={{ flex: 1.5,alignItems: "center",}}>
@@ -118,6 +105,10 @@ export const Login = (props) => {
             </Image>
           </View>
           <View style={{ flex: 1,}}>
+=======
+        <View style={{ flex: 1 }}>
+          <View style={{ flex: 1 }}>
+>>>>>>> refs/remotes/origin/main
             <AuthInput
               placeholder="Email"
               secureTextEntry={false}
@@ -130,8 +121,11 @@ export const Login = (props) => {
               value={credential.password}
               onChangeText={(text) => setPassword(text)}
             />
+<<<<<<< HEAD
 
             
+=======
+>>>>>>> refs/remotes/origin/main
           </View>
 
           <View style={{ flex: 1.5 ,alignItems:'center',marginTop:10,}}>
@@ -141,7 +135,10 @@ export const Login = (props) => {
             >
               <Text style={{ fontSize: 20 ,color: '#000'}}>Sign in</Text>
             </TouchableOpacity>
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/main
             <TouchableOpacity
               style={styles.button}
               onPress={onSignUpPress}
@@ -152,6 +149,7 @@ export const Login = (props) => {
               onPress={onForgotPress} 
               style={{alignSelf:'flex-end',paddingRight:16}}
               >
+<<<<<<< HEAD
               <Text
                 style={{
                   fontSize: 16,
@@ -160,13 +158,20 @@ export const Login = (props) => {
                   textDecorationLine: "underline",
                 }}
               >
+=======
+>>>>>>> refs/remotes/origin/main
                 Forgot Password ?
               </Text>
             </TouchableOpacity>
           </View>
+<<<<<<< HEAD
           
 
         </View>
+=======
+        </View>
+        <View style={{ flex: 1 }}></View>
+>>>>>>> refs/remotes/origin/main
       </LinearGradient>
     </SafeAreaView>
   );

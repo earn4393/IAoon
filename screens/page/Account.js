@@ -3,21 +3,24 @@ import {
   StyleSheet,
   View,
   Text,
-  ImageBackground,
   TouchableOpacity,
   Image,
   Alert,
   TextInput,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector, useDispatch } from "react-redux";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import { updateIMGUser,updateUser,deleteUser } from "../../redux/slice/userSlice";
-import SelectDropdown from 'react-native-select-dropdown';
-import { Login } from './auth/Login';
-import * as UserModel from '../../firebase/userModel';
+import {
+  updateIMGUser,
+  updateUser,
+  deleteUser,
+} from "../../redux/slice/userSlice";
+import SelectDropdown from "react-native-select-dropdown";
+import { Login } from "./auth/Login";
+import * as UserModel from "../../firebase/userModel";
 import * as AuthModel from "../../firebase/authModel";
 
 export const Account = (props) => {
@@ -30,10 +33,6 @@ export const Account = (props) => {
 
   const FindAccount = (user) => {
     user = user.user;
-    console.log("Account มีอะไรออกไหม");
-    console.log(user);
-    console.log("user มีกี่คนกันแน่: ", user.length);
-    // console.log(username)
     if (user.length > 0) {
       const getImage = user[0].img;
       const [image, setImage] = useState(getImage);
@@ -41,7 +40,6 @@ export const Account = (props) => {
       const [firstName, setFirstName] = useState(user[0].firstName);
       const [lastName, setLastName] = useState(user[0].lastName);
       const [sex, setSex] = useState(user[0].sex);
-      console.log(user[0]);
 
       let openImagePickerAsync = async () => {
         let perm = await ImagePicker.requestCameraPermissionsAsync();
@@ -57,28 +55,53 @@ export const Account = (props) => {
           return;
         }
         setImage(pickerResult.uri);
-        dispatch(updateIMGUser({img:pickerResult.uri}));
-        UserModel.editUser(user[0].id,username,firstName,lastName,sex,pickerResult.uri,success)
-        dispatch(updateUser({username:username,firstName:firstName,lastName:lastName,sex:sex}))
+        dispatch(updateIMGUser({ img: pickerResult.uri }));
+        UserModel.editUser(
+          user[0].id,
+          username,
+          firstName,
+          lastName,
+          sex,
+          pickerResult.uri,
+          success
+        );
+        dispatch(
+          updateUser({
+            username: username,
+            firstName: firstName,
+            lastName: lastName,
+            sex: sex,
+          })
+        );
         // Alert.alert('Save your image already');
       };
 
       const success = () => {
-        console.log('Edit Profile success')
-        Alert.alert('Save your proflie already');
-      }
+        dispatch(
+          updateUser({
+            username: username,
+            firstName: firstName,
+            lastName: lastName,
+            sex: sex,
+          })
+        );
+        Alert.alert("Save your proflie already");
+      };
 
-      const editProfile =()=>{
-        UserModel.editUser(user[0].id,username,firstName,lastName,sex,image,success)
-        dispatch(updateUser({username:username,firstName:firstName,lastName:lastName,sex:sex}))
-        console.log('Edit Profile')
-        Alert.alert('Save your proflie already');
-      }
-    
-      const logOutProfile =()=>{
-        // dispatch(deleteUser(user[0]));
+      const editProfile = () => {
+        UserModel.editUser(
+          user[0].id,
+          username,
+          firstName,
+          lastName,
+          sex,
+          image,
+          success
+        );
+      };
+
+      const logOutProfile = () => {
         AuthModel.signOut(deleteUserStore, unsuccess);
-        console.log("Log out Profile");
       };
 
       const deleteUserStore = () => {
@@ -181,18 +204,19 @@ export const Account = (props) => {
 
             <TouchableOpacity
               onPress={rePassword}
-              style={{alignSelf:'flex-end',paddingRight:'8%',}}
+              style={{ alignSelf: "flex-end", paddingRight: "8%" }}
             >
-              <Text style={{ 
-                  fontSize: 16 ,
-                  paddingTop: 10 ,
-                  color:'#9AD3DA',
+              <Text
+                style={{
+                  fontSize: 16,
+                  paddingTop: 10,
+                  color: "#9AD3DA",
                   textDecorationLine: "underline",
-              }}>
+                }}
+              >
                 Reset Password
               </Text>
             </TouchableOpacity>
-
           </View>
           <View
             style={{
@@ -219,13 +243,9 @@ export const Account = (props) => {
         </View>
       );
     } else if (user.length <= 0) {
-      // console.log("ไม่มีใครอยู่ก็ต้องออกอันนี้ดิ ต้อง log in ก่อนนะ");
+      // console.log("ไม่มีใครอยู่ก็ต้องออกอันนี้ดิ ออกนะ แต่เออเร่อทำไมก่อง");
       return <Login nav={navigation} />;
     }
-  };
-
-  const LogOut = () => {
-    console.log("ไม่มีใครอยู่ก็ต้องออกอันนี้ดิ ออกนะ แต่เออเร่อทำไมก่อง");
   };
 
   return (

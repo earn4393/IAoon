@@ -1,12 +1,11 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet, View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import * as WatchModel from "../firebase/watchModel";
 import { useDispatch } from "react-redux";
 import { addWatch } from "../redux/slice/watchSlice";
 import { addField } from "../redux/slice/fieldSlice";
-import { useSelector } from "react-redux";
 
 export const Splash = (props) => {
   const navigation = props.nav;
@@ -24,6 +23,7 @@ export const Splash = (props) => {
         love: doc.data().love,
         img: doc.data().img,
         trailer: doc.data().trailer,
+        ep: doc.data().ep,
       })
     );
   };

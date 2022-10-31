@@ -4,11 +4,9 @@ import {
   View,
   Text,
   Dimensions,
-  TextInput,
   TouchableOpacity,
 } from "react-native";
-import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Entypo } from "@expo/vector-icons";
 import Constants from "expo-constants";
 import { VideoPlay } from "../page/VideoPlay";
 

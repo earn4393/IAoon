@@ -1,15 +1,12 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StyleSheet, View, Text, Dimensions } from "react-native";
-import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import Constants from "expo-constants";
+import { Dimensions } from "react-native";
 import { Splash } from "../Splash";
 import { TabNav } from "./TabNav";
 import { TabSearchNav } from "./TabSearchNav";
 import { PlayTabNav } from "./PlayTabNav";
-import { Register  } from "../page/auth/Register";
+import { Register } from "../page/auth/Register";
 import { Recover } from "../page/auth/Recover";
 import { ChangePassword } from "../page/auth/ChangePassword";
-// import { Search } from "../page/Search";
 
 const Stack = createNativeStackNavigator();
 const HEIGHT = Dimensions.get("screen").height;
@@ -32,24 +29,23 @@ const TabSearchScreen = () => {
 
 const PlayTabScreen = ({ navigation, route }) => {
   console.log("หน้า VideoPlay ใน StackNav.js");
-  // console.log("PlayTab", route.params);
   return <PlayTabNav nav={navigation} route={route} />;
 };
 
-const RegisterScreen = ({navigation}) =>{
+const RegisterScreen = ({ navigation }) => {
   console.log("หน้า Register ใน StackNav.js");
-  return <Register nav={navigation}/>;
-}
+  return <Register nav={navigation} />;
+};
 
-const RecoverScreen = ({navigation}) =>{
+const RecoverScreen = ({ navigation }) => {
   console.log("หน้า Recover ใน StackNav.js");
   return <Recover nav={navigation} />;
-}
+};
 
-const ChangePasswordScreen = ({navigation}) =>{
+const ChangePasswordScreen = ({ navigation }) => {
   console.log("หน้า ChangePassword ใน StackNav.js");
-  return <ChangePassword nav={navigation}/>;
-}
+  return <ChangePassword nav={navigation} />;
+};
 
 export const StackNav = () => {
   return (
@@ -80,25 +76,25 @@ export const StackNav = () => {
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
-        options={{ 
-          headerStyle:{backgroundColor:'black',} ,
-          headerTintColor:'#FAA307',
+        options={{
+          headerStyle: { backgroundColor: "black" },
+          headerTintColor: "#FAA307",
         }}
       />
       <Stack.Screen
         name="Recover"
         component={RecoverScreen}
-        options={{ 
-          headerStyle:{backgroundColor:'black',} ,
-          headerTintColor:'#FAA307',
+        options={{
+          headerStyle: { backgroundColor: "black" },
+          headerTintColor: "#FAA307",
         }}
       />
       <Stack.Screen
         name="ChangePassword"
         component={ChangePasswordScreen}
-        options={{ 
-          headerStyle:{backgroundColor:'black',} ,
-          headerTintColor:'#FAA307',
+        options={{
+          headerStyle: { backgroundColor: "black" },
+          headerTintColor: "#FAA307",
         }}
       />
     </Stack.Navigator>

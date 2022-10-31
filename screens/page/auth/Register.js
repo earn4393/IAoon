@@ -14,7 +14,6 @@ import * as AuthModel from "../../../firebase/authModel";
 import * as userModel from "../../../firebase/userModel";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector, useDispatch } from "react-redux";
-import { addUser } from "../../../redux/slice/userSlice";
 import SelectDropdown from "react-native-select-dropdown";
 import { Entypo } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
@@ -28,7 +27,6 @@ export const Register = (props) => {
   const [selectedValue, setSelectedValue] = useState("");
   const selectSex = ["female", "male"];
   const [password, setPassword] = useState("");
-  console.log(user);
 
   const dispatch = useDispatch();
 
@@ -89,7 +87,6 @@ export const Register = (props) => {
   };
 
   const unsuccess = (msg) => {
-    console.log(msg);
     Alert.alert(msg);
   };
 
@@ -98,7 +95,6 @@ export const Register = (props) => {
   };
 
   const onRegisterPress = () => {
-    // console.log(`profile ${profile.firstname}`)
     AuthModel.signUpEmailPass(
       profile.email,
       password,
@@ -109,7 +105,6 @@ export const Register = (props) => {
 
   // กลับไปหน้า login
   const onCancelPress = () => {
-    // navigation.goBack()
     console.log("จะออกจาก register");
     navigation.navigate("Account");
   };

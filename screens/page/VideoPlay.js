@@ -24,17 +24,20 @@ const WIDTH = Dimensions.get("screen").width;
 export const VideoPlay = (props) => {
   const navigation = props.nav;
   const route = props.route;
+  const dispatch = useDispatch();
 
   const data = useSelector((state) => state.watch);
   const user = useSelector((state) => state.user);
-  const username = user[0].username;
-  const watch = route.params.data;
-  const dispatch = useDispatch();
+
+  const [watch, setWatch] = useState(route.params.data);
   const [love, setLove] = useState([...watch.love]);
   const [like, setLike] = useState(love.indexOf(username) != -1 ? true : false);
-  const imgTo = { uri: watch.img };
+  const [play, setPlay] = useState(watch.trailer);
+  const [username, setUsername] = useState(
+    user.length > 0 ? user[0].username : ""
+  );
 
-  console.log("Love : ", love);
+  const imgTo = { uri: watch.img };
 
   const categories = watch.category.map((cat) => {
     return (
@@ -45,7 +48,12 @@ export const VideoPlay = (props) => {
   });
 
   const FlatListTester = () => {
-    const watches = data;
+    const watches = [];
+    data.map((item) => {
+      if (item.id != watch.id && item.type == watch.type) {
+        watches.push(item);
+      }
+    });
     if (watches.length > 0) {
       return (
         <View style={{ paddingBottom: 10 }}>
@@ -63,14 +71,44 @@ export const VideoPlay = (props) => {
     }
   };
 
-  const renderItem = ({ item }) => <ShowImages img={item.img} />;
+  const renderItem = ({ item }) => <ShowImages data={item} />;
+  const renderPlay = ({ item, index }) => (
+    <ShowEpisode data={item} index={index} />
+  );
 
   const ShowImages = (props) => {
-    const imgTo = { uri: props.img };
-    // console.log(imgTo);
+    const imgTo = { uri: props.data.img };
     return (
       <View style={{ flex: 1 }}>
-        <Image source={imgTo} style={styles.imageHead}></Image>
+        <TouchableOpacity
+          onPress={() => {
+            setWatch(props.data);
+            setPlay(props.data.trailer);
+          }}
+        >
+          <Image source={imgTo} style={styles.imageHead}></Image>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const ShowEpisode = (props) => {
+    return (
+      <View style={{ flex: 1 }}>
+        <TouchableOpacity
+          onPress={() => {
+            setPlay(props.data);
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 20,
+              color: "white",
+            }}
+          >
+            {props.index + 1}
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -84,41 +122,41 @@ export const VideoPlay = (props) => {
   };
 
   const addFavorite = () => {
-    // console.log("CARD + USER ON CLICK", card, user);
-    // props.updateUser(card, user);
-    let loveList;
-    let array;
-    if (!like) {
-      loveList = [...love, username];
-      array = {
-        id: watch.id,
-        name: watch.name,
-        review: watch.review,
-        type: watch.type,
-        country: watch.country,
-        category: watch.category,
-        love: loveList,
-        img: watch.img,
-        trailer: watch.trailer,
-      };
-      WatchModel.updateWatch(array, likeWatched);
-    } else {
-      loveList = love.filter((item) => item != username);
-      array = {
-        id: watch.id,
-        name: watch.name,
-        review: watch.review,
-        type: watch.type,
-        country: watch.country,
-        category: watch.category,
-        love: loveList,
-        img: watch.img,
-        trailer: watch.trailer,
-      };
-      WatchModel.updateWatch(array, unLikeWatched);
+    if (username != "") {
+      let loveList;
+      let array;
+      if (!like) {
+        loveList = [...love, username];
+        array = {
+          id: watch.id,
+          name: watch.name,
+          review: watch.review,
+          type: watch.type,
+          country: watch.country,
+          category: watch.category,
+          love: loveList,
+          img: watch.img,
+          trailer: watch.trailer,
+        };
+        WatchModel.updateWatch(array, likeWatched);
+      } else {
+        loveList = love.filter((item) => item != username);
+        array = {
+          id: watch.id,
+          name: watch.name,
+          review: watch.review,
+          type: watch.type,
+          country: watch.country,
+          category: watch.category,
+          love: loveList,
+          img: watch.img,
+          trailer: watch.trailer,
+        };
+        WatchModel.updateWatch(array, unLikeWatched);
+      }
+      setLove(loveList);
+      setLike(!like);
     }
-    setLove(loveList);
-    setLike(!like);
   };
 
   return (
@@ -131,8 +169,15 @@ export const VideoPlay = (props) => {
         style={styles.background}
       >
         <View style={styles.container}>
-          <YoutubePlayer height={300} play={false} videoId={watch.trailer} />
-
+          <YoutubePlayer height={300} play={false} videoId={play} />
+          {watch.type != "ภาพยนตร์" ? (
+            <FlatList
+              data={watch.ep}
+              renderItem={renderPlay}
+              keyExtractor={(item) => item.id}
+              horizontal={true}
+            />
+          ) : null}
           <ScrollView style={styles.box}>
             <View>
               <View style={{ flex: 1, flexDirection: "column" }}>
@@ -207,7 +252,7 @@ export const VideoPlay = (props) => {
               </View>
             </View>
             <ScrollView style={styles.box}>
-              {/* <FlatListTester /> */}
+              <FlatListTester />
             </ScrollView>
           </ScrollView>
         </View>

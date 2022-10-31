@@ -17,17 +17,6 @@ import { Searchbar } from "react-native-paper";
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
 
-const ShowImages = (props) => {
-  const imgTo = { uri: props.img };
-  return (
-    <View style={{ flex: 1 }}>
-      <Image source={imgTo} style={styles.imageHead}></Image>
-    </View>
-  );
-};
-
-const renderItem = ({ item }) => <ShowImages img={item.img} />;
-
 export const Search = (props) => {
   const navigation = props.nav;
   const DATA = useSelector((state) => state.watch);
@@ -94,7 +83,7 @@ export const Search = (props) => {
   const SearchCountry = () => {
     const selectedCountry = countryList.map((item) => {
       return (
-        <View>
+        <View style={{ flex: 1 }}>
           <TouchableOpacity
             onPress={() => {
               if (country != item) {
@@ -105,16 +94,14 @@ export const Search = (props) => {
               setSearch([]);
             }}
           >
-            <View>
-              <Text style={styles.styleText}>{item}</Text>
-            </View>
+            <Text style={styles.styleText}>{item}</Text>
           </TouchableOpacity>
         </View>
       );
     });
     return (
-      <View>
-        <Text style={styles.styleText}>ประเทศ: </Text>
+      <View style={styles.fieldbar}>
+        <Text style={styles.styleText}>ประเทศ :</Text>
         {selectedCountry}
       </View>
     );
@@ -122,8 +109,8 @@ export const Search = (props) => {
 
   const SearchType = () => {
     return (
-      <View>
-        <Text style={styles.styleText}>ประเภท: </Text>
+      <View style={styles.fieldbar}>
+        <Text style={styles.styleText}>ประเภท :</Text>
         <TouchableOpacity
           onPress={() => {
             if (type != "ภาพยนตร์") {
@@ -171,8 +158,8 @@ export const Search = (props) => {
       );
     });
     return (
-      <View>
-        <Text style={styles.styleText}>แนว: </Text>
+      <View style={styles.fieldbar}>
+        <Text style={styles.styleText}>แนว :</Text>
         {selectedCategory}
       </View>
     );
@@ -187,6 +174,27 @@ export const Search = (props) => {
     }
   };
 
+  const ShowImages = (props) => {
+    const imgTo = { uri: props.data.img };
+    return (
+      <View style={{ flex: 1 }}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate({
+              name: "PlayTabNav",
+              params: props.data,
+            });
+            console.log("Go to Watch Video");
+          }}
+        >
+          <Image source={imgTo} style={styles.imagetitle}></Image>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const renderItem = ({ item }) => <ShowImages data={item} />;
+
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient
@@ -198,71 +206,76 @@ export const Search = (props) => {
       >
         <View
           style={{
-            flexDirection: "row",
+            flex: 1,
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "stretch",
             width: parseInt(WIDTH),
             height: parseInt(HEIGHT * 0.1),
-            backgroundColor: "black",
           }}
         >
           <View
             style={{
-              flex: 4,
+              flex: 1,
               flexDirection: "row",
               paddingTop: parseInt(HEIGHT * 0.05),
+              backgroundColor: "black",
             }}
           >
-            <View style={{ flex: 1, flexDirection: "row" }}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.goBack();
-                  console.log("Go Home");
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+                console.log("Go Home");
+              }}
+              style={{
+                flex: 1,
+                borderWidth: 2,
+              }}
+            >
+              <Entypo
+                name="chevron-small-left"
+                size={32}
+                color="#006262"
+                style={{ position: "absolute", top: 5, right: 3 }}
+              />
+            </TouchableOpacity>
+            <View style={{ flex: 4 }}>
+              <Text
+                style={{
+                  fontSize: 25,
+                  color: "#FAA307",
+                  flex: 3,
+                  marginLeft: -5,
                 }}
               >
-                <Entypo
-                  name="chevron-small-left"
-                  size={32}
-                  color="#006262"
-                  style={{ paddingTop: "2%", paddingLeft: "2%" }}
-                />
-              </TouchableOpacity>
-              <Text style={{ fontSize: 25, color: "#FAA307", paddingLeft: 0 }}>
                 ไออุ่น
               </Text>
             </View>
 
-            <View style={{ flex: 3, flexDirection: "row" }}>
-              <View style={{ marginBottom: 4 }}>
-                <Searchbar
-                  placeholder={"search from name"}
-                  placeholderTextColor="black"
-                  value={searchQry}
-                  onChangeText={setSearchQry}
-                  onSubmitEditing={doSearch}
-                  style={styles.searchbarStyle}
-                  inputStyle={{ color: "black" }}
-                />
-              </View>
-              {/* <View style={{flex: 1,flexDirection: "row-reverse",paddingTop: '2%'}}>
-                <Ionicons
-                  name="search"
-                  size={32}
-                  color="#006262"
-                  style={{ width:36, height:36, }}
-                />
-              </View> */}
+            <View style={{ flex: 10 }}>
+              <Searchbar
+                placeholder={"search from name"}
+                placeholderTextColor="black"
+                value={searchQry}
+                onChangeText={setSearchQry}
+                onSubmitEditing={doSearch}
+                style={styles.searchbarStyle}
+                inputStyle={{ color: "black" }}
+              />
             </View>
           </View>
+          <SearchCountry />
+          <SearchType />
+          <SearchCategory />
+          <View style={{ flex: 10 }}>
+            <FlatList
+              data={search}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+              numColumns={2}
+            />
+          </View>
         </View>
-
-        <SearchCountry />
-        <SearchType />
-        <SearchCategory />
-
-        <FlatList
-          data={search}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
       </LinearGradient>
     </SafeAreaView>
   );
@@ -291,18 +304,26 @@ const styles = StyleSheet.create({
   },
   styleText: {
     color: "white",
+    margin: 5,
   },
-  imageHead: {
-    width: parseInt(WIDTH),
+  imagetitle: {
+    width: parseInt(WIDTH / 2),
     height: 250,
-    marginBottom: 20,
+    margin: 5,
   },
   searchbarStyle: {
     backgroundColor: "gray",
-    marginLeft: 0,
     height: parseInt(HEIGHT * 0.05),
-    width: parseInt(WIDTH * 0.75),
+    width: parseInt(WIDTH * 0.7),
     alignItems: "flex-end",
     textColor: "pink",
+    marginLeft: -25,
+  },
+  fieldbar: {
+    flex: 0.5,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "stretch",
+    flexWrap: "wrap",
   },
 });

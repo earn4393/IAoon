@@ -22,27 +22,27 @@ export const Home = (props) => {
   const USER = useSelector((state) => state.user);
   const DATA = useSelector((state) => state.watch);
   const COUNTRY_ARRAY = useSelector((state) => state.field);
-  // const [user, setUser] = useState(USER[0].username);
-  console.log("home : ", USER);
+  const user = USER.length > 0 ? USER[0].username : "";
+  const [position, setPosition] = useState(0);
 
   const IMG = DATA.map((item) => {
     return item;
   });
 
+  useEffect(() => {
+    const toggle = setInterval(() => {
+      setPosition(position === 5 ? 0 : position + 1);
+    }, 3000);
+
+    return () => clearInterval(toggle);
+  });
+
   const ShowImages = (props) => {
-    // console.log(props)
-    // const getAllWatches = []
-    // for (var i=0; i < 5; i++){
-    //   getAllWatches.push()
-    // }
     const imgTo = { uri: props.data.img };
     return (
       <View style={{ flex: 1 }}>
         <TouchableOpacity
           onPress={() => {
-            // navigation.navigate("PlayTabNav", {
-            //   data: { text: "Hello" },
-            // });
             navigation.navigate({
               name: "PlayTabNav",
               params: props.data,
@@ -57,16 +57,12 @@ export const Home = (props) => {
   };
 
   const ShowImage = (props) => {
-    // const navigation = props.nav;
     const imgTo = { uri: props.data.img };
     const title = props.title;
     return (
       <View style={{ flex: 1 }}>
         <TouchableOpacity
           onPress={() => {
-            // navigation.navigate("PlayTabNav", {
-            //   data: { text: "Hello" },
-            // });
             navigation.navigate({
               name: "PlayTabNav",
               params: props.data,
@@ -95,11 +91,11 @@ export const Home = (props) => {
     );
   };
 
-  const FlatListTester = (props) => {
-    const showAllWatch = props.countryList.map((c) => {
+  const FlatListTester = () => {
+    const showAllWatch = COUNTRY_ARRAY.map((c) => {
       let watches = [];
       let countries = [];
-      props.data.map((item) => {
+      DATA.map((item) => {
         if (item.country == c.country) {
           watches.push(item);
           countries.push(item.country);
@@ -125,12 +121,11 @@ export const Home = (props) => {
     return <View>{showAllWatch}</View>;
   };
 
-  const FlatlistFavorite = (props) => {
-    if (props.user.length > 0) {
-      const user = props.user[0].username;
+  const FlatlistFavorite = () => {
+    if (user != "") {
       const watches = [];
 
-      const showFavorite = props.data.map((item) => {
+      const showFavorite = DATA.map((item) => {
         const index = item.love.indexOf(user);
         if (index != -1) {
           watches.push(item);
@@ -157,15 +152,6 @@ export const Home = (props) => {
   const renderIMG = ({ item }) => <ShowImages data={item} />;
   const renderItem = ({ item }) => <ShowImage data={item} />;
 
-  const [position, setPosition] = useState(0);
-  useEffect(() => {
-    const toggle = setInterval(() => {
-      setPosition(position === 5 ? 0 : position + 1);
-    }, 3000);
-
-    return () => clearInterval(toggle);
-  });
-
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient
@@ -187,8 +173,8 @@ export const Home = (props) => {
             keyExtractor={(item) => item.id}
             horizontal={true}
           />
-          <FlatlistFavorite data={DATA} user={USER} />
-          <FlatListTester data={DATA} countryList={COUNTRY_ARRAY} />
+          <FlatlistFavorite />
+          <FlatListTester />
         </ScrollView>
       </LinearGradient>
     </SafeAreaView>
