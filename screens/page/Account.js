@@ -5,8 +5,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useSelector,useDispatch } from 'react-redux';
 import { Entypo,Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import { updateIMGUser,updateUser,deleteUser } from "../../redux/slice/userSlice"
-import SelectDropdown from 'react-native-select-dropdown'
+import { updateIMGUser,updateUser,deleteUser } from "../../redux/slice/userSlice";
+import SelectDropdown from 'react-native-select-dropdown';
+import { Login } from './auth/Login';
 
 export const Account = (props) => {
   const navigation = props.nav;
@@ -56,6 +57,9 @@ export const Account = (props) => {
       const logOutProfile =()=>{
         dispatch(deleteUser(user[0]));
         console.log('Log out Profile');
+      }
+      const rePassword =()=>{
+        navigation.navigate('ChangePassword');
       }
 
       return (
@@ -140,15 +144,21 @@ export const Account = (props) => {
                 </Text>
               </TouchableOpacity>
           </View>
+            <TouchableOpacity
+              onPress={rePassword}
+              // style={styles.button}
+              >
+              <Text style={{fontSize: 25}}>
+                Reset Password
+              </Text>
+            </TouchableOpacity>
         </View>
       )
     }
     else if(user.length<=0){
       console.log('ไม่มีใครอยู่ก็ต้องออกอันนี้ดิ ออกนะ แต่เออเร่อทำไมก่อง')
       return (
-        <SafeAreaView>
-          <Text>ไม่อยากทำแล้วน้าาาาา</Text>
-        </SafeAreaView>
+          <Login nav={navigation}/>
       )
     }
   }
