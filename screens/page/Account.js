@@ -17,6 +17,8 @@ import * as ImagePicker from "expo-image-picker";
 import { updateIMGUser,updateUser,deleteUser } from "../../redux/slice/userSlice";
 import SelectDropdown from 'react-native-select-dropdown';
 import { Login } from './auth/Login';
+import * as UserModel from '../../firebase/userModel';
+import * as AuthModel from "../../firebase/authModel";
 
 export const Account = (props) => {
   const navigation = props.nav;
@@ -56,10 +58,18 @@ export const Account = (props) => {
         }
         setImage(pickerResult.uri);
         dispatch(updateIMGUser({img:pickerResult.uri}));
-        Alert.alert('Save your image already');
+        UserModel.editUser(user[0].id,username,firstName,lastName,sex,pickerResult.uri,success)
+        dispatch(updateUser({username:username,firstName:firstName,lastName:lastName,sex:sex}))
+        // Alert.alert('Save your image already');
       };
 
+      const success = () => {
+        console.log('Edit Profile success')
+        Alert.alert('Save your proflie already');
+      }
+
       const editProfile =()=>{
+        UserModel.editUser(user[0].id,username,firstName,lastName,sex,image,success)
         dispatch(updateUser({username:username,firstName:firstName,lastName:lastName,sex:sex}))
         console.log('Edit Profile')
         Alert.alert('Save your proflie already');
@@ -67,16 +77,13 @@ export const Account = (props) => {
     
       const logOutProfile =()=>{
         dispatch(deleteUser(user[0]));
+        AuthModel.signOut(deleteUserStore, unsuccess);
+        console.log("Log out Profile");
       };
 
       const unsuccess = (msg) => {
         console.log(msg);
         Alert.alert(msg);
-      };
-
-      const logOutProfile = () => {
-        AuthModel.signOut(deleteUserStore, unsuccess);
-        console.log("Log out Profile");
       };
 
       const rePassword = () => {
@@ -165,6 +172,21 @@ export const Account = (props) => {
               }}
               buttonTextStyle={{ fontSize: 20, textAlign: "left" }}
             />
+
+            <TouchableOpacity
+              onPress={rePassword}
+              style={{alignSelf:'flex-end',paddingRight:'8%',}}
+            >
+              <Text style={{ 
+                  fontSize: 16 ,
+                  paddingTop: 10 ,
+                  color:'#9AD3DA',
+                  textDecorationLine: "underline",
+              }}>
+                Reset Password
+              </Text>
+            </TouchableOpacity>
+
           </View>
           <View
             style={{
@@ -182,16 +204,16 @@ export const Account = (props) => {
               <Text style={{ fontSize: 25 }}>Log out</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={rePassword}
             // style={styles.button}
           >
             <Text style={{ fontSize: 25 }}>Reset Password</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       );
     } else if (user.length <= 0) {
-      console.log("ไม่มีใครอยู่ก็ต้องออกอันนี้ดิ ออกนะ แต่เออเร่อทำไมก่อง");
+      // console.log("ไม่มีใครอยู่ก็ต้องออกอันนี้ดิ ต้อง log in ก่อนนะ");
       return <Login nav={navigation} />;
     }
   };

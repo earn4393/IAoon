@@ -22,7 +22,7 @@ export const Home = (props) => {
   const USER = useSelector((state) => state.user);
   const DATA = useSelector((state) => state.watch);
   const COUNTRY_ARRAY = useSelector((state) => state.field);
-  const [user, setUser] = useState(USER[0].username);
+  // const [user, setUser] = useState(USER[0].username);
   console.log("home : ", USER);
 
   const IMG = DATA.map((item) => {

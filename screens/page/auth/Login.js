@@ -194,8 +194,8 @@ export const Login = (props) => {
               <Text
                 style={{
                   fontSize: 15,
-                  color: "blue",
-                  textDecorationColor: "blue",
+                  color: "#9AD3DA",
+                  textDecorationColor: "#9AD3DA",
                   textDecorationLine: "underline",
                 }}
               >
