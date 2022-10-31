@@ -39,8 +39,6 @@ export const VideoPlay = (props) => {
 
   const imgTo = { uri: watch.img };
 
-  console.log("Love : ", love);
-
   const categories = watch.category.map((cat) => {
     return (
       <View>

@@ -1,7 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Dimensions } from "react-native";
-import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import Constants from "expo-constants";
 import { Splash } from "../Splash";
 import { TabNav } from "./TabNav";
 import { TabSearchNav } from "./TabSearchNav";

@@ -21,7 +21,6 @@ export const Recover = (props) => {
   const [email, setEmail] = useState("");
 
   const unsuccess = (msg) => {
-    console.log(msg);
     Alert.alert(msg);
   };
 

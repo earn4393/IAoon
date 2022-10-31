@@ -46,7 +46,6 @@ export const ChangePassword = (props) => {
   };
 
   const unsuccess = (msg) => {
-    console.log(msg);
     Alert.alert(msg);
   };
 
@@ -55,10 +54,6 @@ export const ChangePassword = (props) => {
     navigation.navigate("Account");
   };
   const onChangePassword = () => {
-    console.log("Change password now");
-    console.log(user[0].email);
-    console.log(password.oldPass);
-    console.log(password.newPass);
     if (password.newPass === password.confirmPass) {
       AuthModel.changePassword(
         user[0].email,

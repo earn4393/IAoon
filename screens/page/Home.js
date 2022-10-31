@@ -37,9 +37,6 @@ export const Home = (props) => {
     return () => clearInterval(toggle);
   });
 
-  console.log("Home USER : ", USER.length);
-  console.log("Home user : ", user);
-
   const ShowImages = (props) => {
     const imgTo = { uri: props.data.img };
     return (

@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import Constants from "expo-constants";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Home } from "../page/Home";

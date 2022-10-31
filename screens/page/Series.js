@@ -25,7 +25,6 @@ export const Series = (props) => {
     return item;
   });
 
-  console.log(IMG);
   const ShowImages = (props) => {
     const imgTo = { uri: props.data.img };
     return (

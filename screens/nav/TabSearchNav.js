@@ -8,11 +8,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
-import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Entypo, Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
 import { Search } from "../page/Search";
-import { useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 const HEIGHT = Dimensions.get("screen").height;

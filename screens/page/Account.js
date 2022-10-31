@@ -18,9 +18,10 @@ import {
   updateUser,
   deleteUser,
 } from "../../redux/slice/userSlice";
-import * as AuthModel from "../../firebase/authModel";
 import SelectDropdown from "react-native-select-dropdown";
 import { Login } from "./auth/Login";
+import * as UserModel from "../../firebase/userModel";
+import * as AuthModel from "../../firebase/authModel";
 
 export const Account = (props) => {
   const navigation = props.nav;
@@ -30,14 +31,8 @@ export const Account = (props) => {
 
   const selectSex = ["female", "male"];
 
-  console.log("Account : ", user[0]);
-
   const FindAccount = (user) => {
     user = user.user;
-    // console.log("Account มีอะไรออกไหม");
-    // console.log(user);
-    // console.log("user มีกี่คนกันแน่: ", user.length);
-    // console.log(username)
     if (user.length > 0) {
       const getImage = user[0].img;
       const [image, setImage] = useState(getImage);
@@ -45,7 +40,6 @@ export const Account = (props) => {
       const [firstName, setFirstName] = useState(user[0].firstName);
       const [lastName, setLastName] = useState(user[0].lastName);
       const [sex, setSex] = useState(user[0].sex);
-      // console.log(user[0]);
 
       let openImagePickerAsync = async () => {
         let perm = await ImagePicker.requestCameraPermissionsAsync();
@@ -62,10 +56,15 @@ export const Account = (props) => {
         }
         setImage(pickerResult.uri);
         dispatch(updateIMGUser({ img: pickerResult.uri }));
-        Alert.alert("Save your image already");
-      };
-
-      const editProfile = () => {
+        UserModel.editUser(
+          user[0].id,
+          username,
+          firstName,
+          lastName,
+          sex,
+          pickerResult.uri,
+          success
+        );
         dispatch(
           updateUser({
             username: username,
@@ -74,8 +73,35 @@ export const Account = (props) => {
             sex: sex,
           })
         );
-        // console.log("Edit Profile");
+        // Alert.alert('Save your image already');
+      };
+
+      const success = () => {
+        dispatch(
+          updateUser({
+            username: username,
+            firstName: firstName,
+            lastName: lastName,
+            sex: sex,
+          })
+        );
         Alert.alert("Save your proflie already");
+      };
+
+      const editProfile = () => {
+        UserModel.editUser(
+          user[0].id,
+          username,
+          firstName,
+          lastName,
+          sex,
+          image,
+          success
+        );
+      };
+
+      const logOutProfile = () => {
+        AuthModel.signOut(deleteUserStore, unsuccess);
       };
 
       const deleteUserStore = () => {
@@ -86,10 +112,6 @@ export const Account = (props) => {
       const unsuccess = (msg) => {
         console.log(msg);
         Alert.alert(msg);
-      };
-
-      const logOutProfile = () => {
-        AuthModel.signOut(deleteUserStore, unsuccess);
       };
 
       const rePassword = () => {
@@ -178,6 +200,22 @@ export const Account = (props) => {
               }}
               buttonTextStyle={{ fontSize: 20, textAlign: "left" }}
             />
+
+            <TouchableOpacity
+              onPress={rePassword}
+              style={{ alignSelf: "flex-end", paddingRight: "8%" }}
+            >
+              <Text
+                style={{
+                  fontSize: 16,
+                  paddingTop: 10,
+                  color: "#9AD3DA",
+                  textDecorationLine: "underline",
+                }}
+              >
+                Reset Password
+              </Text>
+            </TouchableOpacity>
           </View>
           <View
             style={{
@@ -195,12 +233,12 @@ export const Account = (props) => {
               <Text style={{ fontSize: 25 }}>Log out</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={rePassword}
             // style={styles.button}
           >
             <Text style={{ fontSize: 25 }}>Reset Password</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       );
     } else if (user.length <= 0) {
