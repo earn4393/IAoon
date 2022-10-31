@@ -15,12 +15,17 @@ const regStyles = StyleSheet.create({
     flex:1,
     justifyContent:'center',
     alignItems:'center',
+    alignSelf: 'center',
     paddingLeft:20,
     borderWidth:1,
     borderColor:'gray',
-    borderRadius:40,
+    borderRadius: 40,
+    // height: 30,
+    width: 350,
+    margin:4,
     backgroundColor: "#9AD3DA",
     fontFamily:(Platform.OS === 'ios')? 'AppleSDGothicNeo-Thin' : 'Roboto',
+    fontSize:20,
   }
 })
 

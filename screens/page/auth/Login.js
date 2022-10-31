@@ -23,6 +23,8 @@ const WIDTH = Dimensions.get("screen").width;
 export const Login = (props) => {
   const navigation = props.nav;
 
+  const TopIMG = { uri: 'https://i.ibb.co/mXW1Fmf/unknown-1.png' }
+
   const authList = useSelector((state) => state.user);
   console.log(`authList = ${authList}`);
 
@@ -107,64 +109,52 @@ export const Login = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-        {/* <View style={{ flex: 1 }}></View> */}
 
-        {/* <View
-          style={{
-            flex: 4,
-            padding: 0,
-            borderWidth: 0,
-            alignItems: "center",
-          }}
-        ></View> */}
-        <View style={{ flex: 1 }}>
-          <View style={{ flex: 1 }}>
-          <AuthInput
-            placeholder="Email"
-            secureTextEntry={false}
-            value={credential.username}
-            onChangeText={(text) => setEmail(text)}
-          />
-          <AuthInput
-            placeholder="Password"
-            secureTextEntry={true}
-            value={credential.password}
-            onChangeText={(text) => setPassword(text)}
-          />
+        <View style={{ flex: 1 , flexDirection: "column" ,justifyContent:'center',alignItems: 'stretch',}}>
+          <View style={{ flex: 1.5,alignItems: "center",}}>
+            <Image
+              style={{width:parseInt(WIDTH) , height:parseInt(HEIGHT/4)}}
+              source={TopIMG}>
+            </Image>
           </View>
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1,}}>
+            <AuthInput
+              placeholder="Email"
+              secureTextEntry={false}
+              value={credential.username}
+              onChangeText={(text) => setEmail(text)}
+            />
+            <AuthInput
+              placeholder="Password"
+              secureTextEntry={true}
+              value={credential.password}
+              onChangeText={(text) => setPassword(text)}
+            />
+
+            
+          </View>
+
+          <View style={{ flex: 1.5 ,alignItems:'center',marginTop:10,}}>
             <TouchableOpacity
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "gray",
-                borderRadius: 40,
-              }}
+              style={styles.button}
               onPress={onSignInPress}
             >
-              <Text style={{ fontSize: 20 }}>Sign in</Text>
+              <Text style={{ fontSize: 20 ,color: '#000'}}>Sign in</Text>
             </TouchableOpacity>
-          {/* </View> */}
-          {/* <View style={{flex: 1 }}> */}
+
             <TouchableOpacity
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "gray",
-                borderRadius: 40,
-              }}
+              style={styles.button}
               onPress={onSignUpPress}
             >
-              <Text style={{ fontSize: 20 }}>Sign up</Text>
+              <Text style={{ fontSize: 20,color: '#000' }}>Sign up</Text>
             </TouchableOpacity>
-          </View>
-          <View style={{ flex: 1 }}>
-            <TouchableOpacity onPress={onForgotPress}>
+            <TouchableOpacity 
+              onPress={onForgotPress} 
+              style={{alignSelf:'flex-end',paddingRight:16}}
+              >
               <Text
                 style={{
-                  fontSize: 15,
+                  fontSize: 16,
                   color: "#9AD3DA",
                   textDecorationColor: "#9AD3DA",
                   textDecorationLine: "underline",
@@ -174,84 +164,9 @@ export const Login = (props) => {
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
-        {/* <View
-          style={{
-            flex: 1,
-            flexDirection: "column",
-            padding: 0,
-            borderWidth: 0,
-            justifyContent: "center",
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "gray",
-              borderRadius: 40,
-            }}
-            onPress={onSignInPress}
-          >
-            <Text style={{ fontSize: 20 }}>Sign in</Text>
-          </TouchableOpacity>
-        </View> */}
-        {/* <View
-          style={{
-            flex: 1,
-            flexDirection: "column",
-            paddingTop: 10,
-            borderWidth: 0,
-            justifyContent: "center",
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "gray",
-              borderRadius: 40,
-            }}
-            onPress={onSignUpPress}
-          >
-            <Text style={{ fontSize: 20 }}>Sign up</Text>
-          </TouchableOpacity>
-        </View> */}
-        {/* <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            padding: 5,
-            borderWidth: 0,
-            justifyContent: "center",
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "flex-start",
-              alignItems: "flex-end",
-              paddingRight: 10,
-            }}
-          >
-            <TouchableOpacity onPress={onForgotPress}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  color: "#9AD3DA",
-                  textDecorationColor: "#9AD3DA",
-                  textDecorationLine: "underline",
-                }}
-              >
-                Forgot Password ?
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View> */}
+          
 
-        <View style={{ flex: 1 }}></View>
+        </View>
       </LinearGradient>
     </SafeAreaView>
   );
@@ -303,5 +218,15 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginRight: 10,
     marginLeft: 10,
+  },
+  button: {
+    margin: 10,
+    backgroundColor: "#FAA307",
+    height: 48,
+    width: 350,
+    borderRadius: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 0,
   },
 });

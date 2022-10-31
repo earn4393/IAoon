@@ -174,6 +174,7 @@ export const Account = (props) => {
                 width: 350,
                 borderColor: "black",
                 borderWidth: 1,
+                borderRadius: 40,
               }}
               buttonTextStyle={{ fontSize: 20, textAlign: "left" }}
             />
@@ -264,8 +265,8 @@ const styles = StyleSheet.create({
     marginLeft: "2%",
     borderWidth: 1,
     fontFamily: Platform.OS === "ios" ? "AppleSDGothicNeo-Thin" : "Roboto",
-    // alignSelf:'center',
-    paddingLeft: 8,
+    borderRadius: 40,
+    paddingLeft: 20,
     marginTop: 13,
   },
   button: {
@@ -273,7 +274,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FAA307",
     height: 48,
     width: 200,
-    // borderRadius: 30,
+    borderRadius: 40,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 0,

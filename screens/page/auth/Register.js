@@ -17,6 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addUser } from "../../../redux/slice/userSlice";
 import SelectDropdown from "react-native-select-dropdown";
 import { Entypo } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
@@ -127,8 +128,7 @@ export const Register = (props) => {
       return;
     }
     setImage(pickerResult.uri);
-    dispatch(updateIMGUser({ img: pickerResult.uri }));
-    Alert.alert("Save your image already");
+    Alert.alert("Select your image already");
   };
 
   return (
@@ -219,6 +219,7 @@ export const Register = (props) => {
                   width: 350,
                   borderColor: "black",
                   borderWidth: 1,
+                  borderRadius: 40,
                 }}
                 buttonTextStyle={{ fontSize: 20, textAlign: "left" }}
               />
@@ -302,7 +303,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FAA307",
     height: 48,
     width: 200,
-    // borderRadius: 30,
+    borderRadius: 40,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 0,

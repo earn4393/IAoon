@@ -79,40 +79,39 @@ export const ChangePassword = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-        <View style={{ flex: 3 }}>
-          <AuthInput
-            placeholder="old password"
-            secureTextEntry={true}
-            value={password.oldPass}
-            onChangeText={(text) => setOldPass(text)}
-          />
-          <AuthInput
-            placeholder="new password"
-            secureTextEntry={true}
-            value={password.newPass}
-            onChangeText={(text) => setNewPass(text)}
-          />
-          <AuthInput
-            placeholder="confirm new password"
-            secureTextEntry={true}
-            value={password.confirmPass}
-            onChangeText={(text) => setConfirmPass(text)}
-          />
-          <TouchableOpacity
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "gray",
-              borderRadius: 40,
-              marginVertical: 20,
-            }}
-            onPress={onChangePassword}
-          >
-            <Text style={{ fontSize: 20 }}>Change Password</Text>
-          </TouchableOpacity>
+        <View style={{ flex: 1, flexDirection: "column", alignItems: "center",justifyContent:'center',}}>
+          <View style={{ flex: 0.5,}}></View>
+          <View style={styles.backgroundButton}>
+            <AuthInput
+              placeholder="old password"
+              secureTextEntry={true}
+              value={password.oldPass}
+              onChangeText={(text) => setOldPass(text)}
+            />
+            <AuthInput
+              placeholder="new password"
+              secureTextEntry={true}
+              value={password.newPass}
+              onChangeText={(text) => setNewPass(text)}
+            />
+            <AuthInput
+              placeholder="confirm new password"
+              secureTextEntry={true}
+              value={password.confirmPass}
+              onChangeText={(text) => setConfirmPass(text)}
+            />
+            <View style={{ flex: 1,marginTop: 10,}}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={onChangePassword}
+              >
+                <Text style={{ fontSize: 20 }}>Change Password</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
-        <View style={{ flex: 2 }}></View>
+          
+        <View style={{ flex: 0.5, }}></View>
       </LinearGradient>
     </SafeAreaView>
   );
@@ -169,10 +168,21 @@ const styles = StyleSheet.create({
     margin: 10,
     backgroundColor: "#FAA307",
     height: 48,
-    width: 200,
-    // borderRadius: 30,
+    width: 350,
+    borderRadius: 40,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 0,
   },
+  backgroundButton: {
+    flex:1 , 
+    flexDirection: "column",
+    backgroundColor:'rgba(255, 255, 255, 0.1)',
+    paddingTop:10,
+    borderColor: 'rgba(0, 0, 0, 0.2)',
+    borderBottomWidth:4,
+    borderRightWidth:2,
+    borderRadius:10,
+  }
+
 });
