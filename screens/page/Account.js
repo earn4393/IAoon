@@ -76,8 +76,13 @@ export const Account = (props) => {
       }
     
       const logOutProfile =()=>{
-        dispatch(deleteUser(user[0]));
+        // dispatch(deleteUser(user[0]));
         AuthModel.signOut(deleteUserStore, unsuccess);
+        console.log("Log out Profile");
+      };
+
+      const deleteUserStore = () => {
+        dispatch(deleteUser(user[0]));
         console.log("Log out Profile");
       };
 

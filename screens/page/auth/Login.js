@@ -107,29 +107,75 @@ export const Login = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-        <View style={{ flex: 1 }}></View>
+        {/* <View style={{ flex: 1 }}></View> */}
 
-        <View
+        {/* <View
           style={{
             flex: 4,
             padding: 0,
             borderWidth: 0,
             alignItems: "center",
           }}
-        ></View>
-        <AuthInput
-          placeholder="Email"
-          secureTextEntry={false}
-          value={credential.username}
-          onChangeText={(text) => setEmail(text)}
-        />
-        <AuthInput
-          placeholder="Password"
-          secureTextEntry={true}
-          value={credential.password}
-          onChangeText={(text) => setPassword(text)}
-        />
-        <View
+        ></View> */}
+        <View style={{ flex: 1 }}>
+          <View style={{ flex: 1 }}>
+          <AuthInput
+            placeholder="Email"
+            secureTextEntry={false}
+            value={credential.username}
+            onChangeText={(text) => setEmail(text)}
+          />
+          <AuthInput
+            placeholder="Password"
+            secureTextEntry={true}
+            value={credential.password}
+            onChangeText={(text) => setPassword(text)}
+          />
+          </View>
+          <View style={{ flex: 1 }}>
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "gray",
+                borderRadius: 40,
+              }}
+              onPress={onSignInPress}
+            >
+              <Text style={{ fontSize: 20 }}>Sign in</Text>
+            </TouchableOpacity>
+          {/* </View> */}
+          {/* <View style={{flex: 1 }}> */}
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "gray",
+                borderRadius: 40,
+              }}
+              onPress={onSignUpPress}
+            >
+              <Text style={{ fontSize: 20 }}>Sign up</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ flex: 1 }}>
+            <TouchableOpacity onPress={onForgotPress}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: "#9AD3DA",
+                  textDecorationColor: "#9AD3DA",
+                  textDecorationLine: "underline",
+                }}
+              >
+                Forgot Password ?
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        {/* <View
           style={{
             flex: 1,
             flexDirection: "column",
@@ -150,8 +196,8 @@ export const Login = (props) => {
           >
             <Text style={{ fontSize: 20 }}>Sign in</Text>
           </TouchableOpacity>
-        </View>
-        <View
+        </View> */}
+        {/* <View
           style={{
             flex: 1,
             flexDirection: "column",
@@ -172,8 +218,8 @@ export const Login = (props) => {
           >
             <Text style={{ fontSize: 20 }}>Sign up</Text>
           </TouchableOpacity>
-        </View>
-        <View
+        </View> */}
+        {/* <View
           style={{
             flex: 1,
             flexDirection: "row",
@@ -203,7 +249,7 @@ export const Login = (props) => {
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </View> */}
 
         <View style={{ flex: 1 }}></View>
       </LinearGradient>
