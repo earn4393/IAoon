@@ -6,6 +6,7 @@ import {
   Alert,
   StyleSheet,
   Dimensions,
+  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AuthInput from "./AuthInput";
@@ -95,20 +96,19 @@ export const Login = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-<<<<<<< HEAD
+
 
         <View style={{ flex: 1 , flexDirection: "column" ,justifyContent:'center',alignItems: 'stretch',}}>
-          <View style={{ flex: 1.5,alignItems: "center",}}>
+          <View style={{ flex: 2,alignItems: "center",}}>
             <Image
               style={{width:parseInt(WIDTH) , height:parseInt(HEIGHT/4)}}
               source={TopIMG}>
             </Image>
           </View>
-          <View style={{ flex: 1,}}>
-=======
-        <View style={{ flex: 1 }}>
+          {/* <View style={{ flex: 1,}}> */}
+
+        {/* <View style={{ flex: 1 }}> */}
           <View style={{ flex: 1 }}>
->>>>>>> refs/remotes/origin/main
             <AuthInput
               placeholder="Email"
               secureTextEntry={false}
@@ -121,24 +121,17 @@ export const Login = (props) => {
               value={credential.password}
               onChangeText={(text) => setPassword(text)}
             />
-<<<<<<< HEAD
-
-            
-=======
->>>>>>> refs/remotes/origin/main
           </View>
 
-          <View style={{ flex: 1.5 ,alignItems:'center',marginTop:10,}}>
+          <View style={{ flex: 2 ,alignItems:'center',marginTop:10,}}>
             <TouchableOpacity
               style={styles.button}
               onPress={onSignInPress}
             >
               <Text style={{ fontSize: 20 ,color: '#000'}}>Sign in</Text>
             </TouchableOpacity>
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/main
+
             <TouchableOpacity
               style={styles.button}
               onPress={onSignUpPress}
@@ -149,7 +142,6 @@ export const Login = (props) => {
               onPress={onForgotPress} 
               style={{alignSelf:'flex-end',paddingRight:16}}
               >
-<<<<<<< HEAD
               <Text
                 style={{
                   fontSize: 16,
@@ -158,20 +150,18 @@ export const Login = (props) => {
                   textDecorationLine: "underline",
                 }}
               >
-=======
->>>>>>> refs/remotes/origin/main
                 Forgot Password ?
               </Text>
             </TouchableOpacity>
           </View>
-<<<<<<< HEAD
+
           
 
+        {/* </View> */}
+
         </View>
-=======
-        </View>
-        <View style={{ flex: 1 }}></View>
->>>>>>> refs/remotes/origin/main
+        {/* <View style={{ flex: 0.5 }}></View> */}
+
       </LinearGradient>
     </SafeAreaView>
   );
