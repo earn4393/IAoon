@@ -8,6 +8,7 @@ import * as ImagePicker from "expo-image-picker";
 import { updateIMGUser,updateUser,deleteUser } from "../../redux/slice/userSlice";
 import SelectDropdown from 'react-native-select-dropdown';
 import { Login } from './auth/Login';
+import * as UserModel from '../../firebase/userModel';
 
 export const Account = (props) => {
   const navigation = props.nav;
@@ -45,13 +46,21 @@ export const Account = (props) => {
         }
         setImage(pickerResult.uri);
         dispatch(updateIMGUser({img:pickerResult.uri}));
-        Alert.alert('Save your image already');
+        UserModel.editUser(user[0].id,username,firstName,lastName,sex,pickerResult.uri,success)
+
+        // Alert.alert('Save your image already');
       };
 
+      const success = () => {
+        console.log('Edit Profile success')
+        Alert.alert('Save your proflie already');
+      }
+
       const editProfile =()=>{
+        UserModel.editUser(user[0].id,username,firstName,lastName,sex,image,success)
         dispatch(updateUser({username:username,firstName:firstName,lastName:lastName,sex:sex}))
         console.log('Edit Profile')
-        Alert.alert('Save your proflie already');
+        // Alert.alert('Save your proflie already');
       }
     
       const logOutProfile =()=>{

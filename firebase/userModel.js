@@ -30,3 +30,16 @@ export const addUser = (profile, success) => {
       console.error(`Cannot insert profile due to ${err}`);
     });
 };
+
+export const editUser = (id,newUsername,newFirstName,newLastName,newSex,newImg,success) => {
+  const docref = userCall
+  .doc(id)
+  .update({username:newUsername,firstName:newFirstName,lastName:newLastName,sex:newSex,img:newImg})
+  .then((doc) => {
+    success(doc);
+    // console.log('editUser : ',doc)
+  })
+  .catch((err) => {
+    console.error(`cannot update editUser due to ${err}`);
+  });
+}
