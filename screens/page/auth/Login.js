@@ -49,8 +49,8 @@ export const Login = (props) => {
       id: doc.id,
       email: doc.data().email,
       username: doc.data().username,
-      firstName: doc.data().firstname,
-      lastName: doc.data().lastname,
+      firstName: doc.data().firstName,
+      lastName: doc.data().lastName,
       sex: doc.data().sex,
       img: doc.data().img,
     };

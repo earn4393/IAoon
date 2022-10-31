@@ -30,14 +30,11 @@ export const VideoPlay = (props) => {
   const username = user[0].username;
   const watch = route.params.data;
   const dispatch = useDispatch();
-  const [like, setLike] = useState(false);
-  const [love, setLove] = useState({ love: watch.love });
+  const [love, setLove] = useState([...watch.love]);
+  const [like, setLike] = useState(love.indexOf(username) != -1 ? true : false);
   const imgTo = { uri: watch.img };
 
-  const index = love.love.indexOf(username);
-  if (index != -1) {
-    setLike(true);
-  }
+  console.log("Love : ", love);
 
   const categories = watch.category.map((cat) => {
     return (
@@ -47,24 +44,24 @@ export const VideoPlay = (props) => {
     );
   });
 
-  // const FlatListTester = () => {
-  //   const watches = DATA;
-  //   if (watches.length > 0) {
-  //     return (
-  //       <View style={{ paddingBottom: 10 }}>
-  //         <View>
-  //           <Text>You also like</Text>
-  //         </View>
-  //         <FlatList
-  //           data={watches}
-  //           renderItem={renderItem}
-  //           keyExtractor={(item) => item.id}
-  //           horizontal={true}
-  //         />
-  //       </View>
-  //     );
-  //   }
-  // };
+  const FlatListTester = () => {
+    const watches = data;
+    if (watches.length > 0) {
+      return (
+        <View style={{ paddingBottom: 10 }}>
+          <View>
+            <Text>You also like</Text>
+          </View>
+          <FlatList
+            data={watches}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            horizontal={true}
+          />
+        </View>
+      );
+    }
+  };
 
   const renderItem = ({ item }) => <ShowImages img={item.img} />;
 
@@ -90,9 +87,10 @@ export const VideoPlay = (props) => {
     // console.log("CARD + USER ON CLICK", card, user);
     // props.updateUser(card, user);
     let loveList;
+    let array;
     if (!like) {
-      loveList = [...love.love, username];
-      const array = {
+      loveList = [...love, username];
+      array = {
         id: watch.id,
         name: watch.name,
         review: watch.review,
@@ -103,9 +101,10 @@ export const VideoPlay = (props) => {
         img: watch.img,
         trailer: watch.trailer,
       };
+      WatchModel.updateWatch(array, likeWatched);
     } else {
-      loveList = love.love.filter((item) => item != username);
-      const array = {
+      loveList = love.filter((item) => item != username);
+      array = {
         id: watch.id,
         name: watch.name,
         review: watch.review,
@@ -116,8 +115,9 @@ export const VideoPlay = (props) => {
         img: watch.img,
         trailer: watch.trailer,
       };
+      WatchModel.updateWatch(array, unLikeWatched);
     }
-    setLove({ love: loveList });
+    setLove(loveList);
     setLike(!like);
   };
 
@@ -131,7 +131,7 @@ export const VideoPlay = (props) => {
         style={styles.background}
       >
         <View style={styles.container}>
-          <YoutubePlayer height={300} play={false} videoId={"6FWpO12Rr_I"} />
+          <YoutubePlayer height={300} play={false} videoId={watch.trailer} />
 
           <ScrollView style={styles.box}>
             <View>

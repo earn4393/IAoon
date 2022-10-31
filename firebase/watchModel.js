@@ -15,8 +15,12 @@ export const getAllWatches = async (success1, success2) => {
   });
 };
 
-export const updateWatch = async (watch) => {
-  console.log("11111111111111111111111111");
-  console.log(watch.love);
-  const doc = await watchCall.doc(watch.id).set(watch);
+export const updateWatch = async (watch, success) => {
+  console.log(watch.id);
+  const doc = await watchCall
+    .doc(watch.id)
+    .set(watch)
+    .then(() => {
+      success();
+    });
 };
