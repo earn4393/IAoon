@@ -69,3 +69,24 @@ export const recoverPassword = (email, success, unsuccess) => {
       unsuccess(err.code + " " + err.message);
     });
 };
+
+export const changePassword = (
+  email,
+  oldpassword,
+  newpassword,
+  success,
+  unsuccess
+) => {
+  auth
+    .signInWithEmailAndPassword(email, oldpassword)
+    .then((userCredential) => {
+      let user = userCredential.user;
+      user
+        .updatePassword(newpassword)
+        .then(success("You password has been Change"))
+        .catch((err) => {});
+    })
+    .catch((e) => {
+      unsuccess(e.code + " " + e.message);
+    });
+};

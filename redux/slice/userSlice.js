@@ -52,15 +52,15 @@ const userSlice = createSlice({
         }
       });
     },
-    deleteUser(state, action){
+    deleteUser(state, action) {
       console.log(`deleteUser activated payload = ${action.payload.id}`);
       // return state.filter((item)=>item.id !== action.payload)
-      return []
-    }
+      return [];
+    },
   },
 });
 
 console.log(userSlice);
 const { actions, reducer } = userSlice;
-export const { addUser, updateIMGUser ,updateUser ,deleteUser } = actions;
+export const { addUser, updateIMGUser, updateUser, deleteUser } = actions;
 export default reducer;

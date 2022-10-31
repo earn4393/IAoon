@@ -24,7 +24,7 @@ export const addUser = (profile, success) => {
   const docRef = userCall
     .add(profile)
     .then(() => {
-      success();
+      success(profile);
     })
     .catch((err) => {
       console.error(`Cannot insert profile due to ${err}`);

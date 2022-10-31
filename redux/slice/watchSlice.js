@@ -73,7 +73,17 @@ const watchSlice = createSlice({
       console.log("updateTodo actived payload");
       state.map((item) => {
         if (item.id === action.payload.id) {
-          return (item.love = action.payload.love);
+          item.love.push(action.payload.username);
+        }
+      });
+    },
+    deleteWatch(state, action) {
+      console.log("deleteTodo actived payload");
+      state.map((item) => {
+        if (item.id === action.payload.id) {
+          item.love = item.love.filter(
+            (username) => username != action.payload.username
+          );
         }
       });
     },
@@ -82,5 +92,5 @@ const watchSlice = createSlice({
 
 console.log(watchSlice);
 const { actions, reducer } = watchSlice;
-export const { addWatch, updateWatch } = actions;
+export const { addWatch, updateWatch, deleteWatch } = actions;
 export default reducer;

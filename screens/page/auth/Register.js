@@ -83,8 +83,8 @@ export const Register = (props) => {
   };
   // แจ้งเตือนแล้วไป
   const allSuccess = (doc) => {
-    Alert.alert(`${doc.firstname} has been added to system`);
-    // navigation.goBack()
+    Alert.alert(`${doc.username} has been added to system`);
+    navigation.navigate("Account");
   };
 
   const unsuccess = (msg) => {
@@ -92,13 +92,8 @@ export const Register = (props) => {
     Alert.alert(msg);
   };
 
-  const loadToStore = () => {
-    dispatch(addUser(profile));
-    allSuccess(profile);
-  };
-
   const loadToFirebase = () => {
-    userModel.addUser(profile, loadToStore);
+    userModel.addUser(profile, allSuccess);
   };
 
   const onRegisterPress = () => {
@@ -109,14 +104,13 @@ export const Register = (props) => {
       loadToFirebase,
       unsuccess
     );
-    navigation.navigate('Account');
   };
 
   // กลับไปหน้า login
   const onCancelPress = () => {
     // navigation.goBack()
-    console.log('จะออกจาก register')
-    navigation.navigate('Account');
+    console.log("จะออกจาก register");
+    navigation.navigate("Account");
   };
 
   // สำหรับใส่รูปภาพของ
@@ -133,8 +127,8 @@ export const Register = (props) => {
       return;
     }
     setImage(pickerResult.uri);
-    dispatch(updateIMGUser({img:pickerResult.uri}));
-    Alert.alert('Save your image already');
+    dispatch(updateIMGUser({ img: pickerResult.uri }));
+    Alert.alert("Save your image already");
   };
 
   return (
@@ -146,23 +140,30 @@ export const Register = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-        <View style={{flex: 1,flexDirection:'column'}}>
-          <View style={{flex:2,flexDirection:'column',alignItems:'center',paddingTop: 24}}>
-            <View style={{height:100,width:100,}}>
-              <TouchableOpacity
-                onPress={openImagePickerAsync}
-              >
-                <Image style={{width:'100%',height:'100%',borderRadius:100}}
-                source={{ uri: profile.img }}
-                >
-                </Image>
+        <View style={{ flex: 1, flexDirection: "column" }}>
+          <View
+            style={{
+              flex: 2,
+              flexDirection: "column",
+              alignItems: "center",
+              paddingTop: 24,
+            }}
+          >
+            <View style={{ height: 100, width: 100 }}>
+              <TouchableOpacity onPress={openImagePickerAsync}>
+                <Image
+                  style={{ width: "100%", height: "100%", borderRadius: 100 }}
+                  source={{ uri: profile.img }}
+                ></Image>
               </TouchableOpacity>
             </View>
-            <Text style={{fontSize:20,color: "#9AD3DA",paddingTop: 10}}>
+            <Text style={{ fontSize: 20, color: "#9AD3DA", paddingTop: 10 }}>
               รูปโปรไฟล์
             </Text>
           </View>
-          <View style={{ flex:5,flexDirection:'column',alignItems:'stretch',}}>
+          <View
+            style={{ flex: 5, flexDirection: "column", alignItems: "stretch" }}
+          >
             <AuthInput
               placeholder="Email"
               secureTextEntry={false}
@@ -176,10 +177,10 @@ export const Register = (props) => {
               onChangeText={(text) => setPassword(text)}
             />
             <AuthInput
-            placeholder="Username"
-            secureTextEntry={false}
-            value={profile.username}
-            onChangeText={(text) => setUsername(text)}
+              placeholder="Username"
+              secureTextEntry={false}
+              value={profile.username}
+              onChangeText={(text) => setUsername(text)}
             />
             <AuthInput
               placeholder="Firstname"
@@ -188,15 +189,15 @@ export const Register = (props) => {
               onChangeText={(text) => setFirstname(text)}
             />
             <AuthInput
-            placeholder="Lastname"
-            secureTextEntry={false}
-            value={profile.lastname}
-            onChangeText={(text) => setLastname(text)}
+              placeholder="Lastname"
+              secureTextEntry={false}
+              value={profile.lastname}
+              onChangeText={(text) => setLastname(text)}
             />
-            <View style={{alignItems:'center'}}>
+            <View style={{ alignItems: "center" }}>
               <SelectDropdown
                 data={selectSex}
-                defaultButtonText='Select your gender'
+                defaultButtonText="Select your gender"
                 onSelect={(selectedItem, index) => {
                   setSex(selectedItem);
                   console.log(selectedItem, index);
@@ -223,20 +224,22 @@ export const Register = (props) => {
               />
             </View>
           </View>
-          <View style={{flex: 2,borderWidth:0,borderColor:'yellow',margin:20,alignItems:'center',}}>
-            <View style={{paddingBottom: 10}}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={onRegisterPress}
-              >
+          <View
+            style={{
+              flex: 2,
+              borderWidth: 0,
+              borderColor: "yellow",
+              margin: 20,
+              alignItems: "center",
+            }}
+          >
+            <View style={{ paddingBottom: 10 }}>
+              <TouchableOpacity style={styles.button} onPress={onRegisterPress}>
                 <Text style={{ fontSize: 20 }}>Register</Text>
               </TouchableOpacity>
             </View>
             <View>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={onCancelPress}
-              >
+              <TouchableOpacity style={styles.button} onPress={onCancelPress}>
                 <Text style={{ fontSize: 20 }}>Cancel</Text>
               </TouchableOpacity>
             </View>
@@ -296,12 +299,12 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 10,
-    backgroundColor: '#FAA307',
+    backgroundColor: "#FAA307",
     height: 48,
     width: 200,
     // borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop:0,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 0,
   },
 });

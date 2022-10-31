@@ -16,12 +16,11 @@ import { Home } from "../page/Home";
 import { Series } from "../page/Series";
 import { Movies } from "../page/Movies";
 import { Account } from "../page/Account";
-// import { Search } from "../page/Search";
-// import { Detail } from "../page/Detail";
 import { StackNav } from "./StackNav";
 import { Login } from "../page/auth/Login";
 import { Register } from "../page/auth/Register";
 import { Recover } from "../page/auth/Recover";
+import { ChangePassword } from "../page/auth/ChangePassword";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();

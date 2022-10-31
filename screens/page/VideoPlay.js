@@ -12,10 +12,11 @@ import {
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
-// import { Video } from "expo-av";
-// import * as ScreenOrientation from "expo-screen-orientation";
 import { AntDesign } from "@expo/vector-icons";
 import YoutubePlayer from "react-native-youtube-iframe";
+import { updateWatch, deleteWatch } from "../../redux/slice/watchSlice";
+import { useDispatch } from "react-redux";
+import * as WatchModel from "../../firebase/watchModel";
 
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
@@ -23,11 +24,47 @@ const WIDTH = Dimensions.get("screen").width;
 export const VideoPlay = (props) => {
   const navigation = props.nav;
   const route = props.route;
-  // console.log("in Video play", route.params.data);
-  const DATA = useSelector((state) => state.watch);
-  const data = route.params.data;
-  const video = React.useRef(null);
-  // console.log("มันคืออะไรรรร: ", navigation);
+
+  const data = useSelector((state) => state.watch);
+  const user = useSelector((state) => state.user);
+  const username = user[0].username;
+  const watch = route.params.data;
+  const dispatch = useDispatch();
+  const [like, setLike] = useState(false);
+  const [love, setLove] = useState({ love: watch.love });
+  const imgTo = { uri: watch.img };
+
+  const index = love.love.indexOf(username);
+  if (index != -1) {
+    setLike(true);
+  }
+
+  const categories = watch.category.map((cat) => {
+    return (
+      <View>
+        <Text style={{ fontSize: 10, color: "white" }}>{cat}</Text>
+      </View>
+    );
+  });
+
+  // const FlatListTester = () => {
+  //   const watches = DATA;
+  //   if (watches.length > 0) {
+  //     return (
+  //       <View style={{ paddingBottom: 10 }}>
+  //         <View>
+  //           <Text>You also like</Text>
+  //         </View>
+  //         <FlatList
+  //           data={watches}
+  //           renderItem={renderItem}
+  //           keyExtractor={(item) => item.id}
+  //           horizontal={true}
+  //         />
+  //       </View>
+  //     );
+  //   }
+  // };
 
   const renderItem = ({ item }) => <ShowImages img={item.img} />;
 
@@ -41,114 +78,48 @@ export const VideoPlay = (props) => {
     );
   };
 
-  let watches = [];
-  const youAsloLike = [];
-  DATA.map((item) => {
-    if (item.type == data.type && item.id != data.id) {
-      watches.push(item);
-    }
-  });
-
-  const ShowDetail = (props) => {
-    const data = props.data;
-    // const data = props;
-    const imgTo = { uri: data.img };
-    // console.log(imgTo);
-    const [like, setLike] = useState(false);
-
-    const categories = data.category.map((cat) => {
-      return (
-        <View>
-          <Text style={{ fontSize: 10, color: "white" }}>{cat}</Text>
-        </View>
-      );
-    });
-
-    const addFavorite = (like) => {
-      // console.log("CARD + USER ON CLICK", card, user);
-      // props.updateUser(card, user);
-      setLike(!like);
-    };
-
-    return (
-      <View style={{ flex: 1, flexDirection: "column" }}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            paddingLeft: 14,
-            paddingBottom: 10,
-          }}
-        >
-          <Image source={imgTo} style={styles.imageHead}></Image>
-          <View style={{ flex: 1, flexDirection: "column" }}>
-            <View style={{ flex: 1, flexDirection: "row" }}>
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: "white",
-                }}
-              >
-                {data.name}
-              </Text>
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: "flex-end",
-                  paddingRight: 14,
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() => {
-                    addFavorite(like);
-                  }}
-                >
-                  {like ? (
-                    <AntDesign color={"red"} size={24} name="heart"></AntDesign>
-                  ) : (
-                    <AntDesign
-                      color={"white"}
-                      size={24}
-                      name="hearto"
-                    ></AntDesign>
-                  )}
-                </TouchableOpacity>
-              </View>
-            </View>
-            {categories}
-          </View>
-        </View>
-        <View style={{ flex: 1 }}>
-          <View
-            style={{ backgroundColor: "black", width: "auto", height: 100 }}
-          >
-            {/* หาวิธีให้ตัวอักษรขึ้นบรรทักใหม่ */}
-            <Text
-              style={{
-                fontSize: 10,
-                color: "white",
-                paddingTop: 8,
-                paddingLeft: 4,
-                paddingRight: 4,
-              }}
-            >
-              {data.review}
-            </Text>
-          </View>
-        </View>
-      </View>
-    );
+  const unLikeWatched = () => {
+    dispatch(deleteWatch({ id: watch.id, username: username }));
   };
 
-  // function setOrientation() {
-  //   if (Dimensions.get("window").height > Dimensions.get("window").width) {
-  //     //Device is in portrait mode, rotate to landscape mode.
-  //     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
-  //   } else {
-  //     //Device is in landscape mode, rotate to portrait mode.
-  //     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-  //   }
-  // }
+  const likeWatched = () => {
+    dispatch(updateWatch({ id: watch.id, username: username }));
+  };
+
+  const addFavorite = () => {
+    // console.log("CARD + USER ON CLICK", card, user);
+    // props.updateUser(card, user);
+    let loveList;
+    if (!like) {
+      loveList = [...love.love, username];
+      const array = {
+        id: watch.id,
+        name: watch.name,
+        review: watch.review,
+        type: watch.type,
+        country: watch.country,
+        category: watch.category,
+        love: loveList,
+        img: watch.img,
+        trailer: watch.trailer,
+      };
+    } else {
+      loveList = love.love.filter((item) => item != username);
+      const array = {
+        id: watch.id,
+        name: watch.name,
+        review: watch.review,
+        type: watch.type,
+        country: watch.country,
+        category: watch.category,
+        love: loveList,
+        img: watch.img,
+        trailer: watch.trailer,
+      };
+    }
+    setLove({ love: loveList });
+    setLike(!like);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -160,36 +131,84 @@ export const VideoPlay = (props) => {
         style={styles.background}
       >
         <View style={styles.container}>
-          {/* <Video
-            source={{
-              uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
-            }}
-            ref={video}
-            resizeMode="cover"
-            isLooping
-            onFullscreenUpdate={setOrientation}
-            useNativeControls
-            style={{ width: Dimensions.get("window").width, height: 200 }}
-          /> */}
           <YoutubePlayer height={300} play={false} videoId={"6FWpO12Rr_I"} />
+
           <ScrollView style={styles.box}>
             <View>
-              <ShowDetail data={data} />
-            </View>
-            <View>
-              {/* <FlatListTester watches={DATA} watch={data} /> */}
-              <View>
-                <View>
-                  <Text>You also like</Text>
+              <View style={{ flex: 1, flexDirection: "column" }}>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "row",
+                    paddingLeft: 14,
+                    paddingBottom: 10,
+                  }}
+                >
+                  <Image source={imgTo} style={styles.imageHead}></Image>
+                  <View style={{ flex: 1, flexDirection: "column" }}>
+                    <View style={{ flex: 1, flexDirection: "row" }}>
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          color: "white",
+                        }}
+                      >
+                        {watch.name}
+                      </Text>
+                      <View
+                        style={{
+                          flex: 1,
+                          alignItems: "flex-end",
+                          paddingRight: 14,
+                        }}
+                      >
+                        <TouchableOpacity onPress={addFavorite}>
+                          {like ? (
+                            <AntDesign
+                              color={"red"}
+                              size={24}
+                              name="heart"
+                            ></AntDesign>
+                          ) : (
+                            <AntDesign
+                              color={"white"}
+                              size={24}
+                              name="hearto"
+                            ></AntDesign>
+                          )}
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                    {categories}
+                  </View>
                 </View>
-                {/* <FlatList
-                  data={watches}
-                  renderItem={renderItem}
-                  keyExtractor={(item) => item.id}
-                  horizontal={true}
-                /> */}
+                <View style={{ flex: 1 }}>
+                  <View
+                    style={{
+                      backgroundColor: "black",
+                      width: "auto",
+                      height: 100,
+                    }}
+                  >
+                    {/* หาวิธีให้ตัวอักษรขึ้นบรรทักใหม่ */}
+                    <Text
+                      style={{
+                        fontSize: 10,
+                        color: "white",
+                        paddingTop: 8,
+                        paddingLeft: 4,
+                        paddingRight: 4,
+                      }}
+                    >
+                      {watch.review}
+                    </Text>
+                  </View>
+                </View>
               </View>
             </View>
+            <ScrollView style={styles.box}>
+              {/* <FlatListTester /> */}
+            </ScrollView>
           </ScrollView>
         </View>
       </LinearGradient>
