@@ -57,17 +57,7 @@ const watchSlice = createSlice({
   reducers: {
     addWatch(state, action) {
       console.log("addTodo actived payload");
-      state.push({
-        id: action.payload.id,
-        name: action.payload.name,
-        review: action.payload.review,
-        type: action.payload.type,
-        country: action.payload.country,
-        category: action.payload.category,
-        love: action.payload.love,
-        img: action.payload.img,
-        trailer: action.payload.trailer,
-      }); //proxy state
+      state.push(action.payload); //proxy state
     },
     updateWatch(state, action) {
       console.log("updateTodo actived payload");

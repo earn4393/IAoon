@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  Image,
   TouchableOpacity,
   Alert,
   StyleSheet,
   Dimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import regStyles from "../../styles/authStyle";
 import AuthInput from "./AuthInput";
 import { useSelector, useDispatch } from "react-redux";
 import { LinearGradient } from "expo-linear-gradient";
@@ -56,13 +54,6 @@ export const Login = (props) => {
     };
     dispatch(addUser(profile_state));
     navigation.navigate("Account");
-    // สำหรับ link ไปหา Account
-    // navigation.navigate({
-    //   name: "MainDrawer",
-    //   params: {
-    //     username: doc.data().username,
-    //   },
-    // });
   };
 
   const unsuccess = (msg) => {
@@ -73,7 +64,6 @@ export const Login = (props) => {
   const signInSucces = (email) => {
     console.log("sign in succes email = ", email);
     userModel.getUserByUsername(email, success, unsuccess);
-    // navigation.navigate("Account");
   };
 
   const onSignInPress = () => {
@@ -83,18 +73,15 @@ export const Login = (props) => {
       signInSucces,
       unsuccess
     );
-    // navigation.navigate("Account");
   };
 
   // สำหรับไปหน้า Register
   const onSignUpPress = () => {
-    // navigation.push("Register");
     navigation.navigate("Register");
   };
 
   // สำหรับไปหน้าลืมรหัส
   const onForgotPress = () => {
-    // navigation.push("Recover");
     navigation.navigate("Recover");
   };
 

@@ -3,13 +3,12 @@ import {
   StyleSheet,
   View,
   Text,
-  ImageBackground,
   TouchableOpacity,
   Image,
   Alert,
   TextInput,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector, useDispatch } from "react-redux";
 import { Entypo, Ionicons } from "@expo/vector-icons";
@@ -31,11 +30,13 @@ export const Account = (props) => {
 
   const selectSex = ["female", "male"];
 
+  console.log("Account : ", user[0]);
+
   const FindAccount = (user) => {
     user = user.user;
-    console.log("Account มีอะไรออกไหม");
-    console.log(user);
-    console.log("user มีกี่คนกันแน่: ", user.length);
+    // console.log("Account มีอะไรออกไหม");
+    // console.log(user);
+    // console.log("user มีกี่คนกันแน่: ", user.length);
     // console.log(username)
     if (user.length > 0) {
       const getImage = user[0].img;
@@ -44,7 +45,7 @@ export const Account = (props) => {
       const [firstName, setFirstName] = useState(user[0].firstName);
       const [lastName, setLastName] = useState(user[0].lastName);
       const [sex, setSex] = useState(user[0].sex);
-      console.log(user[0]);
+      // console.log(user[0]);
 
       let openImagePickerAsync = async () => {
         let perm = await ImagePicker.requestCameraPermissionsAsync();
@@ -73,12 +74,13 @@ export const Account = (props) => {
             sex: sex,
           })
         );
-        console.log("Edit Profile");
+        // console.log("Edit Profile");
         Alert.alert("Save your proflie already");
       };
 
       const deleteUserStore = () => {
         dispatch(deleteUser(user[0]));
+        console.log("Log out Profile");
       };
 
       const unsuccess = (msg) => {
@@ -88,7 +90,6 @@ export const Account = (props) => {
 
       const logOutProfile = () => {
         AuthModel.signOut(deleteUserStore, unsuccess);
-        console.log("Log out Profile");
       };
 
       const rePassword = () => {
@@ -203,13 +204,9 @@ export const Account = (props) => {
         </View>
       );
     } else if (user.length <= 0) {
-      console.log("ไม่มีใครอยู่ก็ต้องออกอันนี้ดิ ออกนะ แต่เออเร่อทำไมก่อง");
+      // console.log("ไม่มีใครอยู่ก็ต้องออกอันนี้ดิ ออกนะ แต่เออเร่อทำไมก่อง");
       return <Login nav={navigation} />;
     }
-  };
-
-  const LogOut = () => {
-    console.log("ไม่มีใครอยู่ก็ต้องออกอันนี้ดิ ออกนะ แต่เออเร่อทำไมก่อง");
   };
 
   return (

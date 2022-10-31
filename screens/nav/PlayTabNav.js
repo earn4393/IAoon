@@ -4,7 +4,6 @@ import {
   View,
   Text,
   Dimensions,
-  TextInput,
   TouchableOpacity,
 } from "react-native";
 import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";

@@ -4,7 +4,6 @@ import {
   View,
   Text,
   Dimensions,
-  TextInput,
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
@@ -16,11 +15,6 @@ import { Home } from "../page/Home";
 import { Series } from "../page/Series";
 import { Movies } from "../page/Movies";
 import { Account } from "../page/Account";
-import { StackNav } from "./StackNav";
-import { Login } from "../page/auth/Login";
-import { Register } from "../page/auth/Register";
-import { Recover } from "../page/auth/Recover";
-import { ChangePassword } from "../page/auth/ChangePassword";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -30,7 +24,7 @@ const WIDTH = Dimensions.get("screen").width;
 const CustomHeaderBar = (props) => {
   const { navigation, route, options, layout } = props;
   const [searchQry, setSearchQry] = useState(null);
-  // console.log("options: ", options);
+
   return (
     <View style={styles.headerContainer}>
       <View style={{ flex: 1, flexDirection: "row" }}>
@@ -45,14 +39,8 @@ const CustomHeaderBar = (props) => {
             // backgroundColor: "#191919",
           }}
         >
-          {/* <TextInput
-            style={styles.headerInput}
-            placeholder="ค้นหา"
-            placeholderTextColor="#9AD3DA"
-          /> */}
           <TouchableOpacity
             onPress={() => {
-              // navigation.navigate("PlayTabNav");
               navigation.navigate("TabSearchNav");
               console.log("Go to search page");
             }}
@@ -98,11 +86,6 @@ const Accounts = ({ navigation }) => {
   console.log("หน้า Account ใน TabNav.js");
   return <Account nav={navigation} />;
 };
-
-// const DescriptionScreen = ({ navigation }) => {
-//   console.log("หน้า Description ใน TabNav.js");
-//   return <Detail nav={navigation} />;
-// };
 
 export const TabNav = () => {
   return (
@@ -160,27 +143,6 @@ export const TabNav = () => {
           header: (props) => <CustomHeaderBarAccount {...props} />,
         }}
       />
-
-      {/* <Tab.Screen
-        name="Search"
-        component={SearchScreen}
-        options={{
-          header: (props) => <CustomHeadBarSearch {...props} />,
-          tabBarStyle: { display: "none" },
-          // tabBarVisible: false
-        }}
-      /> */}
-
-      {/* <Tab.Screen
-        name="Description"
-        component={DescriptionScreen}
-        options={{
-          title: "Description",
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="account" size={24} color={color} />
-          ),
-        }}
-      /> */}
     </Tab.Navigator>
   );
 };

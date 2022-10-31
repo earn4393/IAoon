@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import React, { useEffect } from "react";
+import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 
@@ -22,17 +22,20 @@ export const Series = (props) => {
   const COUNTRY_ARRAY = useSelector((state) => state.field);
 
   const IMG = DATA.map((item) => {
-    return item.img;
+    return item;
   });
 
+  console.log(IMG);
   const ShowImages = (props) => {
-    const imgTo = { uri: props.img };
-    // console.log(imgTo);
+    const imgTo = { uri: props.data.img };
     return (
       <View style={{ flex: 1 }}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("PlayTabNav");
+            navigation.navigate({
+              name: "PlayTabNav",
+              params: props.data,
+            });
             console.log("Go to Watch Video");
           }}
         >
@@ -43,14 +46,16 @@ export const Series = (props) => {
   };
 
   const ShowImage = (props) => {
-    // const navigation = props.nav;
-    const imgTo = { uri: props.img };
+    const imgTo = { uri: props.data.img };
     const title = props.title;
     return (
       <View style={{ flex: 1 }}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("PlayTabNav");
+            navigation.navigate({
+              name: "PlayTabNav",
+              params: props.data,
+            });
             console.log("Go to Watch Video");
           }}
         >
@@ -65,7 +70,9 @@ export const Series = (props) => {
                 marginTop: -30,
               }}
             >
-              <Text style={{ fontSize: 16, color: "white" }}>{title}</Text>
+              <Text style={{ fontSize: 16, color: "white" }}>
+                {props.data.name}
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -73,11 +80,11 @@ export const Series = (props) => {
     );
   };
 
-  const FlatListTester = (props) => {
-    const showAllWatch = props.countryList.map((c) => {
+  const FlatListTester = () => {
+    const showAllWatch = COUNTRY_ARRAY.map((c) => {
       let watches = [];
       let countries = [];
-      props.data.map((item) => {
+      DATA.map((item) => {
         if (item.country == c.country && item.type == "ซีรี่ย์") {
           watches.push(item);
           countries.push(item.country);
@@ -103,11 +110,8 @@ export const Series = (props) => {
     return <View>{showAllWatch}</View>;
   };
 
-  const renderInsideItem = ({ item }) => <FlatListTester title={item.name} />;
-  const renderIMG = ({ item }) => <ShowImages img={item} />;
-  const renderItem = ({ item }) => (
-    <ShowImage img={item.img} title={item.name} />
-  );
+  const renderIMG = ({ item }) => <ShowImages data={item} />;
+  const renderItem = ({ item }) => <ShowImage data={item} />;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -125,7 +129,7 @@ export const Series = (props) => {
             keyExtractor={(item) => item.id}
             horizontal={true}
           />
-          <FlatListTester data={DATA} countryList={COUNTRY_ARRAY} />
+          <FlatListTester />
         </ScrollView>
       </LinearGradient>
     </SafeAreaView>

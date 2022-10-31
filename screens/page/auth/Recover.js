@@ -11,7 +11,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import AuthInput from "./AuthInput";
 import * as AuthModel from "../../../firebase/authModel";
-import * as userModel from "../../../firebase/userModel";
 
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;

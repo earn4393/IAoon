@@ -14,7 +14,6 @@ import * as AuthModel from "../../../firebase/authModel";
 import * as userModel from "../../../firebase/userModel";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector, useDispatch } from "react-redux";
-import { addUser } from "../../../redux/slice/userSlice";
 import SelectDropdown from "react-native-select-dropdown";
 import { Entypo } from "@expo/vector-icons";
 

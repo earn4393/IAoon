@@ -17,17 +17,6 @@ import { Searchbar } from "react-native-paper";
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
 
-const ShowImages = (props) => {
-  const imgTo = { uri: props.img };
-  return (
-    <View style={{ flex: 1 }}>
-      <Image source={imgTo} style={styles.imageHead}></Image>
-    </View>
-  );
-};
-
-const renderItem = ({ item }) => <ShowImages img={item.img} />;
-
 export const Search = (props) => {
   const navigation = props.nav;
   const DATA = useSelector((state) => state.watch);
@@ -187,6 +176,27 @@ export const Search = (props) => {
     }
   };
 
+  const ShowImages = (props) => {
+    const imgTo = { uri: props.data.img };
+    return (
+      <View style={{ flex: 1 }}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate({
+              name: "PlayTabNav",
+              params: props.data,
+            });
+            console.log("Go to Watch Video");
+          }}
+        >
+          <Image source={imgTo} style={styles.imageHead}></Image>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const renderItem = ({ item }) => <ShowImages data={item} />;
+
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient
@@ -242,14 +252,6 @@ export const Search = (props) => {
                   inputStyle={{ color: "black" }}
                 />
               </View>
-              {/* <View style={{flex: 1,flexDirection: "row-reverse",paddingTop: '2%'}}>
-                <Ionicons
-                  name="search"
-                  size={32}
-                  color="#006262"
-                  style={{ width:36, height:36, }}
-                />
-              </View> */}
             </View>
           </View>
         </View>
