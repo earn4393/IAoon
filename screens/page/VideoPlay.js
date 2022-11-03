@@ -192,7 +192,7 @@ export const VideoPlay = (props) => {
                 </View>
               </View>
             ) : 
-              <View style={{flex: 3,}}>
+              <View style={{flex: 3.25,}}>
                 <YoutubePlayer height={300} play={false} videoId={play} />
               </View>
             }
@@ -210,7 +210,8 @@ export const VideoPlay = (props) => {
                 >
                   <Image source={imgTo} style={styles.imageHead}></Image>
                   <View style={{ flex: 1, flexDirection: "column" }}>
-                    <View style={{ flex: 1, flexDirection: "row" }}>
+                    <View style={{ flex: 2, flexDirection: "row" }}>
+                      <View style={{ flex: 1,width:100,height:100,}}>
                       <Text
                         style={{
                           fontSize: 20,
@@ -219,12 +220,15 @@ export const VideoPlay = (props) => {
                       >
                         {watch.name}
                       </Text>
+                      </View>
 
                       <View
                         style={{
-                          flex: 1,
-                          alignItems: "flex-end",
-                          paddingRight: 14,
+                          flex: 0.25,
+                          alignItems: "center",
+                          paddingRight: '4%',
+                          paddingTop: '2%',
+                          // backgroundColor:'yellow',
                         }}
                       >
                         <TouchableOpacity onPress={addFavorite}>
@@ -279,7 +283,7 @@ export const VideoPlay = (props) => {
                 {/* </SafeAreaView> */}
                 {/* </ScrollView> */}
                 
-            <ScrollView style={styles.box}>
+            <ScrollView style={styles.box2}>
               <FlatListTester />
             </ScrollView>
 
@@ -311,8 +315,13 @@ const styles = StyleSheet.create({
     //   backgroundColor: "white",
     //   borderWidth: 2,
     flex: 1,
-    paddingTop: 19,
-    //   margin: 20,
+    paddingTop: 12,
+  },
+  box2: {
+    flex: 1,
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 8,
   },
   video: {
     alignSelf: "center",
