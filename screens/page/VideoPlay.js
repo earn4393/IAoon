@@ -262,7 +262,7 @@ export const VideoPlay = (props) => {
                   }}
                 >
                   {/* หาวิธีให้ตัวอักษรขึ้นบรรทัดใหม่ */}
-                  <ScrollView style={{
+                  {/* <ScrollView style={{
                     backgroundColor: "black",
                     width: "auto",
                     // height: "auto",
@@ -270,11 +270,11 @@ export const VideoPlay = (props) => {
                     marginHorizontal: 16,
                     padding: 12,
                     borderRadius:10,
-                  }}>
+                  }}> */}
                     <Text style={{color: "#9AD3DA"}}>
                       เรื่องย่อ: {watch.review}
                     </Text>
-                  </ScrollView>
+                  {/* </ScrollView> */}
                     </View>
                 {/* </SafeAreaView> */}
                 {/* </ScrollView> */}
