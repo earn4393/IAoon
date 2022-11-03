@@ -42,7 +42,7 @@ export const VideoPlay = (props) => {
   const categories = watch.category.map((cat) => {
     return (
       <View>
-        <Text style={{ fontSize: 10, color: "white" }}>{cat}</Text>
+        <Text style={{ fontSize: 16, color: "white" }}>{cat}</Text>
       </View>
     );
   });
@@ -57,8 +57,8 @@ export const VideoPlay = (props) => {
     if (watches.length > 0) {
       return (
         <View style={{ paddingBottom: 10 }}>
-          <View>
-            <Text>You also like</Text>
+          <View style={{ margin:8,padding: 5,backgroundColor: '#FAA307',width: '30%' ,borderRadius:10,}}>
+            <Text style={{ fontSize:16,alignSelf:'center'}}>You also like:</Text>
           </View>
           <FlatList
             data={watches}
@@ -94,11 +94,13 @@ export const VideoPlay = (props) => {
 
   const ShowEpisode = (props) => {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1 ,margin:4,paddingLeft:12}}>
+        <ScrollView>
         <TouchableOpacity
           onPress={() => {
             setPlay(props.data);
           }}
+          style={styles.serieStyle}
         >
           <Text
             style={{
@@ -109,6 +111,7 @@ export const VideoPlay = (props) => {
             {props.index + 1}
           </Text>
         </TouchableOpacity>
+        </ScrollView>
       </View>
     );
   };
@@ -168,18 +171,34 @@ export const VideoPlay = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-        <View style={styles.container}>
-          <YoutubePlayer height={300} play={false} videoId={play} />
-          {watch.type != "ภาพยนตร์" ? (
-            <FlatList
-              data={watch.ep}
-              renderItem={renderPlay}
-              keyExtractor={(item) => item.id}
-              horizontal={true}
-            />
-          ) : null}
+        {/* <View style={styles.container}> */}
+          {/* <View style={{flex: 4,}}>
+            <YoutubePlayer height={300} play={false} videoId={play} />
+          </View> */}
+          
+          
+            {watch.type != "ภาพยนตร์" ? (
+              <View style={{ flex: 5}}>
+                <View style={{flex: 4,}}>
+                  <YoutubePlayer height={300} play={false} videoId={play} />
+                </View>
+                <View style={{flex: 1}}>
+                  <FlatList
+                    data={watch.ep}
+                    renderItem={renderPlay}
+                    keyExtractor={(item) => item.id}
+                    horizontal={true}
+                  />
+                </View>
+              </View>
+            ) : 
+              <View style={{flex: 3,}}>
+                <YoutubePlayer height={300} play={false} videoId={play} />
+              </View>
+            }
+         
+          <View style={{flex: 7}}>
           <ScrollView style={styles.box}>
-            <View>
               <View style={{ flex: 1, flexDirection: "column" }}>
                 <View
                   style={{
@@ -200,6 +219,7 @@ export const VideoPlay = (props) => {
                       >
                         {watch.name}
                       </Text>
+
                       <View
                         style={{
                           flex: 1,
@@ -227,35 +247,47 @@ export const VideoPlay = (props) => {
                     {categories}
                   </View>
                 </View>
-                <View style={{ flex: 1 }}>
-                  <View
-                    style={{
-                      backgroundColor: "black",
-                      width: "auto",
-                      height: 100,
-                    }}
-                  >
-                    {/* หาวิธีให้ตัวอักษรขึ้นบรรทักใหม่ */}
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        color: "white",
-                        paddingTop: 8,
-                        paddingLeft: 4,
-                        paddingRight: 4,
-                      }}
-                    >
-                      {watch.review}
-                    </Text>
-                  </View>
                 </View>
-              </View>
-            </View>
+                <View
+                  style={{
+                    backgroundColor: "black",
+                    width: "auto",
+                    height: "auto",
+                    // height:100,
+                    flex: 1,
+                    flexDirection: 'column',
+                    marginHorizontal: 16,
+                    padding: 12,
+                    borderRadius:10,
+                  }}
+                >
+                  {/* หาวิธีให้ตัวอักษรขึ้นบรรทัดใหม่ */}
+                  <ScrollView style={{
+                    backgroundColor: "black",
+                    width: "auto",
+                    // height: "auto",
+                    height:100,
+                    marginHorizontal: 16,
+                    padding: 12,
+                    borderRadius:10,
+                  }}>
+                    <Text style={{color: "#9AD3DA"}}>
+                      เรื่องย่อ: {watch.review}
+                    </Text>
+                  </ScrollView>
+                    </View>
+                {/* </SafeAreaView> */}
+                {/* </ScrollView> */}
+                
             <ScrollView style={styles.box}>
               <FlatListTester />
             </ScrollView>
+
+            
+
           </ScrollView>
-        </View>
+
+          </View>
       </LinearGradient>
     </SafeAreaView>
   );
@@ -292,4 +324,13 @@ const styles = StyleSheet.create({
     height: parseInt(HEIGHT / 5),
     marginRight: 10,
   },
+  serieStyle: {
+    height:50,
+    width:50,
+    backgroundColor:'#006262',
+    alignSelf:'center',
+    alignItems:'center',
+    justifyContent:'center',
+    borderRadius:10,
+  }
 });

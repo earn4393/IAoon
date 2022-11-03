@@ -29,13 +29,13 @@ export const Home = (props) => {
     return item;
   });
 
-  useEffect(() => {
-    const toggle = setInterval(() => {
-      setPosition(position === 5 ? 0 : position + 1);
-    }, 3000);
+  // useEffect(() => {
+  //   const toggle = setInterval(() => {
+  //     setPosition(position === 5 ? 0 : position + 1);
+  //   }, 3000);
 
-    return () => clearInterval(toggle);
-  });
+  //   return () => clearInterval(toggle);
+  // });
 
   const ShowImages = (props) => {
     const imgTo = { uri: props.data.img };
@@ -161,10 +161,6 @@ export const Home = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-        {/* <Slideshow
-          position={position} 
-          dataSource={IMG}
-        /> */}
 
         <ScrollView style={styles.box}>
           <FlatList
