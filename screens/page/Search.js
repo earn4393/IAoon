@@ -80,30 +80,20 @@ export const Search = (props) => {
     }
   });
 
-  const SearchCountry = () => {
-    const selectedCountry = countryList.map((item) => {
-      return (
-        <View style={{ flex: 1 }}>
-          <TouchableOpacity
-            onPress={() => {
-              if (country != item) {
-                setCountry(item);
-              } else {
-                setCountry("");
-              }
-              setSearch([]);
-            }}
-          >
-            <Text style={styles.styleText}>{item}</Text>
-          </TouchableOpacity>
-        </View>
-      );
-    });
+  const SearchCountry = (props) => {
     return (
-      <View style={styles.fieldbar}>
-        <Text style={styles.styleText}>ประเทศ :</Text>
-        {selectedCountry}
-      </View>
+      <TouchableOpacity
+        onPress={() => {
+          if (country != props.item) {
+            setCountry(props.item);
+          } else {
+            setCountry("");
+          }
+          setSearch([]);
+        }}
+      >
+        <Text style={styles.styleText}>{props.item}</Text>
+      </TouchableOpacity>
     );
   };
 
@@ -120,7 +110,6 @@ export const Search = (props) => {
             }
             setSearch([]);
           }}
-          style={{ flexDirection: "row" }}
         >
           <Text style={styles.styleText}>ภาพยนตร์</Text>
         </TouchableOpacity>
@@ -140,31 +129,22 @@ export const Search = (props) => {
     );
   };
 
-  const SearchCategory = () => {
-    const selectedCategory = categoryList.map((item) => {
-      return (
-        <TouchableOpacity
-          onPress={() => {
-            if (category != item) {
-              setCategory(item);
-            } else {
-              setCategory("");
-            }
-            setSearch([]);
-          }}
-        >
-          <Text style={styles.styleText}>{item}</Text>
-        </TouchableOpacity>
-      );
-    });
+  const SearchCategory = (props) => {
     return (
-      <View style={styles.fieldbar}>
-        <Text style={styles.styleText}>แนว :</Text>
-        {selectedCategory}
-      </View>
+      <TouchableOpacity
+        onPress={() => {
+          if (category != props.item) {
+            setCategory(props.item);
+          } else {
+            setCategory("");
+          }
+          setSearch([]);
+        }}
+      >
+        <Text style={styles.styleText}>{props.item}</Text>
+      </TouchableOpacity>
     );
   };
-
   const doSearch = () => {
     if (searchQry !== null || searchQry !== "") {
       let index = DATA.findIndex((item) => item.name.includes(searchQry));
@@ -194,6 +174,8 @@ export const Search = (props) => {
   };
 
   const renderItem = ({ item }) => <ShowImages data={item} />;
+  const renderCountry = ({ item }) => <SearchCountry item={item} />;
+  const renderCategory = ({ item }) => <SearchCategory item={item} />;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -264,9 +246,27 @@ export const Search = (props) => {
               />
             </View>
           </View>
-          <SearchCountry />
-          <SearchType />
-          <SearchCategory />
+          <View style={{ flex: 3, margin: 5, marginBottom: 20 }}>
+            {/* <SearchCountry />
+            <SearchCategory /> */}
+            <View style={styles.fieldbar}>
+              <Text style={styles.styleText}>ประเทศ :</Text>
+              <FlatList
+                data={countryList}
+                renderItem={renderCountry}
+                horizontal={true}
+              />
+            </View>
+            <SearchType />
+            <View style={styles.fieldbar}>
+              <Text style={styles.styleText}>แนว :</Text>
+              <FlatList
+                data={categoryList}
+                renderItem={renderCategory}
+                horizontal={true}
+              />
+            </View>
+          </View>
           <View style={{ flex: 10 }}>
             <FlatList
               data={search}
@@ -287,7 +287,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    // backgroundColor: 'orange',
   },
   background: {
     position: "absolute",
@@ -296,18 +295,13 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
   },
-  box: {
-    backgroundColor: "white",
-    borderWidth: 2,
-    flex: 1,
-    margin: 20,
-  },
   styleText: {
     color: "white",
     margin: 5,
   },
   imagetitle: {
-    width: parseInt(WIDTH / 2),
+    width: "auto",
+    maxWidth: parseInt(WIDTH / 2),
     height: 250,
     margin: 5,
   },
@@ -320,10 +314,10 @@ const styles = StyleSheet.create({
     marginLeft: -25,
   },
   fieldbar: {
-    flex: 0.5,
+    flex: 1,
     flexDirection: "row",
     justifyContent: "flex-start",
-    alignItems: "stretch",
     flexWrap: "wrap",
+    marginBottom: -20,
   },
 });

@@ -12,7 +12,7 @@ import {
 import React, { useState, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
-import Slideshow from "react-native-image-slider-show";
+// import Slideshow from "react-native-image-slider-show";
 
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
@@ -29,13 +29,12 @@ export const Home = (props) => {
     return item;
   });
 
-  useEffect(() => {
-    const toggle = setInterval(() => {
-      setPosition(position === 5 ? 0 : position + 1);
-    }, 3000);
-
-    return () => clearInterval(toggle);
-  });
+  // useEffect(() => {
+  // const toggle = setInterval(() => {
+  //   setPosition(position === 5 ? 0 : position + 1);
+  // }, 3000);
+  // return () => clearInterval(toggle);
+  // });
 
   const ShowImages = (props) => {
     const imgTo = { uri: props.data.img };
@@ -124,7 +123,6 @@ export const Home = (props) => {
   const FlatlistFavorite = () => {
     if (user != "") {
       const watches = [];
-
       const showFavorite = DATA.map((item) => {
         const index = item.love.indexOf(user);
         if (index != -1) {
@@ -173,6 +171,7 @@ export const Home = (props) => {
             keyExtractor={(item) => item.id}
             horizontal={true}
           />
+
           <FlatlistFavorite />
           <FlatListTester />
         </ScrollView>

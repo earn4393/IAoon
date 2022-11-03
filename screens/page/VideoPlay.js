@@ -47,30 +47,6 @@ export const VideoPlay = (props) => {
     );
   });
 
-  const FlatListTester = () => {
-    const watches = [];
-    data.map((item) => {
-      if (item.id != watch.id && item.type == watch.type) {
-        watches.push(item);
-      }
-    });
-    if (watches.length > 0) {
-      return (
-        <View style={{ paddingBottom: 10 }}>
-          <View>
-            <Text>You also like</Text>
-          </View>
-          <FlatList
-            data={watches}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            horizontal={true}
-          />
-        </View>
-      );
-    }
-  };
-
   const renderItem = ({ item }) => <ShowImages data={item} />;
   const renderPlay = ({ item, index }) => (
     <ShowEpisode data={item} index={index} />
@@ -111,6 +87,31 @@ export const VideoPlay = (props) => {
         </TouchableOpacity>
       </View>
     );
+  };
+
+  const FlatListTester = () => {
+    const watches = [];
+    data.map((item) => {
+      if (item.id != watch.id && item.type == watch.type) {
+        watches.push(item);
+      }
+    });
+
+    if (watches.length > 0) {
+      return (
+        <View style={{ paddingBottom: 10 }}>
+          <View>
+            <Text>You also like</Text>
+          </View>
+          <FlatList
+            data={watches}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            horizontal={true}
+          />
+        </View>
+      );
+    }
   };
 
   const unLikeWatched = () => {
@@ -235,7 +236,6 @@ export const VideoPlay = (props) => {
                       height: 100,
                     }}
                   >
-                    {/* หาวิธีให้ตัวอักษรขึ้นบรรทักใหม่ */}
                     <Text
                       style={{
                         fontSize: 10,
@@ -251,9 +251,8 @@ export const VideoPlay = (props) => {
                 </View>
               </View>
             </View>
-            <ScrollView style={styles.box}>
-              <FlatListTester />
-            </ScrollView>
+
+            <FlatListTester />
           </ScrollView>
         </View>
       </LinearGradient>
