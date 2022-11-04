@@ -9,7 +9,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState,useEffect,useCallback } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 import { AntDesign } from "@expo/vector-icons";
@@ -36,12 +36,33 @@ export const VideoPlay = (props) => {
   const [username, setUsername] = useState(
     user.length > 0 ? user[0].username : ""
   );
+  const [showMoreButton, setShowMoreButton] = useState(false);
+  const [textShown, setTextShown] = useState(false);
+  const [numLines, setNumLines] = useState(undefined);
+
+  const toggleTextShown = () => {
+    setTextShown(!textShown);
+  };
+
+  useEffect(() => {
+    setNumLines(textShown ? undefined : 3);
+  }, [textShown]);
+
+  const onTextLayout = useCallback(
+    (e) => {
+      if (e.nativeEvent.lines.length > 3 && !textShown) {
+        setShowMoreButton(true);
+        setNumLines(3);
+      }
+    },
+    [textShown],
+  );
 
   const imgTo = { uri: watch.img };
 
   const categories = watch.category.map((cat) => {
     return (
-      <View>
+      <View style={{flex:1, flexDirection: 'column',paddingRight:8}}>
         <Text style={{ fontSize: 16, color: "white" }}>{cat}</Text>
       </View>
     );
@@ -248,7 +269,9 @@ export const VideoPlay = (props) => {
                         </TouchableOpacity>
                       </View>
                     </View>
-                    {categories}
+                    <ScrollView horizontal={true}>
+                      {categories}
+                    </ScrollView>
                   </View>
                 </View>
                 </View>
@@ -275,9 +298,22 @@ export const VideoPlay = (props) => {
                     padding: 12,
                     borderRadius:10,
                   }}> */}
-                    <Text style={{color: "#9AD3DA"}}>
+                    <Text Text onTextLayout={onTextLayout} numberOfLines={textShown ? undefined : 3} ellipsizeMode="tail" style={{color: "#9AD3DA"}}>
                       เรื่องย่อ: {watch.review}
                     </Text>
+
+                    {showMoreButton ? (
+                      <Text 
+                        onPress={toggleTextShown} 
+                        style={{
+                                color: "#9AD3DA",
+                                textDecorationColor: "#9AD3DA",
+                                textDecorationLine: "underline",
+                                textAlign:'right',
+                              }}>
+                        {textShown ? 'Read Less' : 'Read More'}
+                      </Text>
+                    ) : null}
                   {/* </ScrollView> */}
                     </View>
                 {/* </SafeAreaView> */}
