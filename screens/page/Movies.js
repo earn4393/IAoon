@@ -59,15 +59,19 @@ export const Movies = (props) => {
             console.log("Go to Watch Video");
           }}
         >
-          <View style={{ paddingLeft: 10, paddingTop: 10 }}>
+          <View style={{ paddingLeft: 5, paddingTop: 10 ,paddingRight:5 }}>
             <Image source={imgTo} style={styles.imagetitle}></Image>
             <View
               style={{
                 flex: 1,
                 alignItems: "flex-end",
-                paddingRight: 4,
+                paddingRight: 8,
+                paddingTop:4,
                 marginBottom: 0,
-                marginTop: -30,
+                marginTop: 0,
+                width: parseInt(WIDTH / 2),
+                height: 'auto',
+                // backgroundColor:'pink',
               }}
             >
               <Text style={{ fontSize: 16, color: "white" }}>
@@ -164,7 +168,7 @@ const styles = StyleSheet.create({
   imagetitle: {
     width: parseInt(WIDTH / 2),
     height: 250,
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   countryBar: {
     backgroundColor: "#FAA307",
