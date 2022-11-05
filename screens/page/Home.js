@@ -12,7 +12,7 @@ import {
 import React, { useState, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
-// import Slideshow from "react-native-image-slider-show";
+import Slideshow from 'react-native-image-slider-show';
 
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
@@ -23,11 +23,27 @@ export const Home = (props) => {
   const DATA = useSelector((state) => state.watch);
   const COUNTRY_ARRAY = useSelector((state) => state.field);
   const user = USER.length > 0 ? USER[0].username : "";
+
+  const dataSource = []
+
+  DATA.map((item) => {
+    if (dataSource.length < 11) {
+      dataSource.push({ url: item.img });
+    }
+  });
+  
   const [position, setPosition] = useState(0);
 
-  const IMG = DATA.map((item) => {
-    return item;
+  useEffect(() => {
+  const toggle = setInterval(() => {
+    setPosition(position === dataSource.length ? 0 : position + 1);
+  }, 2000);
+  return () => clearInterval(toggle);
   });
+
+  // const IMG = DATA.map((item) => {
+  //   return item;
+  // });
 
   // useEffect(() => {
   // const toggle = setInterval(() => {
@@ -36,24 +52,24 @@ export const Home = (props) => {
   // return () => clearInterval(toggle);
   // });
 
-  const ShowImages = (props) => {
-    const imgTo = { uri: props.data.img };
-    return (
-      <View style={{ flex: 1 }}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate({
-              name: "PlayTabNav",
-              params: props.data,
-            });
-            console.log("Go to Watch Video");
-          }}
-        >
-          <Image source={imgTo} style={styles.imageHead}></Image>
-        </TouchableOpacity>
-      </View>
-    );
-  };
+  // const ShowImages = (props) => {
+  //   const imgTo = { uri: props.data.img };
+  //   return (
+  //     <View style={{ flex: 1 }}>
+  //       <TouchableOpacity
+  //         onPress={() => {
+  //           navigation.navigate({
+  //             name: "PlayTabNav",
+  //             params: props.data,
+  //           });
+  //           console.log("Go to Watch Video");
+  //         }}
+  //       >
+  //         <Image source={imgTo} style={styles.imageHead}></Image>
+  //       </TouchableOpacity>
+  //     </View>
+  //   );
+  // };
 
   const ShowImage = (props) => {
     const imgTo = { uri: props.data.img };
@@ -151,7 +167,7 @@ export const Home = (props) => {
     }
   };
 
-  const renderIMG = ({ item }) => <ShowImages data={item} />;
+  // const renderIMG = ({ item }) => <ShowImages data={item} />;
   const renderItem = ({ item }) => <ShowImage data={item} />;
 
   return (
@@ -163,18 +179,34 @@ export const Home = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-        {/* <Slideshow
-          position={position} 
-          dataSource={IMG}
-        /> */}
-
         <ScrollView style={styles.box}>
-          <FlatList
+          <View style={{paddingBottom: 10,}}>
+
+        <Slideshow
+            dataSource={dataSource}
+            position={position}
+            onPositionChanged={(position) => setPosition(position)}
+            indicatorSize={20}
+            height = {250}
+            onPress={({ url, index }) => {
+              console.log("index: ", index);
+              console.log("data: ", DATA[index]);
+              navigation.navigate({
+                name: "PlayTabNav",
+                params: DATA[index],
+              });
+            }}
+            // containerStyle = {{paddingTop: 10,paddingBottom: 10}}
+          />
+          </View>
+
+        
+          {/* <FlatList
             data={IMG}
             renderItem={renderIMG}
             keyExtractor={(item) => item.id}
             horizontal={true}
-          />
+          /> */}
 
           <FlatlistFavorite />
           <FlatListTester />

@@ -9,9 +9,10 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
+import Slideshow from 'react-native-image-slider-show';
 
 const HEIGHT = Dimensions.get("screen").height;
 const WIDTH = Dimensions.get("screen").width;
@@ -20,30 +21,48 @@ export const Movies = (props) => {
   const navigation = props.nav;
   const DATA = useSelector((state) => state.watch);
   const COUNTRY_ARRAY = useSelector((state) => state.field);
-  const scrollRef = React.createRef();
 
-  const IMG = DATA.map((item) => {
-    return item;
+  const dataSource = []
+
+  DATA.map((item) => {
+    if (dataSource.length < 6) {
+      if(item.type == 'ภาพยนตร์') {
+        dataSource.push({ url: item.img });
+      }
+    }
+  });
+  
+  const [position, setPosition] = useState(0);
+
+  useEffect(() => {
+  const toggle = setInterval(() => {
+    setPosition(position === dataSource.length ? 0 : position + 1);
+  }, 2000);
+  return () => clearInterval(toggle);
   });
 
-  const ShowImages = (props) => {
-    const imgTo = { uri: props.data.img };
-    return (
-      <View style={{ flex: 1 }}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate({
-              name: "PlayTabNav",
-              params: props.data,
-            });
-            console.log("Go to Watch Video");
-          }}
-        >
-          <Image source={imgTo} style={styles.imageHead}></Image>
-        </TouchableOpacity>
-      </View>
-    );
-  };
+  // const IMG = DATA.map((item) => {
+  //   return item;
+  // });
+
+  // const ShowImages = (props) => {
+  //   const imgTo = { uri: props.data.img };
+  //   return (
+  //     <View style={{ flex: 1 }}>
+  //       <TouchableOpacity
+  //         onPress={() => {
+  //           navigation.navigate({
+  //             name: "PlayTabNav",
+  //             params: props.data,
+  //           });
+  //           console.log("Go to Watch Video");
+  //         }}
+  //       >
+  //         <Image source={imgTo} style={styles.imageHead}></Image>
+  //       </TouchableOpacity>
+  //     </View>
+  //   );
+  // };
 
   const ShowImage = (props) => {
     const imgTo = { uri: props.data.img };
@@ -114,7 +133,7 @@ export const Movies = (props) => {
     return <View>{showAllWatch}</View>;
   };
 
-  const renderIMG = ({ item }) => <ShowImages data={item} />;
+  // const renderIMG = ({ item }) => <ShowImages data={item} />;
   const renderItem = ({ item }) => <ShowImage data={item} />;
 
   return (
@@ -127,12 +146,31 @@ export const Movies = (props) => {
         style={styles.background}
       >
         <ScrollView style={styles.box}>
-          <FlatList
+        <View style={{paddingBottom: 10,}}>
+          <Slideshow
+              dataSource={dataSource}
+              position={position}
+              onPositionChanged={(position) => setPosition(position)}
+              indicatorSize={20}
+              height = {250}
+              onPress={({ url, index }) => {
+                console.log("index: ", index);
+                console.log("data: ", DATA[index]);
+                // console.log("object: ", onPress);
+                navigation.navigate({
+                  name: "PlayTabNav",
+                  params: DATA[index],
+                });
+              }}
+              // containerStyle = {{paddingTop: 10,paddingBottom: 10}}
+            />
+          </View>
+          {/* <FlatList
             data={IMG}
             renderItem={renderIMG}
             keyExtractor={(item) => item.id}
             horizontal={true}
-          />
+          /> */}
           <FlatListTester />
         </ScrollView>
       </LinearGradient>
