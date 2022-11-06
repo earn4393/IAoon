@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 import React, { useState } from "react";
-import { Entypo, Ionicons } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 import { Searchbar } from "react-native-paper";
@@ -27,23 +27,13 @@ export const Search = (props) => {
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState([]);
 
-  let countryList = [];
-  let categoryList = [];
-  const field = DATA.map((item) => {
-    if (countryList.indexOf(item.country) == -1) {
-      countryList.push(item.country);
-    }
-
-    const categories = item.category.map((cat) => {
-      if (categoryList.indexOf(cat) == -1) {
-        categoryList.push(cat);
-      }
-    });
-  });
+  const countryList = [];
+  const categoryList = [];
 
   console.log(`country: ${country} type: ${type} category: ${category}`);
   DATA.map((item) => {
     const index = item.category.indexOf(category);
+
     if (country !== "" && type === "" && category === "") {
       if (item.country == country) {
         search.push(item);
@@ -78,6 +68,16 @@ export const Search = (props) => {
         search.push(item);
       }
     }
+
+    if (countryList.indexOf(item.country) == -1) {
+      countryList.push(item.country);
+    }
+
+    item.category.map((cat) => {
+      if (categoryList.indexOf(cat) == -1) {
+        categoryList.push(cat);
+      }
+    });
   });
 
   const SearchCountry = (props) => {
@@ -145,6 +145,7 @@ export const Search = (props) => {
       </TouchableOpacity>
     );
   };
+
   const doSearch = () => {
     if (searchQry !== null || searchQry !== "") {
       let index = DATA.findIndex((item) => item.name.includes(searchQry));
@@ -247,8 +248,6 @@ export const Search = (props) => {
             </View>
           </View>
           <View style={{ flex: 3, margin: 5, marginBottom: 20 }}>
-            {/* <SearchCountry />
-            <SearchCategory /> */}
             <View style={styles.fieldbar}>
               <Text style={styles.styleText}>ประเทศ :</Text>
               <FlatList

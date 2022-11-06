@@ -11,7 +11,7 @@ import {
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector, useDispatch } from "react-redux";
-import { Entypo, Ionicons } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import {
   updateIMGUser,
@@ -43,14 +43,12 @@ export const Account = (props) => {
 
       let openImagePickerAsync = async () => {
         let perm = await ImagePicker.requestCameraPermissionsAsync();
-        console.log("Add picture on Account page");
         if (perm === false) {
           Alert("Allow access to your files.");
           return;
         }
 
         let pickerResult = await ImagePicker.launchImageLibraryAsync();
-        console.log(pickerResult);
         if (pickerResult.cancelled === true) {
           return;
         }
@@ -154,7 +152,6 @@ export const Account = (props) => {
               value={username}
               onChangeText={(un) => {
                 setUsername(un);
-                console.log(un);
               }}
               style={[styles.textInput, { marginTop: 30 }]}
             />
@@ -178,7 +175,6 @@ export const Account = (props) => {
               defaultButtonText={sex}
               onSelect={(selectedItem, index) => {
                 setSex(selectedItem);
-                console.log(selectedItem, index);
               }}
               renderDropdownIcon={(focused) => {
                 return (
@@ -234,12 +230,6 @@ export const Account = (props) => {
               <Text style={{ fontSize: 25 }}>Log out</Text>
             </TouchableOpacity>
           </View>
-          {/* <TouchableOpacity
-            onPress={rePassword}
-            // style={styles.button}
-          >
-            <Text style={{ fontSize: 25 }}>Reset Password</Text>
-          </TouchableOpacity> */}
         </View>
       );
     } else if (user.length <= 0) {

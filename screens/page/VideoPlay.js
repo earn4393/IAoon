@@ -9,7 +9,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 import { AntDesign } from "@expo/vector-icons";
@@ -36,12 +36,33 @@ export const VideoPlay = (props) => {
   const [username, setUsername] = useState(
     user.length > 0 ? user[0].username : ""
   );
+  const [showMoreButton, setShowMoreButton] = useState(false);
+  const [textShown, setTextShown] = useState(false);
+  const [numLines, setNumLines] = useState(undefined);
+
+  const toggleTextShown = () => {
+    setTextShown(!textShown);
+  };
+
+  useEffect(() => {
+    setNumLines(textShown ? undefined : 3);
+  }, [textShown]);
+
+  const onTextLayout = useCallback(
+    (e) => {
+      if (e.nativeEvent.lines.length > 3 && !textShown) {
+        setShowMoreButton(true);
+        setNumLines(3);
+      }
+    },
+    [textShown]
+  );
 
   const imgTo = { uri: watch.img };
 
   const categories = watch.category.map((cat) => {
     return (
-      <View>
+      <View style={{ flex: 1, flexDirection: "column", paddingRight: 8 }}>
         <Text style={{ fontSize: 16, color: "white" }}>{cat}</Text>
       </View>
     );
@@ -57,8 +78,18 @@ export const VideoPlay = (props) => {
     if (watches.length > 0) {
       return (
         <View style={{ paddingBottom: 10 }}>
-          <View style={{ margin:8,padding: 5,backgroundColor: '#FAA307',width: '30%' ,borderRadius:10,}}>
-            <Text style={{ fontSize:16,alignSelf:'center'}}>You also like:</Text>
+          <View
+            style={{
+              margin: 8,
+              padding: 5,
+              backgroundColor: "#FAA307",
+              width: "30%",
+              borderRadius: 10,
+            }}
+          >
+            <Text style={{ fontSize: 16, alignSelf: "center" }}>
+              You also like:
+            </Text>
           </View>
           <FlatList
             data={watches}
@@ -94,23 +125,23 @@ export const VideoPlay = (props) => {
 
   const ShowEpisode = (props) => {
     return (
-      <View style={{ flex: 1 ,margin:4,paddingLeft:12}}>
+      <View style={{ flex: 1, margin: 4, paddingLeft: 12 }}>
         <ScrollView>
-        <TouchableOpacity
-          onPress={() => {
-            setPlay(props.data);
-          }}
-          style={styles.serieStyle}
-        >
-          <Text
-            style={{
-              fontSize: 20,
-              color: "white",
+          <TouchableOpacity
+            onPress={() => {
+              setPlay(props.data);
             }}
+            style={styles.serieStyle}
           >
-            {props.index + 1}
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 20,
+                color: "white",
+              }}
+            >
+              {props.index + 1}
+            </Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     );
@@ -171,46 +202,41 @@ export const VideoPlay = (props) => {
         end={{ x: 1, y: 0.6 }}
         style={styles.background}
       >
-        {/* <View style={styles.container}> */}
-          {/* <View style={{flex: 4,}}>
+        {watch.type != "ภาพยนตร์" ? (
+          <View style={{ flex: 5 }}>
+            <View style={{ flex: 4 }}>
+              <YoutubePlayer height={300} play={false} videoId={play} />
+            </View>
+            <View style={{ flex: 1 }}>
+              <FlatList
+                data={watch.ep}
+                renderItem={renderPlay}
+                keyExtractor={(item) => item.id}
+                horizontal={true}
+              />
+            </View>
+          </View>
+        ) : (
+          <View style={{ flex: 3.25 }}>
             <YoutubePlayer height={300} play={false} videoId={play} />
-          </View> */}
-          
-          
-            {watch.type != "ภาพยนตร์" ? (
-              <View style={{ flex: 5}}>
-                <View style={{flex: 4,}}>
-                  <YoutubePlayer height={300} play={false} videoId={play} />
-                </View>
-                <View style={{flex: 1}}>
-                  <FlatList
-                    data={watch.ep}
-                    renderItem={renderPlay}
-                    keyExtractor={(item) => item.id}
-                    horizontal={true}
-                  />
-                </View>
-              </View>
-            ) : 
-              <View style={{flex: 3,}}>
-                <YoutubePlayer height={300} play={false} videoId={play} />
-              </View>
-            }
-         
-          <View style={{flex: 7}}>
+          </View>
+        )}
+
+        <View style={{ flex: 7 }}>
           <ScrollView style={styles.box}>
-              <View style={{ flex: 1, flexDirection: "column" }}>
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: "row",
-                    paddingLeft: 14,
-                    paddingBottom: 10,
-                  }}
-                >
-                  <Image source={imgTo} style={styles.imageHead}></Image>
-                  <View style={{ flex: 1, flexDirection: "column" }}>
-                    <View style={{ flex: 1, flexDirection: "row" }}>
+            <View style={{ flex: 1, flexDirection: "column" }}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  paddingLeft: 14,
+                  paddingBottom: 10,
+                }}
+              >
+                <Image source={imgTo} style={styles.imageHead}></Image>
+                <View style={{ flex: 1, flexDirection: "column" }}>
+                  <View style={{ flex: 2, flexDirection: "row" }}>
+                    <View style={{ flex: 1, width: 100, height: 100 }}>
                       <Text
                         style={{
                           fontSize: 20,
@@ -219,75 +245,81 @@ export const VideoPlay = (props) => {
                       >
                         {watch.name}
                       </Text>
-
-                      <View
-                        style={{
-                          flex: 1,
-                          alignItems: "flex-end",
-                          paddingRight: 14,
-                        }}
-                      >
-                        <TouchableOpacity onPress={addFavorite}>
-                          {like ? (
-                            <AntDesign
-                              color={"red"}
-                              size={24}
-                              name="heart"
-                            ></AntDesign>
-                          ) : (
-                            <AntDesign
-                              color={"white"}
-                              size={24}
-                              name="hearto"
-                            ></AntDesign>
-                          )}
-                        </TouchableOpacity>
-                      </View>
                     </View>
-                    {categories}
+
+                    <View
+                      style={{
+                        flex: 0.25,
+                        alignItems: "center",
+                        paddingRight: "4%",
+                        paddingTop: "2%",
+                        // backgroundColor:'yellow',
+                      }}
+                    >
+                      <TouchableOpacity onPress={addFavorite}>
+                        {like ? (
+                          <AntDesign
+                            color={"red"}
+                            size={24}
+                            name="heart"
+                          ></AntDesign>
+                        ) : (
+                          <AntDesign
+                            color={"white"}
+                            size={24}
+                            name="hearto"
+                          ></AntDesign>
+                        )}
+                      </TouchableOpacity>
+                    </View>
                   </View>
+                  <ScrollView horizontal={true}>{categories}</ScrollView>
                 </View>
-                </View>
-                <View
+              </View>
+            </View>
+            <View
+              style={{
+                backgroundColor: "black",
+                width: "auto",
+                height: "auto",
+                // height:100,
+                flex: 1,
+                flexDirection: "column",
+                marginHorizontal: 16,
+                padding: 12,
+                borderRadius: 10,
+              }}
+            >
+              <Text
+                Text
+                onTextLayout={onTextLayout}
+                numberOfLines={textShown ? undefined : 3}
+                ellipsizeMode="tail"
+                style={{ color: "#9AD3DA" }}
+              >
+                เรื่องย่อ: {watch.review}
+              </Text>
+
+              {showMoreButton ? (
+                <Text
+                  onPress={toggleTextShown}
                   style={{
-                    backgroundColor: "black",
-                    width: "auto",
-                    height: "auto",
-                    // height:100,
-                    flex: 1,
-                    flexDirection: 'column',
-                    marginHorizontal: 16,
-                    padding: 12,
-                    borderRadius:10,
+                    color: "#9AD3DA",
+                    textDecorationColor: "#9AD3DA",
+                    textDecorationLine: "underline",
+                    textAlign: "right",
                   }}
                 >
-                  {/* หาวิธีให้ตัวอักษรขึ้นบรรทัดใหม่ */}
-                  {/* <ScrollView style={{
-                    backgroundColor: "black",
-                    width: "auto",
-                    // height: "auto",
-                    height:100,
-                    marginHorizontal: 16,
-                    padding: 12,
-                    borderRadius:10,
-                  }}> */}
-                    <Text style={{color: "#9AD3DA"}}>
-                      เรื่องย่อ: {watch.review}
-                    </Text>
-                  {/* </ScrollView> */}
-                    </View>
-                {/* </SafeAreaView> */}
-                {/* </ScrollView> */}
-                
-            <ScrollView style={styles.box}>
+                  {textShown ? "Read Less" : "Read More"}
+                </Text>
+              ) : null}
+            </View>
+
+            <ScrollView style={styles.box2}>
               <FlatListTester />
             </ScrollView>
-
-            
-
           </ScrollView>
-
-          </View>
+        </View>
       </LinearGradient>
     </SafeAreaView>
   );
@@ -296,9 +328,6 @@ export const VideoPlay = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // alignItems: "center",
-    // justifyContent: "center",
-    // backgroundColor: 'orange',
   },
   background: {
     position: "absolute",
@@ -308,11 +337,14 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   box: {
-    //   backgroundColor: "white",
-    //   borderWidth: 2,
     flex: 1,
-    paddingTop: 19,
-    //   margin: 20,
+    paddingTop: 12,
+  },
+  box2: {
+    flex: 1,
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 8,
   },
   video: {
     alignSelf: "center",
@@ -325,12 +357,12 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   serieStyle: {
-    height:50,
-    width:50,
-    backgroundColor:'#006262',
-    alignSelf:'center',
-    alignItems:'center',
-    justifyContent:'center',
-    borderRadius:10,
-  }
+    height: 50,
+    width: 50,
+    backgroundColor: "#006262",
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 10,
+  },
 });

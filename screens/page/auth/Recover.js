@@ -11,7 +11,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import AuthInput from "./AuthInput";
 import * as AuthModel from "../../../firebase/authModel";
-import * as userModel from "../../../firebase/userModel";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const HEIGHT = Dimensions.get("screen").height;
@@ -47,10 +46,14 @@ export const Recover = (props) => {
         style={styles.background}
       >
         <View style={{ flex: 0.75 }}></View>
-        
+
         <View style={styles.backgroundButton}>
-          <View style={{ padding:25}}>
-            <MaterialCommunityIcons name="email-multiple-outline" size={100} color='white' />
+          <View style={{ padding: 25 }}>
+            <MaterialCommunityIcons
+              name="email-multiple-outline"
+              size={100}
+              color="white"
+            />
           </View>
           <AuthInput
             placeholder="Email"
@@ -59,10 +62,7 @@ export const Recover = (props) => {
             onChangeText={(text) => setEmail(text)}
           />
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={onSendPress}
-          >
+          <TouchableOpacity style={styles.button} onPress={onSendPress}>
             <Text style={{ fontSize: 20 }}>Recover</Text>
           </TouchableOpacity>
         </View>
@@ -130,16 +130,16 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   backgroundButton: {
-    flex:1 , 
+    flex: 1,
     flexDirection: "column",
-    backgroundColor:'rgba(255, 255, 255, 0.1)',
-    paddingTop:10,
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    paddingTop: 10,
     paddingBottom: 10,
-    borderColor: 'rgba(0, 0, 0, 0.2)',
-    borderBottomWidth:4,
-    borderRightWidth:2,
-    borderRadius:10,
-    margin:8 , 
+    borderColor: "rgba(0, 0, 0, 0.2)",
+    borderBottomWidth: 4,
+    borderRightWidth: 2,
+    borderRadius: 10,
+    margin: 8,
     alignItems: "center",
-  }
+  },
 });
