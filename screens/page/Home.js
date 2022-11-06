@@ -24,18 +24,21 @@ export const Home = (props) => {
   const COUNTRY_ARRAY = useSelector((state) => state.field);
   const user = USER.length > 0 ? USER[0].username : "";
   const [position, setPosition] = useState(0);
+  const [data, setData] = useState([...DATA]);
+  const dataSource = [];
 
   const IMG = DATA.map((item) => {
-    return item;
+    if (dataSource.length < 11) {
+      dataSource.push({ url: item.img });
+    }
   });
 
-  // useEffect(() => {
-  //   const toggle = setInterval(() => {
-  //     setPosition(position === 5 ? 0 : position + 1);
-  //   }, 3000);
-
-  //   return () => clearInterval(toggle);
-  // });
+  useEffect(() => {
+    const toggle = setInterval(() => {
+      setPosition(position === dataSource.length ? 0 : position + 1);
+    }, 2500);
+    return () => clearInterval(toggle);
+  });
 
   const ShowImages = (props) => {
     const imgTo = { uri: props.data.img };
@@ -162,14 +165,28 @@ export const Home = (props) => {
         style={styles.background}
       >
         <ScrollView style={styles.box}>
-          <FlatList
+          {/* <FlatList
             data={IMG}
             renderItem={renderIMG}
             keyExtractor={(item) => item.id}
             horizontal={true}
           />
           <FlatlistFavorite />
-          <FlatListTester />
+          <FlatListTester /> */}
+          <Slideshow
+            dataSource={dataSource}
+            position={position}
+            onPositionChanged={(position) => setPosition(position)}
+            indicatorSize={20}
+            onPress={({ url, index }) => {
+              console.log("index: ", index);
+              console.log("data: ", DATA[index]);
+              navigation.navigate({
+                name: "PlayTabNav",
+                params: DATA[index],
+              });
+            }}
+          />
         </ScrollView>
       </LinearGradient>
     </SafeAreaView>
